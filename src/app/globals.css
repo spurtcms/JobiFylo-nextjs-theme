@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+@layer base{
+  html{
+    font-family: "Lexend", sans-serif;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-black-100{
+    color: #2D384C;
+  }
+  .border-gray{
+    border-color: rgba(237, 237, 237, 1);
+  }
+  .bg-gray-200{
+    background-color: rgba(237, 237, 237, 1);
+  }
+  .shadow-500{
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
+  }
+  .border-gray-300{
+    border-color: rgba(229, 231, 235, 1);
+  }
+  .grid-cols-5fr{
+    grid-template-columns: 1fr 1fr 1fr 1fr 0.5fr;
+  }
+  .border-gray-500{
+    border-color: rgba(203, 213, 225, 1);
+  }
+  .bg-gray-slate{
+    background-color: rgba(248, 250, 252, 1);
+  }
+}
