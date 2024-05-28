@@ -17,6 +17,10 @@ export default function Header() {
                     aria-label="Global"
                 >
                     <Link href="/"><img src="/img/job-theme-logo.svg" /></Link>
+                    <Link href="/" className="flex gap-2 items-center text-gray-500 text-sm font-light">
+                        <img src="/img/login-user.svg" />
+                        Login\Register
+                    </Link>
                     <div className="flex lg:hidden ml-auto">
                         {/* <button
                             type="button"

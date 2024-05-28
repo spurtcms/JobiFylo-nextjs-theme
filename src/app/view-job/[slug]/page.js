@@ -2,10 +2,10 @@ import ViewJob from '@/Component/ViewJob'
 import React from 'react'
 
 
-export default function page() {
+export default function page({params}) {
     return (
         <>
-         <ViewJob/>
+         <ViewJob params={params?.slug}/>
         </>
     )
 }

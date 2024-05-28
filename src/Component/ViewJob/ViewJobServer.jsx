@@ -1,44 +1,46 @@
 import Link from 'next/link'
 import React from 'react'
 
-export default function ViewJobServer() {
+export default function ViewJobServer({DetailData}) {
+console.log(DetailData,'990909');
+    
   return (
     <>
                 <main className="min-h-screen max-w-screen-2xl m-auto md:py-8 lg:px-[120px] md:px-10 p-6">
                 <Link href='/' className="flex gap-1 items-center text-gray-500 text-xs font-light leading-4"> <img src="/img/left-arrow.svg" /> Back </Link>
                 <div className="mt-8">
-                    <span className="px-2.5 py-1 rounded-3xl bg-blue-100 text-black text-xs font-normal">Security</span>
-                    <h2 className="mt-2 mb-4 sm:text-4xl sm:leading-[45px] font-normal text-blue-600 text-3xl">Crypto PKI und CMS Entwickler (m/w/d)</h2>
+                    <span className="px-2.5 py-1 rounded-3xl bg-blue-100 text-black text-xs font-normal">{DetailData?.category?.categoryName}</span>
+                    <h2 className="mt-2 mb-4 sm:text-4xl sm:leading-[45px] font-normal text-blue-600 text-3xl">{DetailData?.jobTitle}</h2>
                     <div className="flex gap-6 mb-6 flex-wrap">
                         <div className="flex items-center gap-2">
                             <img src="/img/exp.svg" />
-                            <p className="text-sm  leading-4  text-gray-500 font-light">5 - 7 Years</p>
+                            <p className="text-sm  leading-4  text-gray-500 font-light">{DetailData?.minimumYears} - {DetailData?.maximumYears} Years</p>
                         </div>
                         <div className="w-0.5 h-4 bg-gray-200"></div>
                         <div className="flex items-center gap-2">
                             <img src="/img/Time.svg" />
-                            <p className="text-sm  leading-4 text-gray-500 font-light">Full-Time</p>
+                            <p className="text-sm  leading-4 text-gray-500 font-light">{DetailData?.jobType}</p>
                         </div>
                         <div className="w-0.5 h-4 bg-gray-200"></div>
                         <div className="flex items-center gap-2">
                             <img src="/img/job-type.svg" />
-                            <p className="text-sm  leading-4 text-gray-500 font-light">Chennai</p>
+                            <p className="text-sm  leading-4 text-gray-500 font-light">{DetailData?.jobLocation}</p>
                         </div>
                     </div>
                     <div className="flex gap-4 items-center pb-6 border-b border-gray mb-6">
-                        <Link href="applyJob" className="w-auto p-4 h-11 bg-blue-600 text-white text-base font-normal rounded flex justify-center items-center">Apply Now</Link>
+                        <Link href="/applyJob" className="w-auto p-4 h-11 bg-blue-600 text-white text-base font-normal rounded flex justify-center items-center">Apply Now</Link>
                         <Link href="shareJob" className="w-auto p-4 h-11 bg-slate-50 text-blue-600 border border-gray-500 text-base font-normal rounded flex justify-center items-center">Share Job</Link>
                     </div>
                     <div className="pb-6 border-b border-gray mb-6">
                         <h2 className="text-2xl font-medium leading-[30px] mb-4 text-black">Job Description</h2>
                         <div className="flex flex-col gap-3 mb-4">
-                            <p className="text-sm font-medium leading-4 text-black ">Project Role :  <span className="text-gray-500 font-light">Application Developer</span></p>
-                            <p className="text-sm font-medium leading-4 text-black ">Project Role Description :  <span className="text-gray-500 font-light">Design, build and configure applications to meet business process and application requirements.</span></p>
+                            <p className="text-gray-500 font-light">{DetailData?.jobDescription}</p>
+                            {/* <p className="text-sm font-medium leading-4 text-black ">Project Role Description :  <span className="text-gray-500 font-light">Design, build and configure applications to meet business process and application requirements.</span></p>
                             <p className="text-sm font-medium leading-4 text-black ">Must have skills :  <span className="text-gray-500 font-light">Java Standard Edition</span></p>
                             <p className="text-sm font-medium leading-4 text-black ">Good to have skills :  <span className="text-gray-500 font-light">NA</span></p>
-                            <p className="text-sm font-medium leading-[22px] text-black ">Summary:  <span className="text-gray-500 font-light">As an Application Developer, you will be responsible for designing, building, and configuring applications to meet business process and application requirements using Java Standard Edition. Your typical day will involve collaborating with cross-functional teams, analyzing user requirements, and developing high-quality software solutions.</span></p>
+                            <p className="text-sm font-medium leading-[22px] text-black ">Summary:  <span className="text-gray-500 font-light">As an Application Developer, you will be responsible for designing, building, and configuring applications to meet business process and application requirements using Java Standard Edition. Your typical day will involve collaborating with cross-functional teams, analyzing user requirements, and developing high-quality software solutions.</span></p> */}
                         </div>
-                        <div className="mb-3">
+                        {/* <div className="mb-3">
                             <h4 className="text-sm font-medium leading-4 text-black mb-2">Roles & Responsibilities:</h4>
                             <ul className="list-disc ps-7 flex flex-col gap-2">
                                 <li className="text-gray-500 font-light text-sm">Have experience in Java and springboot</li>
@@ -47,8 +49,8 @@ export default function ViewJobServer() {
                                 <li className="text-gray-500 font-light text-sm">Have exposure to Performance</li>
                                 <li className="text-gray-500 font-light text-sm">Worked in onshore/offshore model Professional</li>
                             </ul>
-                        </div>
-                        <div className="mb-4">
+                        </div> */}
+                        {/* <div className="mb-4">
                             <h4 className="text-sm font-medium leading-4 text-black mb-2">Roles & Responsibilities:</h4>
                             <ul className="list-disc ps-7 flex flex-col gap-2">
                                 <li className="text-gray-500 font-light text-sm">Aware of the SDLC process</li>
@@ -57,9 +59,9 @@ export default function ViewJobServer() {
                                 <li className="text-gray-500 font-light text-sm">Good communication skills</li>
                             </ul>
                         </div>
-                        <p className="text-sm font-medium leading-[22px] text-black ">Additional Information: - <span className="text-gray-500 font-light"> The candidate should have a minimum of 3 years of experience in Java Standard Edition. - The ideal candidate will possess a strong educational background in computer science or a related field, along with a proven track record of delivering high-quality software solutions. - This position is based at our Chennai office.</span></p>
+                        <p className="text-sm font-medium leading-[22px] text-black ">Additional Information: - <span className="text-gray-500 font-light"> The candidate should have a minimum of 3 years of experience in Java Standard Edition. - The ideal candidate will possess a strong educational background in computer science or a related field, along with a proven track record of delivering high-quality software solutions. - This position is based at our Chennai office.</span></p> */}
                     </div>
-                    <div className="pb-6 border-b border-gray mb-6">
+                    {/* <div className="pb-6 border-b border-gray mb-6">
                         <h2 className="text-2xl font-medium leading-[30px] mb-4 text-black">Qualifications</h2>
                         <p className="text-sm font-medium leading-4 text-black ">Educational Qualification : <span className="text-gray-500 font-light">Engineering</span></p>
                         <div className="flex items-start gap-2 mt-3 flex-col sm:flex-row">
@@ -75,7 +77,7 @@ export default function ViewJobServer() {
                                 <p className="text-gray-500 font-light leading-[22px] text-sm ">Ability to express observations clearly with supporting facts, assess alternative options, and encourage their acceptance</p>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
                 <div>
                     <div className="flex justify-between items-center mb-6">

@@ -1,12 +1,5 @@
 
-// export const GET_POSTS_SIGN_QUERY = `mutation($singData: MemberDetails!) {
-//   memberRegister(
-//     input:$singData
-//   )
-// }
-//   `;
-
-  export const GET_POSTS_SIGN_QUERY = `mutation memberRegister($singData: MemberDetails!,$ecomModule:Int) {
+export const GET_POSTS_SIGN_QUERY = `mutation memberRegister($singData: MemberDetails!,$ecomModule:Int) {
     memberRegister(
       input:$singData,
       ecomModule:$ecomModule
@@ -66,3 +59,51 @@
       count
     }
     }`
+
+
+    export const GET_POST_DETAIL_QUERY=`query($jobSlug: String){
+      jobDetail(jobSlug:$jobSlug){
+        id
+      categoriesId
+      category{
+        id
+        categoryName
+        categorySlug
+      }
+      jobTitle
+      jobDescription
+      jobLocation
+      jobType
+      education
+      department
+      experience
+      salary
+      createdOn
+      createdBy
+      isDeleted
+      deletedOn
+      deletedBy
+      keyword
+      skill
+      minimumYears
+      maximumYears
+      postedDate
+      validThrough
+      status
+      modifiedOn
+      modifiedBy
+        
+      }
+    }
+    `
+    export const GET_POST_CATEGORIES_LIST= `query($hierarchylevel: Int!){
+      categoriesList(hierarchyLevel: $hierarchylevel){
+        categories{
+          id
+          categoryName
+          categorySlug
+          parentId
+        }
+      }
+    }
+    `
