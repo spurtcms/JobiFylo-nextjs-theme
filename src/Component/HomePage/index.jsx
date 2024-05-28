@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import HomePageAction from './HomePageAction'
 import { fetchGraphQl } from '@/api/graphicql'
 import { GET_POST_LIST_QUERY } from '@/api/query'
@@ -10,10 +10,12 @@ export default async function Home() {
   }
   let ListData=await fetchGraphQl(GET_POST_LIST_QUERY,variables)
 
-  console.log(ListData?.jobsList?.jobs,'ListData')
   return (
    <>
-   <HomePageAction ListData={ListData?.jobsList?.jobs}/>
+          <Suspense fallback={null}>
+           <HomePageAction ListData={ListData?.jobsList?.jobs}/>
+         </Suspense>
+
    </>
   )
 }

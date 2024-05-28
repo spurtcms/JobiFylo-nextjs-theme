@@ -1,7 +1,8 @@
 import Link from 'next/link'
 import React from 'react'
 
-export default function FilterJob() {
+export default function FilterJob({pathname}) {
+
   return (
     <>
      <div className="grid md:grid-cols-5fr grid-cols-2  gap-4 mb-4">
@@ -57,10 +58,14 @@ export default function FilterJob() {
               </div>
               <button className="text-sm whitespace-nowrap font-light text-black leading-4 p-3 border-gray-500 rounded-md border bg-white">Clear All</button>
             </div>
-            <Link href="listView" className="p-3 flex gap-2 justify-center items-center min-w-[110px] whitespace-nowrap h-[42px] text-blue-600 border-blue-600 border rounded-md">
-              <img src="/img/list.svg" />
-              List View
-            </Link>
+            {pathname=="/"?<Link href="/list-view" className="p-3 flex gap-2 justify-center items-center min-w-[110px] whitespace-nowrap h-[42px] text-blue-600 border-blue-600 border rounded-md">
+            <img src="/img/list.svg" />
+            List View 
+            </Link>:<Link href="/" className="p-3 flex gap-2 justify-center items-center min-w-[110px] whitespace-nowrap h-[42px] text-blue-600 border-blue-600 border rounded-md">
+            <img src="/img/title.svg" />
+            Tile View
+            </Link>}
+            
           </div>
     </>
   )
