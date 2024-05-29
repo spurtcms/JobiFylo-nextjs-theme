@@ -95,6 +95,7 @@ export default function FilterJob({pathname,setList}) {
 
           let filterListData=await fetchGraphQl (GET_POST_LIST_QUERY,variable)
           setList(filterListData?.jobsList?.jobs)
+          console.log(filterListData,'filterListData');
         }
 
       }
