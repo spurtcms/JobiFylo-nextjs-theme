@@ -1,8 +1,16 @@
 import Link from 'next/link'
 import React from 'react'
+import TilteView from '../HomePage/TilteView';
 
-export default function ViewJobServer({DetailData}) {
-console.log(DetailData,'990909');
+export default function ViewJobServer({DetailData,ListData}) {
+const relatedData=ListData?.map((data)=>{
+ if(DetailData&&data.id !==DetailData.id&&data.categoriesId===DetailData.categoriesId){
+         return data
+    }else{
+        return []
+    }
+}).flat()
+
     
   return (
     <>
@@ -82,9 +90,10 @@ console.log(DetailData,'990909');
                 <div>
                     <div className="flex justify-between items-center mb-6">
                         <h2 className="text-2xl font-medium leading-[30px]  text-black">Related Jobs</h2>
-                        <Link href="javascript:void(0)" className="flex items-center gap-2 text-xs font-light text-blue-600"> View All <img src="/img/right-arrow.svg" /> </Link>
+                        <Link href="/" className="flex items-center gap-2 text-xs font-light text-blue-600"> View All <img src="/img/right-arrow.svg" /> </Link>
                     </div>
-                    <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 grid-cols-1 mt-6 mb-10">
+                    <TilteView ListData={relatedData}/>
+                    {/* <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 grid-cols-1 mt-6 mb-10">
                         <div className="border-gray-300 border rounded p-4 hover:shadow-lg">
                             <span className="px-2.5 py-1 rounded-3xl bg-blue-100 text-black text-xs font-normal">Security</span>
                             <Link href="javascript:void(0)" className="block text-black text-2xl leading-8 font-normal my-2">Crypto PKI und CMS Entwickler (m/w/d)</Link>
@@ -148,7 +157,7 @@ console.log(DetailData,'990909');
                             <h5 className="text-gray-500 text-xs font-light mb-4">Posted Date: 26 Mar 2024</h5>
                             <Link href="viewJob" className="w-full h-11 bg-blue-600 text-white text-base font-normal rounded flex justify-center items-center">View Job</Link>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </main>
     </>
