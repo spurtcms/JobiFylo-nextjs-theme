@@ -1,6 +1,35 @@
-import React from 'react'
+import { fetchGraphQl } from '@/api/graphicql'
+import { GET_POST_LIST_QUERY } from '@/api/query'
+import React, { useState } from 'react'
 
-export default function HomeHeader() {
+export default function HomeHeader({setList}) {
+  const [jobTitle,setJobTitle]=useState('')
+  const [location,setLocation]=useState('')
+
+  const handleJobTitle=(e,value)=>{
+    if(value=="title"){
+      setJobTitle(e)
+    }
+    else if(value=="location"){
+      setLocation(e)
+    }
+  }
+
+  const handleSearch=async()=>{
+    // setJobTitle("")
+    // setLocation("")
+    let variable={
+      "limit":10,
+      "offset":0,
+      "filter": {
+        "jobTitle":jobTitle,
+        "jobLocation":location
+      }
+    }
+    let filterListData=await fetchGraphQl (GET_POST_LIST_QUERY,variable)
+    setList(filterListData?.jobsList?.jobs)
+  }
+
   return (
     <div className="bg-blue-50 w-full ">
           <div className="max-w-screen-2xl m-auto flex  gap-[130.65px] flex-col lg:flex-row lg:pt-[85px] items-start lg:ps-[120px] lg:pe-[234.5px] lg:pb-[26.89px] md:px-10 md:py-20 px-6 py-10 relative">
@@ -13,15 +42,15 @@ export default function HomeHeader() {
               <div className="w-full bg-white h-full flex gap-px items-center p-2 rounded-md shadow-500 border border-gray mb-6 flex-col sm:flex-row">
 
                 <div className="w-full relative">
-                  <input type="text" className="sm:h-full sm:border-0 border-b border-gray  h-10 py-0 sm:py-7 w-full focus-visible:outline-none ps-14 text-sm leading-4 font-light placeholder:text-slate-300" placeholder="Search by Job Title/Role" />
+                  <input value={jobTitle} type="text" className="sm:h-full sm:border-0 border-b border-gray  h-10 py-0 sm:py-7 w-full focus-visible:outline-none ps-14 text-sm leading-4 font-light placeholder:text-slate-300" placeholder="Search by Job Title/Role" onChange={(e)=>handleJobTitle(e.target.value,"title")}/>
                   <img src="/img/search.svg" className="absolute top-3 sm:top-[27px] left-6" />
                 </div>
                 <div className="h-[50px] w-0.5 bg-gray-200 hidden sm:flex"></div>
                 <div className="w-full relative">
-                  <input type="text" className="sm:h-full h-10 py-0 sm:py-7 w-full sm:border-0 border-b border-gray focus-visible:outline-none ps-14 text-sm leading-4 font-light placeholder:text-slate-300" placeholder="Location" />
+                  <input value={location} type="text" className="sm:h-full h-10 py-0 sm:py-7 w-full sm:border-0 border-b border-gray focus-visible:outline-none ps-14 text-sm leading-4 font-light placeholder:text-slate-300" placeholder="Location" onChange={(e)=>handleJobTitle(e.target.value,"location")}/>
                   <img src="/img/location.svg" className="absolute top-3 sm:top-[27px] left-6" />
                 </div>
-                <button className="sm:h-full h-10 min-w-[177px] sm:mt-0 mt-3 rounded bg-blue-600 text-white text-base leading-5 font-medium">Search Jobs</button>
+                <button className="sm:h-full h-10 min-w-[177px] sm:mt-0 mt-3 rounded bg-blue-600 text-white text-base leading-5 font-medium" onClick={()=>handleSearch()}>Search Jobs</button>
               </div>
               <div className="w-full h-px bg-gray-200"></div>
             </div>

@@ -7,7 +7,6 @@ import TilteView from './TilteView';
 import { useState } from 'react';
 
 export default function HomePageAction({ListData}) {
-  console.log(ListData,'ListDsaddata')
 
   const[List,setList]=useState(ListData)
   const pathname=usePathname()
@@ -15,7 +14,7 @@ export default function HomePageAction({ListData}) {
    <>
    <main className="min-h-screen">
        
-        <HomeHeader />
+        <HomeHeader setList={setList}/>
         <div className="lg:px-[120px] max-w-screen-2xl m-auto md:px-10 px-6 mt-[11rem] sm:mt-20">
          <FilterJob pathname={pathname} setList={setList} />
           

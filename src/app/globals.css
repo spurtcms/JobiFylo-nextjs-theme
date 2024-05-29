@@ -52,3 +52,15 @@
     background-color: rgba(248, 250, 252, 1);
   }
 }
+.css-13cymwt-control{
+  border-color:rgba(203, 213, 225, 1);
+}
+.css-13cymwt-control:hover{
+  border-color: rgba(203, 213, 225, 1) !important;
+}
+.css-1u9des2-indicatorSeparator{
+  display: none;
+}
+.css-1jqq78o-placeholder{
+  color: #CBD5E1 !important;
+}
