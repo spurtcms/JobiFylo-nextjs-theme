@@ -63,7 +63,7 @@ export const postGraphQl = async (GET_POSTS_QUERY,varia,check,setLoader,cartName
       }
       
       ToastMessage({type:'success',message:"Login Successfull"})
-      dispatch(reloadCartCount(reloadCount+1))
+      // dispatch(reloadCartCount(reloadCount+1))
 
       }
       else{

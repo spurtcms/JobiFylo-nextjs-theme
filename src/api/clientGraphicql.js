@@ -23,7 +23,7 @@ export async function fetchGraphQLDa (GET_POSTS_QUERY_LIST,varPos) {
       throw error;
     }
   }
-
+   
   export async function BearerToken(data) {
     cookies().set("Token",data) 
 }
