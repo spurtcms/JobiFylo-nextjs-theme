@@ -1,10 +1,9 @@
 
+import Header from "@/Component/Header";
 import "./globals.css";
-import Header from "./header/page";
 import NextTopLoader from "nextjs-toploader";
 import { Flip, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// const lexend  = Lexend ({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Create Next App",

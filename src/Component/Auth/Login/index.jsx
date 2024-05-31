@@ -20,7 +20,6 @@ export default function Login() {
         setEmailValid(check)
           if(email !==""&&password !==""){
             
-            console.log(emailValid,'emailValid')
             if(check){
 
             setLoader(true)
@@ -33,7 +32,6 @@ export default function Login() {
           }
           
       }
-    console.log(emailValid,'sadadas')
       const Onkeydownfunc = (e) => {
         if (e.key === 'Enter') {
           e.preventDefault()

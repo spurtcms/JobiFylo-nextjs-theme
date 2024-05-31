@@ -35,7 +35,7 @@ export const fetchGraphQl = async (GET_POSTS_QUERY,varia) => {
   // }
 };
 
-export const postGraphQl = async (GET_POSTS_QUERY,varia,check,setLoader,cartName,reloadCount,dispatch) => {
+export const postGraphQl = async (GET_POSTS_QUERY,varia,check,setLoader) => {
 
   try {
     const entries = await fetchGraphQl(GET_POSTS_QUERY,varia);
@@ -55,16 +55,9 @@ export const postGraphQl = async (GET_POSTS_QUERY,varia,check,setLoader,cartName
       BearerToken(entries?.templateMemberLogin) 
       setLoader(false)
       
-      if(cartName!=""){
-        Redirect("/account/checkout-shipping")
-      }
-      else{
         Redirect('/')
-      }
-      
+   
       ToastMessage({type:'success',message:"Login Successfull"})
-      // dispatch(reloadCartCount(reloadCount+1))
-
       }
       else{
         if(entries?.status){
@@ -77,29 +70,7 @@ export const postGraphQl = async (GET_POSTS_QUERY,varia,check,setLoader,cartName
       
 
     }
-    if(check==="checkout"){
-      if(entries?.ecommerceOrderPlacement){
-        localStorage.removeItem("add-cart-list")
-        Redirect("/account/my-orders?offset=0")
-        setLoader(false)
-        dispatch(getAddress({}))
-        dispatch(reloadCartCount(reloadCount+1))
-      }else{
-        setLoader(false)
-      }
-      
-    }
-    if(check==="Address"){
-      if(entries?.customerProfileUpdate){
-        Redirect("/account/checkout-payment")
-        setLoader(false)
-        dispatch(reloadCartCount(reloadCount+1))
-        ToastMessage({type:'success',message:"Address Update Successfull"})
-      } else{
-        setLoader(false)
-      }
-     
-    }
+   
   } catch (error) {
     throw error;
   }

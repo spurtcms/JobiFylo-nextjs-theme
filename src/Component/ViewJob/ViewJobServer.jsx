@@ -19,7 +19,6 @@ export default function ViewJobServer({DetailData,ListData}) {
   }
     },[])
 
-    console.log(DetailData,'DetailData',ListData)
 const relatedData=ListData?.map((data)=>{
  if(DetailData&&data.id !==DetailData.id&&data.categoriesId===DetailData.categoriesId){
          return data
@@ -28,7 +27,6 @@ const relatedData=ListData?.map((data)=>{
     }
 }).flat()
 
-console.log(DetailData,"DetailData",ListData)
     
   return (
     <>
