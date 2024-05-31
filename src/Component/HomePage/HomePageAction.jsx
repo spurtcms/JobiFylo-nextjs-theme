@@ -10,6 +10,8 @@ export default function HomePageAction({ListData}) {
 
   const[List,setList]=useState(ListData)
   const pathname=usePathname()
+
+  console.log(ListData,'ListData')
   return (
    <>
    <main className="min-h-screen">

@@ -1,8 +1,25 @@
+"use client"
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import TilteView from '../HomePage/TilteView';
+import ViewJobsSkeleton from '@/utilities/Skeleton/ViewJobsSkeleton';
 
 export default function ViewJobServer({DetailData,ListData}) {
+
+
+    const [skeleton,setSketon]=useState(true)
+    const [secSkeleton,setSecSkeleton]=useState(true)
+
+    useEffect(()=>{
+  if(DetailData!=undefined){
+    setSketon(false)
+  }
+  if(ListData!=undefined){
+    setSecSkeleton(false)
+  }
+    },[])
+
+    console.log(DetailData,'DetailData',ListData)
 const relatedData=ListData?.map((data)=>{
  if(DetailData&&data.id !==DetailData.id&&data.categoriesId===DetailData.categoriesId){
          return data
@@ -11,12 +28,17 @@ const relatedData=ListData?.map((data)=>{
     }
 }).flat()
 
+console.log(DetailData,"DetailData",ListData)
     
   return (
     <>
                 <main className="min-h-screen max-w-screen-2xl m-auto md:py-8 lg:px-[120px] md:px-10 p-6">
                 <Link href='/' className="flex gap-1 items-center text-gray-500 text-xs font-light leading-4"> <img src="/img/left-arrow.svg" /> Back </Link>
-                <div className="mt-8">
+               {skeleton==true?
+               <ViewJobsSkeleton DetailData={DetailData} ListData={ListData}/>
+               :
+               <>
+               <div className="mt-8">
                     <span className="px-2.5 py-1 rounded-3xl bg-blue-100 text-black text-xs font-normal">{DetailData?.category?.categoryName}</span>
                     <h2 className="mt-2 mb-4 sm:text-4xl sm:leading-[45px] font-normal text-blue-600 text-3xl">{DetailData?.jobTitle}</h2>
                     <div className="flex gap-6 mb-6 flex-wrap">
@@ -37,7 +59,7 @@ const relatedData=ListData?.map((data)=>{
                     </div>
                     <div className="flex gap-4 items-center pb-6 border-b border-gray mb-6">
                         <Link href="/applyJob" className="w-auto p-4 h-11 bg-blue-600 text-white text-base font-normal rounded flex justify-center items-center">Apply Now</Link>
-                        <Link href="shareJob" className="w-auto p-4 h-11 bg-slate-50 text-blue-600 border border-gray-500 text-base font-normal rounded flex justify-center items-center">Share Job</Link>
+                        {/* <Link href="shareJob" className="w-auto p-4 h-11 bg-slate-50 text-blue-600 border border-gray-500 text-base font-normal rounded flex justify-center items-center">Share Job</Link> */}
                     </div>
                     <div className="pb-6 border-b border-gray mb-6">
                         <h2 className="text-2xl font-medium leading-[30px] mb-4 text-black">Job Description</h2>
@@ -87,6 +109,10 @@ const relatedData=ListData?.map((data)=>{
                         </div>
                     </div> */}
                 </div>
+                </>}
+                {secSkeleton==true?
+                <ViewJobsSkeleton DetailData={DetailData} ListData={ListData}/>
+                :
                 <div>
                     <div className="flex justify-between items-center mb-6">
                         <h2 className="text-2xl font-medium leading-[30px]  text-black">Related Jobs</h2>
@@ -159,6 +185,12 @@ const relatedData=ListData?.map((data)=>{
                         </div>
                     </div> */}
                 </div>
+                }
+                
+               
+               
+                
+                
             </main>
     </>
   )

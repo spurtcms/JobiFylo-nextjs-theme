@@ -1,6 +1,6 @@
 import { fetchGraphQl } from '@/api/graphicql'
 import { GET_POST_LIST_QUERY } from '@/api/query'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 export default function HomeHeader({setList}) {
   const [jobTitle,setJobTitle]=useState('')
@@ -29,6 +29,12 @@ export default function HomeHeader({setList}) {
     let filterListData=await fetchGraphQl (GET_POST_LIST_QUERY,variable)
     setList(filterListData?.jobsList?.jobs)
   }
+
+  useEffect(()=>{
+    if(jobTitle==""&&location==""){
+      handleSearch()
+    }
+  },[jobTitle,location])
 
   return (
     <div className="bg-blue-50 w-full ">
