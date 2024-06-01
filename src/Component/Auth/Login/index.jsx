@@ -77,7 +77,7 @@ const handleEmail=(e)=>{
                             "Login"
                         }
                             </button>
-                        <p className="text-base text-black font-light text-center">Don't Have an account?<Link href="/auth/sign-up" className="text-blue-600 font-medium"> Register Here</Link></p>
+                        <p className="text-base text-black font-light text-center">Don&apos;t Have an account?<Link href="/auth/sign-up" className="text-blue-600 font-medium"> Register Here</Link></p>
                     </div>
                 </div>
             </div>
