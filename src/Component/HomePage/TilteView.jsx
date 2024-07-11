@@ -3,6 +3,7 @@ import Link from 'next/link'
 import React from 'react'
 
 export default function TilteView({ListData}) {
+  console.log(ListData,'ListData')
   return (
     <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 grid-cols-1 mt-6 mb-10" >
             {ListData&&ListData.map((data,index)=>(

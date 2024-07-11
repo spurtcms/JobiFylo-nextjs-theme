@@ -2,7 +2,7 @@
 import ViewJobServer from './ViewJobServer'
 import { fetchGraphQl } from '@/api/graphicql';
 import { GET_POST_DETAIL_QUERY, GET_POST_LIST_QUERY } from '@/api/query';
-import { fetchGraphQLDa } from '@/api/clientGraphicql';
+import { Token, fetchGraphQLDa } from '@/api/clientGraphicql';
 
 
 
@@ -16,10 +16,13 @@ let varible={
   "offset":0 
 }
 let ListData=await fetchGraphQLDa(GET_POST_LIST_QUERY,varible)
+
+const token=await Token()
+console.log(token,'e32qweqewqee')
   return (
   <>
         
-  <ViewJobServer DetailData={DetailData?.jobDetail} ListData={ListData?.jobsList?.jobs}/>
+  <ViewJobServer DetailData={DetailData?.jobDetail} ListData={ListData?.jobsList?.jobs} token={token} params={params}/>
   
   </>
   )

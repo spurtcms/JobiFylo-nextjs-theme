@@ -18,7 +18,7 @@ export default function FilterJob({pathname,setList}) {
 
   const [trigger,setTrigger]=useState(false)
 
-
+console.log(setList,'setList')
       // const Filters = [
       //   {orderjob: false},
       //   {orderloca: false},
@@ -31,13 +31,13 @@ export default function FilterJob({pathname,setList}) {
           "hierarchylevel": 1
         }
         let CategorieList=await fetchGraphQl(GET_POST_CATEGORIES_LIST,variable)
+      
         setCatList(CategorieList?.categoriesList?.categories&&CategorieList?.categoriesList?.categories)
       }
       useEffect(()=>{
         CategorieApi()
       },[])
-
-
+console.log(catList,'catList')
 
       const handleJobName=(e)=>{
      
@@ -84,7 +84,6 @@ export default function FilterJob({pathname,setList}) {
             "filter": {
               "jobTitle":"",
               "jobLocation":location,
-              "categoryId": 2,
               "categorySlug":jobName?.label,
               "keyWord": "",
               "datePosted": postDate?.label,
@@ -94,6 +93,7 @@ export default function FilterJob({pathname,setList}) {
           }
 
           let filterListData=await fetchGraphQl (GET_POST_LIST_QUERY,variable)
+          console.log(filterListData,'098765');
           setList(filterListData?.jobsList?.jobs)
         }
 
@@ -121,12 +121,12 @@ export default function FilterJob({pathname,setList}) {
           setInputJob("")
           let filterExp=ExpStatus.filter((data)=>data?.id==expYear.value)
           let variable={
-            "limit":5,
+            "limit":10,
             "offset":0,
             "filter": {
               "jobTitle":"",
               "jobLocation":location,
-              "categoryId": 2,
+              // "categoryId": 2,
               "categorySlug":"",
               "keyWord": "",
               "datePosted": postDate?.label,
@@ -143,12 +143,12 @@ export default function FilterJob({pathname,setList}) {
 
           let filterExp=ExpStatus.filter((data)=>data?.id==expYear.value)
           let variable={
-            "limit":5,
+            "limit":10,
             "offset":0,
             "filter": {
               "jobTitle":"",
               "jobLocation":"",
-              "categoryId": 2,
+              // "categoryId": 2,
               "categorySlug":jobName?.label,
               "keyWord": "",
               "datePosted": postDate?.label,
@@ -165,12 +165,12 @@ export default function FilterJob({pathname,setList}) {
           setInputExp("")
           // let filterExp=ExpStatus.filter((data)=>data.name==expYear)
           let variable={
-            "limit":5,
+            "limit":10,
             "offset":0,
             "filter": {
               "jobTitle":"",
               "jobLocation":location,
-              "categoryId": 2,
+              // "categoryId": 2,
               "categorySlug":jobName?.label,
               "keyWord": "",
               "datePosted": postDate?.label
@@ -185,12 +185,12 @@ export default function FilterJob({pathname,setList}) {
 
           let filterExp=ExpStatus.filter((data)=>data?.id==expYear.value)
           let variable={
-            "limit":5,
+            "limit":10,
             "offset":0,
             "filter": {
               "jobTitle":"",
               "jobLocation":location,
-              "categoryId": 2,
+              // "categoryId": 2,
               "categorySlug":jobName?.label,
               "keyWord": "",
               "datePosted": "",
@@ -223,6 +223,7 @@ export default function FilterJob({pathname,setList}) {
       {id:2, name: "3-5 Years",minDate:3,maxDate:5},
       {id:3, name: "5-7 Years",minDate:5,maxDate:7},
       {id:4, name: "7-10 Years",minDate:7,maxDate:10},
+      // {id:5, name: "10+ Years",minDate:10,maxDate:15}
       ]
 
       let expFilterOption=ExpStatus?.map((list)=>({
@@ -260,7 +261,7 @@ export default function FilterJob({pathname,setList}) {
               </Select>
              
             <div className='w-full'>
-              <input className="h-[38px] rounded-[4px] border-gray-500 border w-full focus-visible:outline-none bg-transparent p-3 text-sm font-normal placeholder:text-slate-300" placeholder="Location" value={location} onChange={(e)=>handleLocation(e.target.value)}/>
+              <input className="h-[38px] rounded-[4px] border-gray-500 border w-full focus-visible:outline-none bg-transparent focus:border-[#2684FF] hover-blue p-3 text-sm font-normal placeholder:text-slate-300" placeholder="Location" value={location} onChange={(e)=>handleLocation(e.target.value)}/>
             </div>
               <Select placeholder="Experienced Level" className='text-sm'
                value={expYear} options={expFilterOption} onChange={(e)=>handleExpYear(e)}>

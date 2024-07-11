@@ -27,14 +27,14 @@ export default function Signup() {
         setValid(1)
 
         const inputdata={
-            "singData": {
+            "input": {
               "firstName": fisrtName,
               "email": email,
               "mobile": phNumber,
               "password": password,
              
             },
-            "ecomModule": 1
+            "ecomModule": 2
           }
           if(validCheck()){
             setValid(0)

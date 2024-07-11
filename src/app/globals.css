@@ -91,6 +91,27 @@
 .loader:after {
   transform: rotate(60deg);
 }
+.job-apply .css-13cymwt-control{
+  border: none !important;
+  box-shadow: none !important ;
+  width: 100% !important;
+
+}
+.job-apply .css-t3ipsp-control{
+  box-shadow: none !important ;
+  border: none !important;
+  width: 100% !important;
+}
+.job-apply .css-1fdsijx-ValueContainer{
+  padding:0 0 0 16px !important;
+}
+
+.hover-blue:focus{
+  box-shadow: 0 0 0 1px #2684FF;
+  border-radius: 4px;
+}
+
+
 @keyframes l26 {
   100% {transform:rotate(1turn)}
 }

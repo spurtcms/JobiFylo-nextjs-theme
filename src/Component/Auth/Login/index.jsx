@@ -25,7 +25,7 @@ export default function Login() {
             setLoader(true)
             
             setValidCheck(0)
-            const inputdata={"email":email,"password":password}
+            const inputdata={"email":email,"password":password,"Module": 2}
             postGraphQl(GET_POSTS_LOGIN_QUERY,inputdata,"login",setLoader)
             }
             
@@ -45,7 +45,7 @@ const handleEmail=(e)=>{
 
   return (
    <>
-   <main className="sm-h-5rem sm:min-h-full min-h-screen  mx-auto mt-1">
+   <main className=" sm:min-h-full min-h-screen  mx-auto mt-1">
         <div className="sm:h-5rem h-full  sm:justify-normal  overflow-auto flex flex-col-reverse md:flex-row">
             <div  className="md:px-[75px] p-4 md:py-[180px] w-full md:w-[60%]">
                 <img src="/img/sigin-banner.png" className="w-auto max-w-full" />

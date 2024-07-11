@@ -3,8 +3,13 @@ import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import TilteView from '../HomePage/TilteView';
 import ViewJobsSkeleton from '@/utilities/Skeleton/ViewJobsSkeleton';
+import { useRouter } from 'next/navigation';
 
-export default function ViewJobServer({DetailData,ListData}) {
+export default function ViewJobServer({DetailData,ListData,token,params}) {
+
+    console.log(token,'token')
+
+    console.log(DetailData,'DetailData',params)
 
 
     const [skeleton,setSketon]=useState(true)
@@ -27,7 +32,16 @@ const relatedData=ListData?.map((data)=>{
     }
 }).flat()
 
-    
+let router=useRouter()
+    const handleApply=()=>{
+        if(token){
+            router.push(`/apply-job/${params}`)
+        }
+        else{
+            router.push('/auth/login')
+        }
+        
+    }
   return (
     <>
                 <main className="min-h-screen max-w-screen-2xl m-auto md:py-8 lg:px-[120px] md:px-10 p-6">
@@ -56,7 +70,7 @@ const relatedData=ListData?.map((data)=>{
                         </div>
                     </div>
                     <div className="flex gap-4 items-center pb-6 border-b border-gray mb-6">
-                        <Link href="/applyJob" className="w-auto p-4 h-11 bg-blue-600 text-white text-base font-normal rounded flex justify-center items-center">Apply Now</Link>
+                        <button className="w-auto p-4 h-11 bg-blue-600 text-white text-base font-normal rounded flex justify-center items-center" onClick={()=>handleApply()}>Apply Now</button>
                         {/* <Link href="shareJob" className="w-auto p-4 h-11 bg-slate-50 text-blue-600 border border-gray-500 text-base font-normal rounded flex justify-center items-center">Share Job</Link> */}
                     </div>
                     <div className="pb-6 border-b border-gray mb-6">

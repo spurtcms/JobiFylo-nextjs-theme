@@ -70,6 +70,26 @@ export const postGraphQl = async (GET_POSTS_QUERY,varia,check,setLoader) => {
       
 
     }
+
+    if(check==="Apply-job"){
+      if(entries?.jobApplication){
+        setLoader(false)
+        // BearerToken(entries?.templateMemberLogin) 
+        // setLoader(false)
+        
+          Redirect('/')
+     
+        ToastMessage({type:'success',message:"Apply Successfull"})
+        }
+        else{
+          if(entries?.status){
+            setLoader(false)
+            ToastMessage({type:'error',message:"error"})
+            // Redirect("/auth/login")
+            // ToastMessage({type:'error',message:"Invalid email and password"})
+          }
+        }
+    }
    
   } catch (error) {
     throw error;

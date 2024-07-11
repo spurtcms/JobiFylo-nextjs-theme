@@ -1,19 +1,33 @@
 
-export const GET_POSTS_SIGN_QUERY = `mutation memberRegister($singData: MemberDetails!,$ecomModule:Int) {
-    memberRegister(
-      input:$singData,
-      ecomModule:$ecomModule
-    )
+export const GET_POSTS_SIGN_QUERY = `mutation memberRegister($input: MemberDetails!
+  $ecomModule: Int){
+    memberRegister(input:$input,ecomModule:$ecomModule)
   }
     `;
 
 
 
-  export const GET_POSTS_LOGIN_QUERY =`mutation($email:String!,$password:String!){
-    templateMemberLogin(
-      email:$email
-      password:$password
-    )
+  export const GET_POSTS_LOGIN_QUERY =`
+  mutation templateMemberlogin($username: String, $email: String, 
+    $password: String!,$Module: Int) 
+    {
+    templateMemberLogin(username: $username, email: $email, 
+      password: $password,Module:$Module)
+  }`
+
+ 
+ 
+  // mutation($email:String!,$password:String!){
+  //   templateMemberLogin(
+  //     email:$email
+  //     password:$password
+  //   )
+  // }
+
+
+  export const GET_POST_JOB_APPLY_QUERY=`mutation jobApplication($applicationDetails: applicationInput!)
+  {
+    jobApplication(applicationDetails: $applicationDetails)
   }`
 
   export const GET_POST_LIST_QUERY=`query(
@@ -107,3 +121,39 @@ export const GET_POSTS_SIGN_QUERY = `mutation memberRegister($singData: MemberDe
       }
     }
     `
+
+    export const GET_POST_JOB_APPLY_LIST_QUERY=`
+    query applicantDetails{
+      applicantDetails{
+        id
+        name
+        emailId
+        mobileNo
+        jobType
+        gender
+        location
+        education
+        graduation
+        companyName
+        experience
+        skills
+        imagePath
+        image
+        createdOn
+        createdBy
+        modifiedOn
+        modifiedBy
+        isDeleted
+        deletedOn
+        deletedBy
+        currentSalary
+        expectedSalary
+        status
+        resumePath
+        resumeName
+        storageType
+      }
+    }
+    `
+
+

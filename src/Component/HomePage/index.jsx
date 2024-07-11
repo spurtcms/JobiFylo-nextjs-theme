@@ -9,6 +9,8 @@ export default async function Home() {
       "offset":0 
   }
   let ListData=await fetchGraphQl(GET_POST_LIST_QUERY,variables)
+  
+  console.log(ListData,'ListData')
 
   return (
    <>
