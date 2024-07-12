@@ -3,13 +3,11 @@ import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import TilteView from '../HomePage/TilteView';
 import ViewJobsSkeleton from '@/utilities/Skeleton/ViewJobsSkeleton';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 export default function ViewJobServer({DetailData,ListData,token,params}) {
 
-    console.log(token,'token')
 
-    console.log(DetailData,'DetailData',params)
 
 
     const [skeleton,setSketon]=useState(true)
@@ -39,6 +37,7 @@ let router=useRouter()
         }
         else{
             router.push('/auth/login')
+            localStorage.setItem('path',`/apply-job/${params}`)
         }
         
     }

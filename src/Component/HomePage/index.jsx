@@ -10,7 +10,6 @@ export default async function Home() {
   }
   let ListData=await fetchGraphQl(GET_POST_LIST_QUERY,variables)
   
-  console.log(ListData,'ListData')
 
   return (
    <>

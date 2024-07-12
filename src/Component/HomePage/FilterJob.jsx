@@ -18,7 +18,6 @@ export default function FilterJob({pathname,setList}) {
 
   const [trigger,setTrigger]=useState(false)
 
-console.log(setList,'setList')
       // const Filters = [
       //   {orderjob: false},
       //   {orderloca: false},
@@ -37,7 +36,6 @@ console.log(setList,'setList')
       useEffect(()=>{
         CategorieApi()
       },[])
-console.log(catList,'catList')
 
       const handleJobName=(e)=>{
      
@@ -93,7 +91,6 @@ console.log(catList,'catList')
           }
 
           let filterListData=await fetchGraphQl (GET_POST_LIST_QUERY,variable)
-          console.log(filterListData,'098765');
           setList(filterListData?.jobsList?.jobs)
         }
 

@@ -27,7 +27,9 @@ export async function fetchGraphQLDa (GET_POSTS_QUERY_LIST,varPos) {
   export async function BearerToken(data) {
     cookies().set("Token",data) 
 }
-  
+  // export async function EmailValue(email){
+  //   cookies().set("Email",email) 
+  // }
 
   export async function Token() {
     const cookiesdata = cookies()

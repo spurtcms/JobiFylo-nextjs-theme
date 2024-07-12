@@ -1,0 +1,1 @@
+export const imageurl=process.env.NEXT_PUBLIC_SPURTCMS_IMAGE

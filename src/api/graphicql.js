@@ -5,9 +5,10 @@ import { BearerToken } from "./clientGraphicql";
 import { apiinstance } from "./interceptor";
 import { Redirect } from "./serverActions";
 
+
 export const fetchGraphQl = async (GET_POSTS_QUERY,varia) => {
- 
-  // try {
+
+  // // try {
     const entries = await apiinstance("",{
       method: 'POST',
       body: JSON.stringify({
@@ -19,23 +20,16 @@ export const fetchGraphQl = async (GET_POSTS_QUERY,varia) => {
       
       return entries?.data
     }else{
-    if(entries?.status){
+    if(entries){
      
       return entries
     }
       
     }
-    // else{
-    //  
-    //   return entries
-    // } 
-     
-  // } catch (error) {
-  //   throw error;
-  // }
+
 };
 
-export const postGraphQl = async (GET_POSTS_QUERY,varia,check,setLoader) => {
+export const postGraphQl = async (GET_POSTS_QUERY,varia,check,setLoader,pathname,setLoginEmail) => {
 
   try {
     const entries = await fetchGraphQl(GET_POSTS_QUERY,varia);
@@ -52,10 +46,15 @@ export const postGraphQl = async (GET_POSTS_QUERY,varia,check,setLoader) => {
     if(check==="login"){
       
       if(entries?.templateMemberLogin!=undefined&&entries?.templateMemberLogin!=""){
-      BearerToken(entries?.templateMemberLogin) 
+      BearerToken(entries?.templateMemberLogin)
+      setLoginEmail()
       setLoader(false)
-      
+      if(pathname){
+        Redirect(`${pathname}`)
+      }else{
         Redirect('/')
+      }
+        
    
       ToastMessage({type:'success',message:"Login Successfull"})
       }
@@ -72,6 +71,7 @@ export const postGraphQl = async (GET_POSTS_QUERY,varia,check,setLoader) => {
     }
 
     if(check==="Apply-job"){
+     
       if(entries?.jobApplication){
         setLoader(false)
         // BearerToken(entries?.templateMemberLogin) 
@@ -82,9 +82,9 @@ export const postGraphQl = async (GET_POSTS_QUERY,varia,check,setLoader) => {
         ToastMessage({type:'success',message:"Apply Successfull"})
         }
         else{
-          if(entries?.status){
+          if(entries?.errors){
             setLoader(false)
-            ToastMessage({type:'error',message:"error"})
+            ToastMessage({type:'error',message:entries?.errors?.[0]?.message})
             // Redirect("/auth/login")
             // ToastMessage({type:'error',message:"Invalid email and password"})
           }
@@ -92,7 +92,7 @@ export const postGraphQl = async (GET_POSTS_QUERY,varia,check,setLoader) => {
     }
    
   } catch (error) {
-    throw error;
+    throw error ;
   }
 };
 

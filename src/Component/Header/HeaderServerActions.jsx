@@ -2,6 +2,10 @@
 
 import { RemoveToken } from "@/api/serverActions";
 import Link from "next/link";
+import ToastMessage from "../ToastMessage/ToastMessage";
+import { useEffect } from "react";
+import { fetchGraphQLDa } from "@/api/clientGraphicql";
+import { GET_POST_JOB_APPLY_LIST_QUERY } from "@/api/query";
 
 
 
@@ -10,7 +14,18 @@ export default function HeaderServerActions({tokenCheck}) {
 
 const Logout=()=>{
   RemoveToken()
+  ToastMessage({type:'success',message:"Logout Successfull"})
+  localStorage.removeItem("emailvalue")
 }
+// const applicantApi=async()=>{
+//   const profileData=await fetchGraphQLDa(GET_POST_JOB_APPLY_LIST_QUERY)
+// }
+// useEffect(()=>{
+//   if(tokenCheck){
+//     applicantApi()
+//   }
+  
+// },[])
   return (
     <>
     <header className="bg-white shadow-md shadow-black/860">

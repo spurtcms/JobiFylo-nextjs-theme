@@ -123,37 +123,38 @@ export const GET_POSTS_SIGN_QUERY = `mutation memberRegister($input: MemberDetai
     `
 
     export const GET_POST_JOB_APPLY_LIST_QUERY=`
-    query applicantDetails{
-      applicantDetails{
-        id
-        name
-        emailId
-        mobileNo
-        jobType
-        gender
-        location
-        education
-        graduation
-        companyName
-        experience
-        skills
-        imagePath
-        image
-        createdOn
-        createdBy
-        modifiedOn
-        modifiedBy
-        isDeleted
-        deletedOn
-        deletedBy
-        currentSalary
-        expectedSalary
-        status
-        resumePath
-        resumeName
-        storageType
+    query applicantDetails ($jobId: Int!
+      $emailId: String!){
+        applicantDetails(jobId:$jobId,emailId:$emailId){
+          id
+          name
+          emailId
+          mobileNo
+          jobType
+          gender
+          location
+          education
+          graduation
+          companyName
+          experience
+          skills
+          imagePath
+          image
+          createdOn
+          createdBy
+          modifiedOn
+          modifiedBy
+          isDeleted
+          deletedOn
+          deletedBy
+          currentSalary
+          expectedSalary
+          status
+          resumePath
+          resumeName
+          storageType
+        }
       }
-    }
     `
 
 

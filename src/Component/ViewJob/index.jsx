@@ -18,7 +18,6 @@ let varible={
 let ListData=await fetchGraphQLDa(GET_POST_LIST_QUERY,varible)
 
 const token=await Token()
-console.log(token,'e32qweqewqee')
   return (
   <>
         

@@ -2,6 +2,7 @@
 import { fetchGraphQLDa } from '@/api/clientGraphicql';
 import { postGraphQl } from '@/api/graphicql';
 import { GET_POST_JOB_APPLY_LIST_QUERY, GET_POST_JOB_APPLY_QUERY } from '@/api/query';
+import { imageurl } from '@/utilities/imageurl';
 import { EmailValidator } from '@/utilities/regexValidation'
 import Link from 'next/link'
 import React, { useEffect, useRef, useState } from 'react'
@@ -12,6 +13,7 @@ export default function ApplyJobServer({DetailData,params}) {
     const [trigger,setTrigger]=useState(0)
     const [resumeName,setResumeName]=useState('')
     const [loader,setLoader]=useState(false)
+    const [imagePath,setImagePath]=useState(true)
     const [myProfile,setMyProfile]=useState({
         name:"",
         email:"",
@@ -45,15 +47,19 @@ export default function ApplyJobServer({DetailData,params}) {
 // }
 
 
-
 const handleFetachData=async()=>{
-    const profileData=await fetchGraphQLDa(GET_POST_JOB_APPLY_LIST_QUERY)
+    
+    const variable={
+        "jobId":DetailData?.jobDetail?.id,
+        "emailId": localStorage.getItem("emailvalue")
+    }
+    const profileData=await fetchGraphQLDa(GET_POST_JOB_APPLY_LIST_QUERY,variable)
     if(profileData&&profileData?.applicantDetails){
         setMyProfile({
             name:profileData?.applicantDetails?.name,
             email:profileData?.applicantDetails?.emailId,
             phone:profileData?.applicantDetails?.mobileNo,
-            gender:{value:null,label:profileData?.applicantDetails?.gender&&profileData?.applicantDetails?.gender},
+            gender:{value:null,label:profileData?.applicantDetails?.gender?profileData?.applicantDetails?.gender:""},
             location:profileData?.applicantDetails?.location,
             qualification:profileData?.applicantDetails?.education,
             yearofGraduation:profileData?.applicantDetails?.graduation,
@@ -114,7 +120,7 @@ useEffect(()=>{
             }
             else if(name=="profileImage"){
                 if (files && files[0] && files[0].name.match(/\.(jpg|jpeg|png)$/)) {
-                      
+                      setImagePath(false)
                     //   const fsize = files[0].size;
                     //   const file = Math.round(fsize / 1024);       
                     //   if (file < 2048) {
@@ -187,7 +193,7 @@ useEffect(()=>{
                   "emailId": myProfile.email,
                   "mobileNo": myProfile.phone,
                   "gender": myProfile.gender.label?myProfile.gender.label:"",
-                  "jobId": 1,
+                  "jobId": DetailData?.jobDetail?.id,
                   "location": myProfile.location,
                   "education": myProfile.qualification,
                   "graduation": myProfile.yearofGraduation,
@@ -256,9 +262,9 @@ useEffect(()=>{
                     </div>
                     <div className="flex flex-col gap-6">
                         <div className="relative  rounded-full w-[120px] h-[120px]">
-                            <img src={`${myProfile.profileImage?myProfile.profileImage:"/img/profile.svg"}`} className='w-full h-full rounded-full' />
+                            <img src={`${myProfile.profileImage? imagePath?`${imageurl}${myProfile.profileImage}`:`${myProfile.profileImage}`:"/img/profile.svg"}`}  className='w-full h-full rounded-full' />
                             <input type="file" name="profileImage" className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer" 
-                            onChange={(e)=>hadleONchage(e)}/>
+                            onChange={(e)=>hadleONchage(e)} accept=".jpg, .jpeg, .png"/>
                             
                         </div>
                         {valid == 1 && myProfile.profileImage == "" && <p className='text-red-600'>profile image is required</p>}
@@ -284,7 +290,6 @@ useEffect(()=>{
                                 <option>Female</option>
                                 
                             </select> */}
-                            {console.log(myProfile?.gender,'myProfile323123')}
                             <div className='h-10 border border-gray-200 rounded  w-full focus-visible:outline-none bg-transparent text-sm leading-4 font-light placeholder:text-slate-300 appearance-none'>
                             <Select placeholder="Choose Gender"  className=' css-13cymwt-control'
                                 value={myProfile?.gender?.label!=""&&myProfile?.gender} options={dateFilterOption} onChange={(e)=>hadleONchage(e)}>
@@ -348,7 +353,7 @@ useEffect(()=>{
                         <div className="loader "></div> :
                             "Apply for Job"
                         }</button>
-                        <button className="w-auto p-4 h-11 bg-slate-50 text-black border border-gray-500 text-base font-normal rounded flex justify-center items-center">Cancel</button>
+                        <Link href={'/'} className="w-auto p-4 h-11 bg-slate-50 text-black border border-gray-500 text-base font-normal rounded flex justify-center items-center">Cancel</Link>
                     </div>
                 </div>
             </main>

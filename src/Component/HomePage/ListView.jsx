@@ -5,11 +5,10 @@ import moment from 'moment'
 
 export default function ListView({ListData}) {
 
-    console.log(ListData,'ListData')
   return (
    <>
     <div className="flex flex-col gap-6 mt-6 mb-10">
-        {ListData&&ListData?.map((data,index)=>(
+        {ListData.length>0?ListData?.map((data,index)=>(
                     <div className="border-gray-300 border rounded p-4 hover:shadow-lg" key={index}>
                             <span className="px-2.5 py-1 rounded-3xl bg-blue-100 text-black text-xs font-normal">{data?.category?.categoryName}</span>
                             <div className="mb-4 mt-2 flex justify-between items-start sm:items-center flex-col sm:flex-row gap-2">
@@ -38,7 +37,10 @@ export default function ListView({ListData}) {
                                 <Link href={`view-job/${data?.jobSlug}`} className="min-w-full sm:min-w-[352px] h-11 bg-blue-600 text-white text-base font-normal rounded flex justify-center items-center">View Job</Link>
                             </div>
                         </div>
-        ))}
+        )):
+        <>
+        <h1>No data</h1>
+        </>}
          
           </div>
    </>
