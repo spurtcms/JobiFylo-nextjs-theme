@@ -53,18 +53,19 @@ const handleFetachData=async()=>{
         "jobId":DetailData?.jobDetail?.id,
         "emailId": localStorage.getItem("emailvalue")
     }
+    
     const profileData=await fetchGraphQLDa(GET_POST_JOB_APPLY_LIST_QUERY,variable)
     if(profileData&&profileData?.applicantDetails){
         setMyProfile({
-            name:profileData?.applicantDetails?.name,
-            email:profileData?.applicantDetails?.emailId,
-            phone:profileData?.applicantDetails?.mobileNo,
+            name:profileData?.applicantDetails?.name ? profileData?.applicantDetails?.name : "",
+            email:profileData?.applicantDetails?.emailId ? profileData?.applicantDetails?.emailId : "",
+            phone:profileData?.applicantDetails?.mobileNo ? profileData?.applicantDetails?.mobileNo : "",
             gender:{value:null,label:profileData?.applicantDetails?.gender?profileData?.applicantDetails?.gender:""},
-            location:profileData?.applicantDetails?.location,
-            qualification:profileData?.applicantDetails?.education,
-            yearofGraduation:profileData?.applicantDetails?.graduation,
-            totalExperience:profileData?.applicantDetails?.experience,
-            skills:profileData?.applicantDetails?.skills,
+            location:profileData?.applicantDetails?.location ? profileData?.applicantDetails?.location : "",
+            qualification:profileData?.applicantDetails?.education ? profileData?.applicantDetails?.education : "",
+            yearofGraduation:profileData?.applicantDetails?.graduation ? profileData?.applicantDetails?.graduation : "",
+            totalExperience:profileData?.applicantDetails?.experience ? profileData?.applicantDetails?.experience : "",
+            skills:profileData?.applicantDetails?.skills ? profileData?.applicantDetails?.skills : "",
             profileImage:profileData?.applicantDetails?.imagePath,
             uploadResume:null
             })
@@ -183,6 +184,13 @@ useEffect(()=>{
         
     }, [myProfile.email])
     // handle submit
+
+    const handleJobId=()=>{
+   
+            localStorage.setItem("JobId",DetailData?.jobDetail?.id)  
+        
+         
+    }
     const handleSubmit = async() => {
         
 
@@ -209,7 +217,7 @@ useEffect(()=>{
         if (validationCheck()) {
             setLoader(true)
             setValid(0)
-           await postGraphQl(GET_POST_JOB_APPLY_QUERY, obj,"Apply-job",setLoader)
+           await postGraphQl(GET_POST_JOB_APPLY_QUERY, obj,"Apply-job",setLoader,"","",handleJobId)
             
             
         }
@@ -296,7 +304,7 @@ useEffect(()=>{
                                     
                                 </Select>
                                 </div>
-                                {valid == 1 && myProfile.gender?.label == "" && <p className='text-red-600'>Gender is required</p>}
+                                {valid == 1 && myProfile.gender?.label == "" && <p className='text-red-600'>gender is required</p>}
                             {/* <img src="/img/arrow.svg" className="absolute top-11 right-[18px]" /> */}
                         </div>
                         <div className="flex flex-col gap-1">

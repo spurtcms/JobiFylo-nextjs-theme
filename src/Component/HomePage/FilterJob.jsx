@@ -27,9 +27,11 @@ export default function FilterJob({pathname,setList}) {
       
       const CategorieApi=async()=>{
         let variable={
-          "hierarchylevel": 1
+          "hierarchylevel": 1,
+          "categoryGroupId": 15
         }
         let CategorieList=await fetchGraphQl(GET_POST_CATEGORIES_LIST,variable)
+
       
         setCatList(CategorieList?.categoriesList?.categories&&CategorieList?.categoriesList?.categories)
       }
@@ -77,7 +79,7 @@ export default function FilterJob({pathname,setList}) {
           setTrigger(true)
           
           let variable={
-            "limit":5,
+            "limit":10,
             "offset":0,
             "filter": {
               "jobTitle":"",
@@ -85,8 +87,8 @@ export default function FilterJob({pathname,setList}) {
               "categorySlug":jobName?.label,
               "keyWord": "",
               "datePosted": postDate?.label,
-              "minimumYears": filterExp?.[0]?.minDate,
-              "maximumYears": filterExp?.[0]?.maxDate
+              "minimumYears": filterExp?.[0]?.minDate
+              // "maximumYears": filterExp?.[0]?.maxDate
             }
           }
 
@@ -127,8 +129,8 @@ export default function FilterJob({pathname,setList}) {
               "categorySlug":"",
               "keyWord": "",
               "datePosted": postDate?.label,
-              "minimumYears": filterExp?.[0]?.minDate,
-              "maximumYears": filterExp?.[0]?.maxDate
+              "minimumYears": filterExp?.[0]?.minDate
+              // "maximumYears": filterExp?.[0]?.maxDate
             }
           }
           let filterListData=await fetchGraphQl (GET_POST_LIST_QUERY,variable)
@@ -149,8 +151,8 @@ export default function FilterJob({pathname,setList}) {
               "categorySlug":jobName?.label,
               "keyWord": "",
               "datePosted": postDate?.label,
-              "minimumYears": filterExp?.[0]?.minDate,
-              "maximumYears": filterExp?.[0]?.maxDate
+              "minimumYears": filterExp?.[0]?.minDate
+              // "maximumYears": filterExp?.[0]?.maxDate
             }
           }
           let filterListData=await fetchGraphQl (GET_POST_LIST_QUERY,variable)
@@ -191,8 +193,8 @@ export default function FilterJob({pathname,setList}) {
               "categorySlug":jobName?.label,
               "keyWord": "",
               "datePosted": "",
-              "minimumYears": filterExp?.[0]?.minDate,
-              "maximumYears": filterExp?.[0]?.maxDate
+              "minimumYears": filterExp?.[0]?.minDate
+              // "maximumYears": filterExp?.[0]?.maxDate
             }
           }
           let filterListData=await fetchGraphQl (GET_POST_LIST_QUERY,variable)
@@ -216,10 +218,11 @@ export default function FilterJob({pathname,setList}) {
 
     const ExpStatus=[
       // {id:0, name: "Experienced Level",apiName:""}, 
-      {id:1, name: "1-3 Years",minDate:1,maxDate:3},
-      {id:2, name: "3-5 Years",minDate:3,maxDate:5},
-      {id:3, name: "5-7 Years",minDate:5,maxDate:7},
-      {id:4, name: "7-10 Years",minDate:7,maxDate:10},
+      {id:1, name: "1 Years",minDate:1},
+      {id:2, name: "3 Years",minDate:3},
+      {id:3, name: "5 Years",minDate:5},
+      {id:4, name: "10 Years",minDate:10},
+      // {id:4, name: "10+ Years",minDate:10,maxDate:10},
       // {id:5, name: "10+ Years",minDate:10,maxDate:15}
       ]
 

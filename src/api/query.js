@@ -110,8 +110,8 @@ export const GET_POSTS_SIGN_QUERY = `mutation memberRegister($input: MemberDetai
       }
     }
     `
-    export const GET_POST_CATEGORIES_LIST= `query($hierarchylevel: Int!){
-      categoriesList(hierarchyLevel: $hierarchylevel){
+    export const GET_POST_CATEGORIES_LIST= `query($hierarchylevel: Int!,$categoryGroupId: Int){
+      categoriesList(hierarchyLevel: $hierarchylevel,categoryGroupId:$categoryGroupId){
         categories{
           id
           categoryName

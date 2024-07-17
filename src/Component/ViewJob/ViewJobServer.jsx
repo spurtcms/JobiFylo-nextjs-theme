@@ -37,8 +37,9 @@ let router=useRouter()
         }
         else{
             router.push('/auth/login')
-            localStorage.setItem('path',`/apply-job/${params}`)
-        }
+          
+            localStorage.setItem('path',`/apply-job/${params}`)}
+        
         
     }
   return (

@@ -29,7 +29,7 @@ export const fetchGraphQl = async (GET_POSTS_QUERY,varia) => {
 
 };
 
-export const postGraphQl = async (GET_POSTS_QUERY,varia,check,setLoader,pathname,setLoginEmail) => {
+export const postGraphQl = async (GET_POSTS_QUERY,varia,check,setLoader,pathname,setLoginEmail,handleJobId) => {
 
   try {
     const entries = await fetchGraphQl(GET_POSTS_QUERY,varia);
@@ -41,7 +41,7 @@ export const postGraphQl = async (GET_POSTS_QUERY,varia,check,setLoader,pathname
       }else{
         setLoader(false)
       }
-
+      ToastMessage({type:'success',message:"Register Successfull"})
     }
     if(check==="login"){
       
@@ -54,8 +54,6 @@ export const postGraphQl = async (GET_POSTS_QUERY,varia,check,setLoader,pathname
       }else{
         Redirect('/')
       }
-        
-   
       ToastMessage({type:'success',message:"Login Successfull"})
       }
       else{
@@ -76,9 +74,9 @@ export const postGraphQl = async (GET_POSTS_QUERY,varia,check,setLoader,pathname
         setLoader(false)
         // BearerToken(entries?.templateMemberLogin) 
         // setLoader(false)
-        
+        handleJobId()
           Redirect('/')
-     
+         
         ToastMessage({type:'success',message:"Apply Successfull"})
         }
         else{

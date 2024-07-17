@@ -14,8 +14,9 @@ export default function Login() {
 
 
 const setLoginEmail=()=>{
- localStorage.setItem('emailvalue',email)
-}
+   
+ localStorage.setItem('emailvalue',email)}
+
     
    
     const handleLogin=async()=>{
@@ -35,11 +36,12 @@ const setLoginEmail=()=>{
             
             setValidCheck(0)
             const inputdata={"email":email,"password":password,"Module": 2}
-            postGraphQl(GET_POSTS_LOGIN_QUERY,inputdata,"login",setLoader,pathname,setLoginEmail)
+            postGraphQl(GET_POSTS_LOGIN_QUERY,inputdata,"login",setLoader,pathname,setLoginEmail,"")
             
             }
+      
             localStorage.removeItem('path')
-            
+           
             
           }
           

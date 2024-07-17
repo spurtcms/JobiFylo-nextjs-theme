@@ -3,29 +3,52 @@
 import { RemoveToken } from "@/api/serverActions";
 import Link from "next/link";
 import ToastMessage from "../ToastMessage/ToastMessage";
-import { useEffect } from "react";
+import { use, useEffect, useState } from "react";
 import { fetchGraphQLDa } from "@/api/clientGraphicql";
 import { GET_POST_JOB_APPLY_LIST_QUERY } from "@/api/query";
+import { imageurl } from "@/utilities/imageurl";
 
 
 
 
 export default function HeaderServerActions({tokenCheck}) {
 
+  
+  const [updateId,setUpdateId]=useState("")
+  const [jobsId,setJobsId]=useState(updateId)
+  const [profileData,setProfileData]=useState("")
+useEffect(()=>{
+  let data=""
+  if(typeof window != 'undefined'){
+    data=localStorage.getItem("JobId")
+  }
+  setUpdateId(data)
+},[jobsId])
+
 const Logout=()=>{
   RemoveToken()
   ToastMessage({type:'success',message:"Logout Successfull"})
+
   localStorage.removeItem("emailvalue")
+  localStorage.removeItem("JobId")
+  setJobsId("")
 }
-// const applicantApi=async()=>{
-//   const profileData=await fetchGraphQLDa(GET_POST_JOB_APPLY_LIST_QUERY)
-// }
-// useEffect(()=>{
-//   if(tokenCheck){
-//     applicantApi()
-//   }
+const applicantApi=async()=>{
+  const variable={
+    "jobId":jobsId,
+    "emailId": localStorage.getItem("emailvalue")
+}
+const profileData=await fetchGraphQLDa(GET_POST_JOB_APPLY_LIST_QUERY,variable)
+setProfileData(profileData?.applicantDetails?.imagePath)
+}
+useEffect(()=>{
+  if(tokenCheck){
+    applicantApi()
+  }
   
-// },[])
+},[jobsId])
+
+
   return (
     <>
     <header className="bg-white shadow-md shadow-black/860">
@@ -35,7 +58,7 @@ const Logout=()=>{
                 >
                     <Link href="/"><img src="/img/job-theme-logo.svg" /></Link>
                     <div className="flex gap-2 items-center text-gray-500 text-sm font-light">
-                        <img src="/img/login-user.svg" />
+                        <img className="w-6 h-6 rounded-full" src={profileData?`${imageurl}${profileData}`:`/img/login-user.svg`} />
                         {tokenCheck?<span className="cursor-pointer" onClick={Logout}>Logout</span>:<span><Link href="/auth/login">Login\</Link><Link href="/auth/sign-up">Register</Link></span>}
                        
                     </div>
