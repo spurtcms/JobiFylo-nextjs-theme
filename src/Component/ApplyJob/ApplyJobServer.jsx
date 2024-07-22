@@ -51,7 +51,7 @@ const handleFetachData=async()=>{
     
     const variable={
         "jobId":DetailData?.jobDetail?.id,
-        "emailId": localStorage.getItem("emailvalue")
+        "emailId":typeof window!= 'undefined' ? localStorage.getItem("emailvalue"):""
     }
     
     const profileData=await fetchGraphQLDa(GET_POST_JOB_APPLY_LIST_QUERY,variable)

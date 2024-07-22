@@ -21,7 +21,7 @@ const setLoginEmail=()=>{
    
     const handleLogin=async()=>{
 
-        const pathname=localStorage.getItem('path')
+        const pathname=typeof window!= 'undefined' ? localStorage.getItem('path'):""
 
    
         setValidCheck(1)

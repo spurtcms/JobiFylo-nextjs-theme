@@ -13,17 +13,14 @@ import { imageurl } from "@/utilities/imageurl";
 
 export default function HeaderServerActions({tokenCheck}) {
 
-  
-  const [updateId,setUpdateId]=useState("")
-  const [jobsId,setJobsId]=useState(updateId)
+  const [jobsId,setJobsId]=useState(typeof window!= 'undefined'?localStorage.getItem("JobId"):"")
   const [profileData,setProfileData]=useState("")
-useEffect(()=>{
-  let data=""
-  if(typeof window != 'undefined'){
-    data=localStorage.getItem("JobId")
-  }
-  setUpdateId(data)
-},[jobsId])
+  useEffect(()=>{
+    if (typeof window!= 'undefined'){
+      if(localStorage.getItem("JobId")){
+    setJobsId(localStorage.getItem("JobId"))
+  }}
+},[typeof window!= 'undefined'&&localStorage.getItem("JobId")])
 
 const Logout=()=>{
   RemoveToken()
@@ -36,7 +33,7 @@ const Logout=()=>{
 const applicantApi=async()=>{
   const variable={
     "jobId":jobsId,
-    "emailId": localStorage.getItem("emailvalue")
+    "emailId":typeof window!= 'undefined'? localStorage.getItem("emailvalue"):""
 }
 const profileData=await fetchGraphQLDa(GET_POST_JOB_APPLY_LIST_QUERY,variable)
 setProfileData(profileData?.applicantDetails?.imagePath)
@@ -47,7 +44,6 @@ useEffect(()=>{
   }
   
 },[jobsId])
-
 
   return (
     <>

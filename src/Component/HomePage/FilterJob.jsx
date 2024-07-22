@@ -27,12 +27,11 @@ export default function FilterJob({pathname,setList}) {
       
       const CategorieApi=async()=>{
         let variable={
-          "hierarchylevel": 1,
+          "hierarchylevel": 1,  
           "categoryGroupId": 15
         }
         let CategorieList=await fetchGraphQl(GET_POST_CATEGORIES_LIST,variable)
 
-      
         setCatList(CategorieList?.categoriesList?.categories&&CategorieList?.categoriesList?.categories)
       }
       useEffect(()=>{
