@@ -6,7 +6,7 @@ A comprehensive job portal theme, equipped with a structured layout to display j
 
 This Jobs Template provides a clean, responsive layout for displaying job listings on a website.  The template is designed to be easily customizable and user-friendly and an excellent starting point for exploring Next.js and SpurtCMS, offering a seamless way to integrate dynamic news content with modern web technologies.
 
-The Studio connects to spurtcms, which gives you hosted content APIs with a flexible query language, on-demand image transformations, powerful patching, and more. 
+The Studio connects to [spurtcms](https://spurtcms.com), which gives you hosted content APIs with a flexible query language, on-demand image transformations, powerful patching, and more. 
 
 ## Features
 
