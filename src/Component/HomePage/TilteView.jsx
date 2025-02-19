@@ -7,7 +7,7 @@ export default function TilteView({ListData}) {
 
   return (
     <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 grid-cols-1 mt-6 mb-10" >
-            {ListData?.length>0?ListData.map((data,index)=>(
+            {/* {ListData?.length>0?ListData.map((data,index)=>(
             <div className="border-gray-300 border rounded p-4 hover:shadow-lg" key={index}>
               <span className="px-2.5 py-1 rounded-3xl bg-blue-100 text-black text-xs font-normal">{data?.category?.categoryName}</span>
               <Link href={`/view-job/${data?.jobSlug}`} className="block text-black text-2xl leading-8 font-normal my-2">{data?.jobTitle}</Link>
@@ -30,21 +30,21 @@ export default function TilteView({ListData}) {
               <Link href={`/view-job/${data?.jobSlug}`} className="w-full h-11 bg-blue-600 text-white text-base font-normal rounded flex justify-center items-center">View Job</Link>
             </div>
             )):
-            <>
-            <div className=" px-5 lg:px-20  py-32 col-span-full grid place-items-center">
+            <> */}
+            {/* <div className=" px-5 lg:px-20  py-32 col-span-full grid place-items-center">
                 <div className="flex flex-col items-center max-w-[408px] ">
-                    {/* <img src="\img\noData.svg" alt="nodata" className="dark:hidden" /> */}
+                    <img src="\img\noData.svg" alt="nodata" className="dark:hidden" />
                     <img
                         src="/img/nodatafilter.svg"
                         alt="nodata"
                     />
                     <h1 className=" text-2xl leading-6 font-medium text-black  mb-3 mt-6 text-center dark:dark:text-light-1">
-                        {/* {search ? "No matching search results" : "No Listing Yet !"} */}
+                        {search ? "No matching search results" : "No Listing Yet !"}
                         No Listing Yet !
                     </h1>
                 </div>
-            </div>
-            </>}
+            </div> */}
+            {/* </>} */}
 
           </div>
   )

@@ -4,6 +4,7 @@ import "./globals.css";
 import NextTopLoader from "nextjs-toploader";
 import { Flip, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import CustomProviders from "@/StoreConfiguration/CustomProviders";
 
 export const metadata = {
   title: "Create Next App",
@@ -45,7 +46,8 @@ export default function RootLayout({ children }) {
           speed={200}
           shadow="0 0 10px #2299DD,0 0 5px #2299DD"/>
         <Header />
-          {children}
+        <CustomProviders> {children}</CustomProviders>
+        
           </main>
         </body>
     </html>

@@ -9,12 +9,12 @@ import ToastMessage from "@/Component/ToastMessage/ToastMessage";
 export const apiinstance=async(url,options)=>{
     const headers = {
         'Content-Type': 'application/json',
-        // "ApiKey":process.env.NEXT_PUBLIC_SPURTCMS_NEXTJS_STARTER_APIKEY
+        "ApiKey":process.env.NEXT_PUBLIC_SPURTCMS_NEXTJS_STARTER_DEFAULT_APIKEY
       }
       const token = await Token();
     
       if (token==""||token==undefined) {
-        headers['Authorization']=process.env.NEXT_PUBLIC_SPURTCMS_TOKEN
+        headers['Authorization']=process.env.NEXT_PUBLIC_SPURTCMS_NEXTJS_STARTER_THEME_TOKEN
         
       }
       else{
@@ -27,55 +27,64 @@ export const apiinstance=async(url,options)=>{
         ...options,
       }
     
-      if (config.method === 'GET') {
+      if (config.method == 'GET') {
         delete config.body
       } else {
         config.body = config.body
       }
 
-        const res = await fetch(`${process.env.NEXT_PUBLIC_SPURTCMS_BASEURL}${url}`,config);
-        if(res.ok){
-            return await res.json();
-        }else{
+        // const res = await fetch(`${process.env.NEXT_PUBLIC_SPURTCMS_NEXTJS_STARTER_THEME_BASEURL}${url}`,config);
+        try {
+          const res = await fetch(`${process.env.NEXT_PUBLIC_SPURTCMS_NEXTJS_STARTER_THEME_BASEURL}${url}`, config);
+          const data = await res.json()
+          return data
+        } catch (error) {
+          console.log(error)
+       
+       
+//         if(res.ok){
+//             return await res.json();
+//         }else{
          
-          switch(res.status){
+//           switch(res.status){
            
-        case 400:
-          handleBadRequest(res);
-        break;
+//         case 400:
+//           handleBadRequest(res);
+//         break;
 
-        case 401:
-          handleUnauthorized(res)
-          break;
+//         case 401:
+//           handleUnauthorized(res)
+//           break;
 
-        case 403:
-          handleForbidden(res);
-          break;
+//         case 403:
+//           handleForbidden(res);
+//           break;
 
-        case 404:
-          handleNotFound(res);
-          break;
+//         case 404:
+//           handleNotFound(res);
+//           break;
 
-        case 422:
-          handleUnProcessableEntry(res);
-          break;
+//         case 422:
+//           handleUnProcessableEntry(res);
+//           break;
 
-        case 500:
-          handleServerError(res);
-          break;
-        case 409:
-          handleErrorMessages(res);
-          break;
-        case 0:
-          handleServerError502(res);
-          break;
-        default:
-          break;
-          }
+//         case 500:
+//           handleServerError(res);
+//           break;
+//         case 409:
+//           handleErrorMessages(res);
+//           break;
+//         case 0:
+//           handleServerError502(res);
+//           break;
+//         default:
+//           break;
+//           }
 
-          return res
-        }
+//           return res
+//         }
      
+}
 }
 const handleBadRequest=async(res)=>{
 
