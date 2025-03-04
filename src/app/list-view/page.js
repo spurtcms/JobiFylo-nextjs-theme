@@ -8,8 +8,8 @@ export default function page() {
     
     return (
         <>
-        <HomeHeader/>
-        <FilterJob/>
+        {/* <HomeHeader/> */}
+        {/* <FilterJob/> */}
        <ListView/>
         </>
     )

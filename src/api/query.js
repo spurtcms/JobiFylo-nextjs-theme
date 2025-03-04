@@ -224,43 +224,41 @@ $AdditionalData: EntriesAdditionalData
   }
 } `
 
-
-
-    // export const GET_POST_DETAIL_QUERY=`query($jobSlug: String){
-    //   jobDetail(jobSlug:$jobSlug){
-    //     id
-    //   categoriesId
-    //   category{
-    //     id
-    //     categoryName
-    //     categorySlug
-    //   }
-    //   jobTitle
-    //   jobDescription
-    //   jobLocation
-    //   jobType
-    //   education
-    //   department
-    //   experience
-    //   salary
-    //   createdOn
-    //   createdBy
-    //   isDeleted
-    //   deletedOn
-    //   deletedBy
-    //   keyword
-    //   skill
-    //   minimumYears
-    //   maximumYears
-    //   postedDate
-    //   validThrough
-    //   status
-    //   modifiedOn
-    //   modifiedBy
+    export const GET_POST_DETAIL_QUERY=`query($jobSlug: String){
+      jobDetail(jobSlug:$jobSlug){
+        id
+      categoriesId
+      category{
+        id
+        categoryName
+        categorySlug
+      }
+      jobTitle
+      jobDescription
+      jobLocation
+      jobType
+      education
+      department
+      experience
+      salary
+      createdOn
+      createdBy
+      isDeleted
+      deletedOn
+      deletedBy
+      keyword
+      skill
+      minimumYears
+      maximumYears
+      postedDate
+      validThrough
+      status
+      modifiedOn
+      modifiedBy
         
-    //   }
-    // }
-    // `
+      }
+    }
+    `
     export const GET_POST_CATEGORIES_LIST= `query($hierarchylevel: Int!,$categoryGroupId: Int){
       categoriesList(hierarchyLevel: $hierarchylevel,categoryGroupId:$categoryGroupId){
         categories{
@@ -272,6 +270,22 @@ $AdditionalData: EntriesAdditionalData
       }
     }
     `
+export const GET_POST_CATEGORY_NAME=`query
+  CategoryList(
+$categoryFilter: CategoryFilter
+$commonFilter: Filter
+  ){
+    CategoryList(categoryFilter:$categoryFilter,
+      commonFilter:$commonFilter){
+        categorylist{
+          id
+          categoryName
+          categorySlug
+          description
+          tenantId
+        }
+      }
+    }`
 
     export const GET_POST_JOB_APPLY_LIST_QUERY=`
     query applicantDetails ($jobId: Int!

@@ -6,34 +6,48 @@ import ViewJobsSkeleton from '@/utilities/Skeleton/ViewJobsSkeleton';
 import { usePathname, useRouter } from 'next/navigation';
 import { useSelector } from 'react-redux';
 import DOMPurify from 'dompurify';
-export default function ViewJobServer({ ListData, token, params,relatedCardList }) {
-    const [relatedList,setRelatedList]=useState("")
+import { fetchGraphQLDa } from '@/api/clientGraphicql';
+import { GET_VIEW_DETAIL_QUERY } from '@/api/query';
+import { fetchGraphQl } from '@/api/graphicql';
+export default  function ViewJobServer({ ListData, token, params,RelatedPageApi,viewJobApi }) {
+    const [relatedList,setRelatedList]=useState([])
     const [categorySlug,setCategorySlug]=useState("");
-    
-    
+    const Category=useSelector((s)=>s?.customerRedux?.Category_Slug_Data)
+  
     const DetailData = useSelector((s) => s?.customerRedux?.Entry_Detail_api_Data_redux);
     console.log(DetailData, "jdvfjkhf")
-    let cardParams = {
-        "entryFilter": {
-            "Status": "published",
-            "categorySlug": categorySlug
-        },
-        // "AdditionalData": {
-            //     "categories": true
-            // },
-            
-            // "AdditionalData": {
-                //     "additionalFields": true
-                
-                // }
-            }
-            
+  
+
+console.log(viewJobApi?.ChannelEntryDetail?.categories?.[0]?.[0]?.categorySlug,"viewJobApi")
+const transformData = (apiResponse) => {
+    return apiResponse?.ChannelEntriesList?.channelEntriesList?.map((entry) => {
+      console.log(entry,"vfdkvfd")
+      let transformedEntry = {
+        id: entry.id,
+        title: entry.title,
+        coverImage: entry.coverImage || "",
+        channelId: entry.channelId,
+        slug: entry.slug,
+      };
+      entry.additionalFields.fields.forEach((field) => {
+        const key = field.fieldName
+          .toLowerCase()
+          .replace(/\s+/g, "");
+        transformedEntry[key] = field.fieldValue?.fieldValue || "";
+      });
+      
+      console.log(transformedEntry,"dfbdf")
+      return transformedEntry;
+    });
+  };
+console.log(RelatedPageApi,"cnsjdcfbdhf")
+console.log(viewJobApi,"vdbvbsdfs")
+     
+useEffect(()=>{
+    setRelatedList(transformData(RelatedPageApi))
+},[])
+         console.log(relatedList,"jbdfvbhj")   
     
-
-    
-   
-
-
 
     const sanitizeHTML = (html) => {
         const sanitized = DOMPurify.sanitize(html, {
@@ -47,6 +61,8 @@ export default function ViewJobServer({ ListData, token, params,relatedCardList 
             .replace(/<h1[^>]*>.*?<\/h1>/, "") // Remove the first <h1> tag and its content
             .replace(/<img[^>]*>/, ""); // Remove the first <img> tag, regardless of where it is
     };
+
+    
 
     return (
         <>
@@ -94,33 +110,44 @@ export default function ViewJobServer({ ListData, token, params,relatedCardList 
                     </div>
                 </div>
                 <div>
-                    <div className="flex justify-between items-center mb-6">
-                        <h2 className="text-2xl font-medium leading-[30px]  text-black">Related Jobs</h2>
-                        <Link href="javascript:void(0)" className="flex items-center gap-2 text-xs font-light text-blue-600"> View All <img src="/img/right-arrow.svg" /> </Link>
-                    </div>
-                    <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 grid-cols-1 mt-6 mb-10">
-                        <div className="border-gray-300 border rounded p-4 hover:shadow-lg">
-                            <span className="px-2.5 py-1 rounded-3xl bg-blue-100 text-black text-xs font-normal">{DetailData?.keyresponsibilities}</span>
-                            <Link href="javascript:void(0)" className="block text-black text-2xl leading-8 font-normal my-2">{DetailData?.title}</Link>
-                            <p className="text-sm font-light leading-4 text-blue-600 mb-4">Job code: <span className="text-gray-500">{DetailData?.jobcode}</span></p>
-                            <div className="flex flex-col gap-4 mb-6">
-                                <div className="flex items-center gap-2">
-                                    <img src="/img/exp.svg" />
-                                    <p className="text-sm font-normal leading-4 text-blue-600 ">Experience: {DetailData?.experiance}</p>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                    <img src="/img/Time.svg" />
-                                    <p className="text-sm font-normal leading-4 text-blue-600 ">Job Type: {DetailData?.jobtype} </p>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                    <img src="/img/job-type.svg" />
-                                    <p className="text-sm font-normal leading-4 text-blue-600 ">Location: {DetailData?.location} </p>
-                                </div>
-                            </div>
-                            <h5 className="text-gray-500 text-xs font-light mb-4">Posted Date: {DetailData?.posteddate}</h5>
-                            <Link href="viewJob" className="w-full h-11 bg-blue-600 text-white text-base font-normal rounded flex justify-center items-center">View Job</Link>
+                <div className="flex justify-between items-center mb-6">
+                            <h2 className="text-2xl font-medium leading-[30px]  text-black">Related Jobs</h2>
+                            <Link href="#" className="flex items-center gap-2 text-xs font-light text-blue-600"> View All <img src="/img/right-arrow.svg" /> </Link>
                         </div>
-                    </div>
+                  
+                            
+                        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 grid-cols-1 mt-6 mb-10" >
+      {
+          relatedList?.map((data,index)=>(
+            <div className="border-gray-300 border rounded p-4 hover:shadow-lg" key={index}>
+            <span className="px-2.5 py-1 rounded-3xl bg-blue-100 text-black text-xs font-normal">{data?.keyresponsibilities}</span>
+            <Link href="#" className="block text-black text-2xl leading-8 font-normal my-2">{data?.title}</Link>
+            <p className="text-sm font-light leading-4 text-blue-600 mb-4">Job code: <span className="text-gray-500">{data?.jobcode}</span></p>
+            <div className="flex flex-col gap-4 mb-6">
+                <div className="flex items-center gap-2">
+                    <img src="/img/exp.svg" />
+                    <p className="text-sm font-normal leading-4 text-blue-600 ">Experience: {data?.experiance}</p>
+                </div>
+                <div className="flex items-center gap-2">
+                    <img src="/img/Time.svg" />
+                    <p className="text-sm font-normal leading-4 text-blue-600 ">Job Type: {data?.jobtype} </p>
+                </div>
+                <div className="flex items-center gap-2">
+                    <img src="/img/job-type.svg" />
+                    <p className="text-sm font-normal leading-4 text-blue-600 ">Location: {data?.location} </p>
+                </div>
+            </div>
+            <h5 className="text-gray-500 text-xs font-light mb-4">Posted Date: {data?.posteddate}</h5>
+            <Link href="viewJob" className="w-full h-11 bg-blue-600 text-white text-base font-normal rounded flex justify-center items-center">View Job</Link>
+        </div>
+        ))
+    }
+    </div>
+                               
+
+                   
+
+                  
                 </div>
             </main>
         </>

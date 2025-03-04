@@ -10,6 +10,8 @@ const initialState = {
     Header_logo_api_result_redux:"",
     Entry_Detail_api_Data_redux:"",
     search_Keyword_List:"",
+    Category_Slug_Data:"",
+    Entry_List_Api_Data:[],
 };
 
 
@@ -44,10 +46,16 @@ export const customerSlice = createSlice({
             state.search_Keyword_List=action.payload;
         },
 
+        Category_Slug_Data:(state,action)=>{
+            state.Category_Slug_Data=action.payload;
+        },
+        Entry_List_Api_Data:(state,action)=>{
+            state.Entry_List_Api_Data=action.payload
+        }
     },
 });
 
 
-export const { addCount, EntryList_Redux_function, header_slug_Reduc_function ,Header_keyword_redux_function,Header_logo_api_result_redux_function , Header_api_result_redux_function,Entry_Detail_api_Data_redux,search_Keyword_List} = customerSlice.actions;
+export const { addCount, EntryList_Redux_function, header_slug_Reduc_function ,Header_keyword_redux_function,Header_logo_api_result_redux_function , Header_api_result_redux_function,Entry_Detail_api_Data_redux,search_Keyword_List,Category_Slug_Data,Entry_List_Api_Data} = customerSlice.actions;
 
 export default customerSlice.reducer;
