@@ -95,14 +95,16 @@ export default function FilterJob({ pathname, setList }) {
   }
 
   console.log(ExpStatus, "jdfhjfdf")
+
   const handleExpYear = (e) => {
     console.log(e, "xvddfvfd")
-  
-      setExpYear(e?.label)
-      // setExpLevel(e?.label)
-      // console.log(ExpStatus?.filter((data)=>data?.experiance==experiance?.name),"dbsdbsds")
-      // handleFilter()
-    
+
+    setExpYear(e)
+
+    // setExpLevel(e?.label)
+    // console.log(ExpStatus?.filter((data)=>data?.experiance==experiance?.name),"dbsdbsds")
+    // handleFilter()
+
   }
   const handleMonth = (e) => {
     if (e != "datePosted") {
@@ -114,7 +116,7 @@ export default function FilterJob({ pathname, setList }) {
 
 
   const handleFilter = async () => {
-    let filterExp = ExpStatus?.filter((data) => data?.experiance == experiance?.name)
+    let filterExp = ExpStatus?.filter((data) => data?.experiance == experiance?.key)
     setInputData(location)
     setInputJob(jobName?.label)
     setInputExp(expYear?.label)
@@ -125,55 +127,24 @@ export default function FilterJob({ pathname, setList }) {
       },
       commonFilter: {
         location: location,
-        Experience: expYear,
-        posteddate: postDate
+        Experience: expYear?.value,
+        posteddate: postDate?.label
       },
       AdditionalData: {
         additionalFields: true,
         categories: true
       },
     };
-    if (variable_list) {
+    if (jobName || location || expYear || postDate !== "") {
       const res = await fetchGraphQl(GET_JOB_LIST_QUERY, variable_list);
-      // setSearchKeyword(res?.ChannelEntriesList?.channelEntriesList); // Update state with fetched data
       setList(transformData(res))
-      console.log(transformData(res), "ndbcsn")
-      // setPostDate(reduxData?.posteddate);
-      // setExpYear(filterExp)
-      console.log(res, "cbjdchsb")
+      setJobName("");
+      setLocation("");
+      setExpYear("");
+      setPostDate("");
     }
-    //         setInputData(location)
-    //         setInputJob(jobName?.label)
-    //         setInputExp(expYear?.label)
-    //         setInputDate(postDate?.label)
-    //         let filterExp=ExpStatus.filter((data)=>data?.id==expYear.value)
-    //         if(jobName!=""||location!=""||expYear!=""||postDate!=""){
-    //           setTrigger(true)
-
-    //           let variable={
-    //             "limit":10,
-    //             "offset":0,
-    //             "filter": {
-    //               "jobTitle":"",
-    //               "jobLocation":location,
-    //               "categorySlug":jobName?.label,
-    //               "keyWord": "",
-    //               "datePosted": postDate?.label,
-    //               "minimumYears": filterExp?.[0]?.minDate
-    //               // "maximumYears": filterExp?.[0]?.maxDate
-    //             }
-    //           }
-    // if(variable){
-    //   let filterListData=await fetchGraphQl (GET_POST_LIST_QUERY,variable)
-    //   setList(filterListData?.jobsList?.jobs)
-    // }       
-    //         }
   }
-  useEffect(() => {
-    if (jobName && location) {
-      handleFilter()
-    }
-  }, [jobName, location])
+
 
   // useEffect(()=>{
   //   if(location){
@@ -323,21 +294,22 @@ export default function FilterJob({ pathname, setList }) {
   }))
   console.log(expOption, "jvhfbdvhfbf")
   const expOptions = [
-    { id: 1, name: "0-1 Years" },
-    { id: 2, name: "1-2 Years" },
-    { id: 3, name: "2-3 Years" },
-    { id: 4, name: "3-4 Years" },
-    { id: 5, name: "4-5 Years" },
-    { id: 6, name: "5-6 Years" },
-    { id: 7, name: "6-7 Years" },
-    { id: 8, name: "7-8 Years" },
-    { id: 9, name: "8-9 Years" },
-    { id: 10, name: "9-10 Years" }
+    { id: 1, name: "0-1 Years", key: "0-1" },
+    { id: 2, name: "1-2 Years", key: "1-2" },
+    { id: 3, name: "2-3 Years", key: "2-3" },
+    { id: 4, name: "3-4 Years", key: "3-4" },
+    { id: 5, name: "4-5 Years", key: "4-5" },
+    { id: 6, name: "5-6 Years", key: "5-6" },
+    { id: 7, name: "6-7 Years", key: "6-7" },
+    { id: 8, name: "7-8 Years", key: "7-8" },
+    { id: 9, name: "8-9 Years", key: "8-9" },
+    { id: 10, name: "9-10 Years", key: "9-10" }
   ]
   const experiance = expOptions?.map((data) => (
     {
-      value: data?.id,
+      value: data?.key,
       label: data?.name
+
     }
   ))
   const postedD = [
