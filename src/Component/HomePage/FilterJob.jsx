@@ -13,9 +13,9 @@ export default function FilterJob({ pathname, setList }) {
   const [jobName, setJobName] = useState("")
   const [location, setLocation] = useState("")
   const [expLevel, setExpLevel] = useState("");
-  const [expYear, setExpYear] = useState()
+  const [expYear, setExpYear] = useState("")
   const [expOption, setExpOption] = useState([])
-  const [postDate, setPostDate] = useState()
+  const [postDate, setPostDate] = useState("")
   const [inputJob, setInputJob] = useState()
   const [inputData, setInputData] = useState()
   const [inputExp, setInputExp] = useState()
@@ -135,7 +135,7 @@ export default function FilterJob({ pathname, setList }) {
         categories: true
       },
     };
-    if (jobName || location || expYear || postDate !== "") {
+    if (jobName !== "" || location !== "" || expYear !== "" || postDate !== "") {
       const res = await fetchGraphQl(GET_JOB_LIST_QUERY, variable_list);
       setList(transformData(res))
       setJobName("");
@@ -146,11 +146,11 @@ export default function FilterJob({ pathname, setList }) {
   }
 
 
-  // useEffect(()=>{
-  //   if(location){
-  //    handleFilter()
+  // useEffect(() => {
+  //   if (location, jobName, expYear, postDate) {
+  //     handleFilter()
   //   }
-  // },[])
+  // }, [location, jobName, expYear, postDate])
   const categoryFun = async () => {
 
     let variable_category = {

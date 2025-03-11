@@ -1,40 +1,26 @@
 
-export const GET_POSTS_SIGN_QUERY = `mutation memberRegister($input: MemberDetails!
+export const GET_POSTS_SIGN_QUERY = `mutation 
+memberRegister($input: MemberDetails!
   $ecomModule: Int){
     memberRegister(input:$input,ecomModule:$ecomModule)
   }
     `;
+export const GET_REGISTER_QUERY = `mutation
+    memberRegister(
+  $input: MemberDetails!
+  $arguments: MemberArguments
+    ){
+      memberRegister(input:$input,
+      arguments:$arguments)
+    }`;
 
 
 
-  export const GET_POSTS_LOGIN_QUERY =`
-  mutation templateMemberlogin($username: String, $email: String, 
+export const GET_POSTS_LOGIN_QUERY = `mutation 
+  templateMemberlogin($username: String, $email: String, 
     $password: String!,$Module: Int) 
     {
-    templateMemberLogin(username: $username, email: $email, 
-      password: $password,Module:$Module)
-  }`
-
- 
- 
-  // mutation($email:String!,$password:String!){
-  //   templateMemberLogin(
-  //     email:$email
-  //     password:$password
-  //   )
-  // }
-
-
-  export const GET_POST_JOB_APPLY_QUERY=`mutation jobApplication($applicationDetails: applicationInput!)
-  {
-    jobApplication(applicationDetails: $applicationDetails)
-  }`
-
-  export const GET_POST_LIST_QUERY=`query(
-    $limit: Int!,
-    $offset: Int!,
-    $filter: JobFilter
-    )
+    templateMemberLogin(usern{console.log(audio_files_Array?.[0]?.coverImage, "cbjjjjjbffb")}
     {
      jobsList(limit:$limit,offset:$offset,filter:$filter){
     jobs{
@@ -73,7 +59,7 @@ export const GET_POSTS_SIGN_QUERY = `mutation memberRegister($input: MemberDetai
     }
     }`
 
-export const GET_VIEW_DETAIL_QUERY=`query ChannelEntryDetail(
+export const GET_VIEW_DETAIL_QUERY = `query ChannelEntryDetail(
 $id: Int
 $slug: String
 $AdditionalData: EntriesAdditionalData
@@ -224,7 +210,7 @@ $AdditionalData: EntriesAdditionalData
   }
 } `
 
-    export const GET_POST_DETAIL_QUERY=`query($jobSlug: String){
+export const GET_POST_DETAIL_QUERY = `query($jobSlug: String){
       jobDetail(jobSlug:$jobSlug){
         id
       categoriesId
@@ -259,7 +245,7 @@ $AdditionalData: EntriesAdditionalData
       }
     }
     `
-    export const GET_POST_CATEGORIES_LIST= `query($hierarchylevel: Int!,$categoryGroupId: Int){
+export const GET_POST_CATEGORIES_LIST = `query($hierarchylevel: Int!,$categoryGroupId: Int){
       categoriesList(hierarchyLevel: $hierarchylevel,categoryGroupId:$categoryGroupId){
         categories{
           id
@@ -270,7 +256,7 @@ $AdditionalData: EntriesAdditionalData
       }
     }
     `
-export const GET_POST_CATEGORY_NAME=`query
+export const GET_POST_CATEGORY_NAME = `query
   CategoryList(
 $categoryFilter: CategoryFilter
 $commonFilter: Filter
@@ -287,7 +273,7 @@ $commonFilter: Filter
       }
     }`
 
-    export const GET_POST_JOB_APPLY_LIST_QUERY=`
+export const GET_POST_JOB_APPLY_LIST_QUERY = `
     query applicantDetails ($jobId: Int!
       $emailId: String!){
         applicantDetails(jobId:$jobId,emailId:$emailId){
@@ -322,7 +308,7 @@ $commonFilter: Filter
       }
     `
 
-  export  const  GET_JOB_LIST_QUERY=`query
+export const GET_JOB_LIST_QUERY = `query
   ChannelEntriesList(
 $commonFilter: Filter
 $sort: Sort
@@ -338,6 +324,7 @@ $AdditionalData: EntriesAdditionalData
         id
         title
         slug
+        tenantId
         description
         userId
         channelId
@@ -420,3 +407,28 @@ $AdditionalData: EntriesAdditionalData
     }
   }`
 
+export const GET_SIGNIN_QUERY = `mutation
+  memberCheckLogin($input: MemberSignin!){
+    memberCheckLogin(input:$input){
+      email
+      password
+      message
+      token
+      success
+    }
+  }
+`;
+
+export const GET_HEADER_FORGOT_PASSWORD_QUERY = `mutation 
+forgotPassword($input: MemberInfo!){
+  forgotPassword(input:$input){
+    message
+  }
+}`;
+
+
+export const GET_RESET_NEW_PASSWORD = `mutation 
+resetPassword($input: MemberResetpassInfo!){
+  resetPassword(input:$input)
+}
+`

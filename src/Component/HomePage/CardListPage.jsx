@@ -155,9 +155,9 @@ export default function CardListViewPage({ params, List }) {
                                     <>
                                         {
                                             cardData && cardData?.map((data, index) => (
-                                                <div className="border-gray-300 border rounded p-4 hover:shadow-lg" key={index}>
+                                                <div className="border-gray-300 border rounded p-4 hover:shadow-lg flex flex-col" key={index}>
                                                     {/* {console.log( data?.additionalFields?.fields,"nckdsjfcnskjw")} */}
-                                                    <span className="px-2.5 py-1 rounded-3xl bg-blue-100 text-black text-xs font-normal">{data?.keyresponsibilities}</span>
+                                                    <span className="px-2.5 py-1 rounded-3xl bg-blue-100 text-black text-xs font-normal w-fit">{data?.keyresponsibilities}</span>
                                                     <Link href="#" className="block text-black text-2xl leading-8 font-normal my-2">{data?.title}</Link>
                                                     <p className="text-sm font-light leading-4 text-blue-600 mb-4">Job code: <span className="text-gray-500">{data?.jobcode}</span></p>
                                                     <div className="flex flex-col gap-4 mb-6">
@@ -175,7 +175,7 @@ export default function CardListViewPage({ params, List }) {
                                                         </div>
                                                     </div>
                                                     <h5 className="text-gray-500 text-xs font-light mb-4">Posted Date: {data?.posteddate}</h5>
-                                                    <Link href={`/view-job/${data?.slug}`} className="w-full h-11 bg-blue-600 text-white text-base font-normal rounded flex justify-center items-center" onClick={() => handleViewJobClick(data?.id, data?.slug, data?.channelId)}>View Job</Link>
+                                                    <Link href={`/view-job/${data?.slug}`} className="w-full h-11 bg-blue-600 text-white text-base font-normal rounded flex justify-center items-center mt-auto" onClick={() => handleViewJobClick(data?.id, data?.slug, data?.channelId)}>View Job</Link>
                                                 </div>
                                             ))
                                         }
