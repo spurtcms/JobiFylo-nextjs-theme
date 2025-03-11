@@ -19,10 +19,10 @@ export default function RootLayout({ children }) {
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Lexend:wght@100..900&display=swap" rel="stylesheet" />
       </head>
-     
-        <body>
-          <main className="bg-white">
-        <ToastContainer
+
+      <body>
+        <main className="bg-white">
+          <ToastContainer
             position="top-right"
             autoClose={2000}
             limit={1}
@@ -35,21 +35,21 @@ export default function RootLayout({ children }) {
             theme='colored'
             transition={Flip}
           />
-        <NextTopLoader  
-          color="#2299DD"
-          initialPosition={0.08}
-          crawlSpeed={200}
-          height={3}
-          crawl={true}
-          showSpinner={false}
-          easing="ease"
-          speed={200}
-          shadow="0 0 10px #2299DD,0 0 5px #2299DD"/>
-        <Header />
-        <CustomProviders> {children}</CustomProviders>
-        
-          </main>
-        </body>
+          <NextTopLoader
+            color="#2299DD"
+            initialPosition={0.08}
+            crawlSpeed={200}
+            height={3}
+            crawl={true}
+            showSpinner={false}
+            easing="ease"
+            speed={200}
+            shadow="0 0 10px #2299DD,0 0 5px #2299DD" />
+          <Header />
+          <CustomProviders> {children}</CustomProviders>
+
+        </main>
+      </body>
     </html>
   );
 }

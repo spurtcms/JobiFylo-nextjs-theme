@@ -1,6 +1,6 @@
 "use client"
 import { fetchGraphQl } from '@/api/graphicql'
-import { GET_JOB_LIST_QUERY, GET_POST_LIST_QUERY } from '@/api/query'
+import { GET_JOB_LIST_QUERY } from '@/api/query'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import CardListViewPage from './CardListPage'

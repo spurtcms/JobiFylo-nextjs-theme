@@ -2,6 +2,7 @@
 
 import { fetchGraphQl } from '@/api/graphicql'
 import { GET_JOB_LIST_QUERY, GET_SIGNIN_QUERY } from '@/api/query'
+import Head from 'next/head'
 
 // import Cookies from 'js-cookie'
 import Link from 'next/link'
@@ -175,9 +176,9 @@ const Signin = () => {
     return (
         <>
 
-            <head>
+            <Head>
                 <title>Signin</title>
-            </head>
+            </Head>
 
 
             <section className='bg-[#FAFAFA] min-h-[calc(100vh-120px)] p-[26px_16px] flex flex-col max-md:min-h-[calc(100vh-68px)] max-[1300px]:p-[16px] max-[1300px]:min-h-[calc(100vh-79px)]'>
@@ -237,7 +238,7 @@ const Signin = () => {
                             <button onClick={(e) => submit_signup(e)} className='bg-[#1D1D1F] border border-[#D8D8D8] text-[14px] leading-[16px] p-[12px] w-full block h-[42px] font-semibold text-[#FFFFFF] mt-[32px] rounded-[4px] text-center hover:bg-[#28282c] max-[1300px]:mt-[16px]'>Sign In</button>
                         </div>
                         <div className='flex items-center space-x-[4px] mt-[30px] justify-center max-[1300px]:mt-[16px]'>
-                            <p className='text-[12px] font-medium leading-[14px] text-[#1516188F]'>Don't have an account?</p>
+                            <p className='text-[12px] font-medium leading-[14px] text-[#1516188F]'>Don&apos;t have an account?</p>
                             <Link href="/auth/signup" className='text-[12px] font-semibold leading-[14px] hover:underline text-[#1D1D1F]'>Sign up</Link>
                         </div>
                     </div>

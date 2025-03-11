@@ -1,6 +1,7 @@
 "use client"
 import { fetchGraphQl } from "@/api/graphicql";
 import { GET_JOB_LIST_QUERY, GET_RESET_NEW_PASSWORD } from "@/api/query";
+import Head from "next/head";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useState, useEffect } from "react";
@@ -183,9 +184,9 @@ const ChangePassword = () => {
     return (
         <>
             {/* new password */}
-            <head>
+            <Head>
                 <title>Change Password</title>
-            </head>
+            </Head>
 
 
 

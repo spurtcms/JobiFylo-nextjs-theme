@@ -1,6 +1,6 @@
 "use client"
 import { fetchGraphQl } from '@/api/graphicql'
-import { GET_JOB_LIST_QUERY, GET_POST_CATEGORIES_LIST, GET_POST_CATEGORY_NAME, GET_POST_LIST_QUERY } from '@/api/query'
+import { GET_JOB_LIST_QUERY, GET_POST_CATEGORIES_LIST, GET_POST_CATEGORY_NAME } from '@/api/query'
 import { Entry_List_Api_Data } from '@/StoreConfiguration/slices/customer'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
@@ -170,111 +170,111 @@ export default function FilterJob({ pathname, setList }) {
   }, [])
 
 
-  const handleClear = async () => {
-    setTrigger(false)
-    setJobName("")
-    setLocation("")
-    setExpYear("")
-    setPostDate("")
+  // const handleClear = async () => {
+  //   setTrigger(false)
+  //   setJobName("")
+  //   setLocation("")
+  //   setExpYear("")
+  //   setPostDate("")
 
-    let variables = {
-      "limit": 10,
-      "offset": 0
-    }
-    let ListData = await fetchGraphQl(GET_POST_LIST_QUERY, variables)
-    setList(ListData?.jobsList?.jobs)
-  }
+  //   let variables = {
+  //     "limit": 10,
+  //     "offset": 0
+  //   }
+  //   let ListData = await fetchGraphQl(GET_POST_LIST_QUERY, variables)
+  //   setList(ListData?.jobsList?.jobs)
+  // }
 
 
-  const handleClose = async (data) => {
-    if (data == "Job Category") {
-      setJobName("")
-      setInputJob("")
-      let filterExp = ExpStatus.filter((data) => data?.id == expYear.value)
-      let variable = {
-        "limit": 10,
-        "offset": 0,
-        "filter": {
-          "jobTitle": "",
-          "jobLocation": location,
-          // "categoryId": 2,
-          "categorySlug": "",
-          "keyWord": "",
-          "datePosted": postDate?.label,
-          "minimumYears": filterExp?.[0]?.minDate
-          // "maximumYears": filterExp?.[0]?.maxDate
-        }
-      }
-      let filterListData = await fetchGraphQl(GET_POST_LIST_QUERY, variable)
-      setList(filterListData?.jobsList?.jobs)
-    }
-    else if (data == "") {
-      setLocation("")
-      setInputData("")
+  // const handleClose = async (data) => {
+  //   if (data == "Job Category") {
+  //     setJobName("")
+  //     setInputJob("")
+  //     let filterExp = ExpStatus.filter((data) => data?.id == expYear.value)
+  //     let variable = {
+  //       "limit": 10,
+  //       "offset": 0,
+  //       "filter": {
+  //         "jobTitle": "",
+  //         "jobLocation": location,
+  //         // "categoryId": 2,
+  //         "categorySlug": "",
+  //         "keyWord": "",
+  //         "datePosted": postDate?.label,
+  //         "minimumYears": filterExp?.[0]?.minDate
+  //         // "maximumYears": filterExp?.[0]?.maxDate
+  //       }
+  //     }
+  //     let filterListData = await fetchGraphQl(GET_POST_LIST_QUERY, variable)
+  //     setList(filterListData?.jobsList?.jobs)
+  //   }
+  //   else if (data == "") {
+  //     setLocation("")
+  //     setInputData("")
 
-      let filterExp = ExpStatus.filter((data) => data?.id == expYear.value)
-      let variable = {
-        "limit": 10,
-        "offset": 0,
-        "filter": {
-          "jobTitle": "",
-          "jobLocation": "",
-          // "categoryId": 2,
-          "categorySlug": jobName?.label,
-          "keyWord": "",
-          "datePosted": postDate?.label,
-          "minimumYears": filterExp?.[0]?.minDate
-          // "maximumYears": filterExp?.[0]?.maxDate
-        }
-      }
-      let filterListData = await fetchGraphQl(GET_POST_LIST_QUERY, variable)
-      setList(filterListData?.jobsList?.jobs)
-    }
-    else if (data == "Experienced Level") {
-      setExpYear("")
-      setInputExp("")
-      // let filterExp=ExpStatus.filter((data)=>data.name==expYear)
-      let variable = {
-        "limit": 10,
-        "offset": 0,
-        "filter": {
-          "jobTitle": "",
-          "jobLocation": location,
-          // "categoryId": 2,
-          "categorySlug": jobName?.label,
-          "keyWord": "",
-          "datePosted": postDate?.label
-        }
-      }
-      let filterListData = await fetchGraphQl(GET_POST_LIST_QUERY, variable)
-      setList(filterListData?.jobsList?.jobs)
-    }
-    else if (data == "Date Posted") {
-      setPostDate("")
-      setInputDate("")
+  //     let filterExp = ExpStatus.filter((data) => data?.id == expYear.value)
+  //     let variable = {
+  //       "limit": 10,
+  //       "offset": 0,
+  //       "filter": {
+  //         "jobTitle": "",
+  //         "jobLocation": "",
+  //         // "categoryId": 2,
+  //         "categorySlug": jobName?.label,
+  //         "keyWord": "",
+  //         "datePosted": postDate?.label,
+  //         "minimumYears": filterExp?.[0]?.minDate
+  //         // "maximumYears": filterExp?.[0]?.maxDate
+  //       }
+  //     }
+  //     let filterListData = await fetchGraphQl(GET_POST_LIST_QUERY, variable)
+  //     setList(filterListData?.jobsList?.jobs)
+  //   }
+  //   else if (data == "Experienced Level") {
+  //     setExpYear("")
+  //     setInputExp("")
+  //     // let filterExp=ExpStatus.filter((data)=>data.name==expYear)
+  //     let variable = {
+  //       "limit": 10,
+  //       "offset": 0,
+  //       "filter": {
+  //         "jobTitle": "",
+  //         "jobLocation": location,
+  //         // "categoryId": 2,
+  //         "categorySlug": jobName?.label,
+  //         "keyWord": "",
+  //         "datePosted": postDate?.label
+  //       }
+  //     }
+  //     let filterListData = await fetchGraphQl(GET_POST_LIST_QUERY, variable)
+  //     setList(filterListData?.jobsList?.jobs)
+  //   }
+  //   else if (data == "Date Posted") {
+  //     setPostDate("")
+  //     setInputDate("")
 
-      let filterExp = ExpStatus.filter((data) => data?.id == expYear.value)
-      let variable = {
-        "limit": 10,
-        "offset": 0,
-        "filter": {
-          "jobTitle": "",
-          "jobLocation": location,
-          // "categoryId": 2,
-          "categorySlug": jobName?.label,
-          "keyWord": "",
-          "datePosted": "",
-          "minimumYears": filterExp?.[0]?.minDate
-          // "maximumYears": filterExp?.[0]?.maxDate
-        }
-      }
+  //     let filterExp = ExpStatus.filter((data) => data?.id == expYear.value)
+  //     let variable = {
+  //       "limit": 10,
+  //       "offset": 0,
+  //       "filter": {
+  //         "jobTitle": "",
+  //         "jobLocation": location,
+  //         // "categoryId": 2,
+  //         "categorySlug": jobName?.label,
+  //         "keyWord": "",
+  //         "datePosted": "",
+  //         "minimumYears": filterExp?.[0]?.minDate
+  //         // "maximumYears": filterExp?.[0]?.maxDate
+  //       }
+  //     }
 
-      let filterListData = await fetchGraphQl(GET_POST_LIST_QUERY, variable)
-      setList(Category)
+  //     let filterListData = await fetchGraphQl(GET_POST_LIST_QUERY, variable)
+  //     setList(Category)
 
-    }
+  //   }
 
-  }
+  // }
 
   useEffect(() => {
     if (jobName == "" && expYear == "" && postDate == "" && location == "") {

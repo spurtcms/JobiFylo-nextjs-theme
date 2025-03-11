@@ -1,6 +1,7 @@
 "use client"
 import { fetchGraphQl } from '@/api/graphicql';
 import { GET_JOB_LIST_QUERY, GET_REGISTER_QUERY } from '@/api/query';
+import Head from 'next/head';
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -179,9 +180,9 @@ const Signup = () => {
 
     return (
         <>
-            <head>
+            <Head>
                 <title>Signup</title>
-            </head>
+            </Head>
 
             <section className='bg-[#FAFAFA] min-h-[calc(100vh-120px)] p-[16px] flex flex-col
              max-md:min-h-[calc(100vh-68px)] max-xl:min-h-[calc(100vh-79px)] max-[1300px]:p-[16px]'>

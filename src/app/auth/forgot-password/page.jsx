@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { GET_HEADER_FORGOT_PASSWORD_QUERY, GET_JOB_LIST_QUERY } from '@/api/query';
 import { fetchGraphQl } from '@/api/graphicql';
 import { local_Url } from '@/api/url';
+import Head from 'next/head';
 
 const Forgot_Password = () => {
     const [emailId, setEmailId] = useState("");
@@ -144,9 +145,9 @@ const Forgot_Password = () => {
 
     return (
         <>
-            <head>
+            <Head>
                 <title>Forgot Password</title>
-            </head>
+            </Head>
             <section className='bg-[#FAFAFA] min-h-[calc(100vh-120px)] p-[26px_16px] flex flex-col max-md:min-h-[calc(100vh-68px)] max-[1300px]:min-h-[calc(100vh-79px)] max-[1300px]:p-[16px]'>
                 <div className='w-[90%] mx-auto max-[1400px]:w-full mb-auto'>
                     <ul className='flex space-x-1 mb-[55px] max-[1300px]:mb-[24px] items-center'>
