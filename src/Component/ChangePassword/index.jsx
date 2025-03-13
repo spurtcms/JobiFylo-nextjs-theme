@@ -36,7 +36,7 @@ const ChangePassword = () => {
         const fetchData = async () => {
             const variable_list = {
                 "entryFilter": {
-                    "categorySlug": "best-stories"
+                    "categorySlug": "jobs"
                 },
                 "commonFilter": {
                     // "limit": 10,

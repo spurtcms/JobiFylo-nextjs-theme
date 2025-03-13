@@ -68,6 +68,7 @@ $AdditionalData: EntriesAdditionalData
   ChannelEntryDetail(id:$id,slug:$slug,
     AdditionalData:$AdditionalData,channelId:$channelId){
     id
+    ctaLink
     title
     slug
     description

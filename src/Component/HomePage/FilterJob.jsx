@@ -17,7 +17,7 @@ export default function FilterJob({ pathname, setList }) {
   const [expOption, setExpOption] = useState([])
   const [postDate, setPostDate] = useState("")
   const [inputJob, setInputJob] = useState()
-  const [inputData, setInputData] = useState()
+  const [inputLoc, setInputLoc] = useState()
   const [inputExp, setInputExp] = useState()
   const [inputDate, setInputDate] = useState()
   const [categoryName, setCategoryName] = useState();
@@ -25,24 +25,8 @@ export default function FilterJob({ pathname, setList }) {
   const [ExpStatus, setExpStatus] = useState([])
   const Category = useSelector((s) => s?.customerRedux?.Category_Slug_Data)
   const listAdditionalData = useSelector((s) => s?.customerRedux?.Entry_List_Api_Data)
-  console.log(location, "jnbvbfbgffj")
+  console.log(inputJob, "jnbvbfbgffj")
   console.log(ExpStatus, "ndjkfjkd")
-  // const Filters = [
-  //   {orderjob: false},
-  //   {orderloca: false},
-  //   {orderyear: false},
-  //   {orderdate:false}
-  // ]
-
-  //       const CategorieApi=async()=>{
-  //         let variable={
-  //           "hierarchylevel": 1,  
-  //           "categoryGroupId": 15
-  //         }
-  //         let CategorieList=await fetchGraphQl(GET_POST_CATEGORIES_LIST,variable)
-  // console.log(CategorieList,"dksjncskdjvnv")
-  //         setCatList(CategorieList?.CategoryList?.categories&&CategorieList?.CategoryList?.categories)
-  //       }
 
   const handleCategory = async () => {
     let cardParams = {
@@ -55,14 +39,10 @@ export default function FilterJob({ pathname, setList }) {
         "additionalFields": true
       },
     }
-
     const cardListPage = await fetchGraphQl(GET_JOB_LIST_QUERY, cardParams)
-
     console.log(cardListPage, "cardListPage")
     console.log(GET_JOB_LIST_QUERY, "cbsjsd")
-    // setCardData(transformData(cardListPage));
     setExpStatus(transformData(cardListPage))
-    // console.log(transformData(cardListPage)?.experiance, "dnvcndfbdv")
   }
   useEffect(() => {
     handleCategory()
@@ -91,36 +71,29 @@ export default function FilterJob({ pathname, setList }) {
   const handleJobName = (e) => {
     if (e != "categorySlug") {
       setJobName(e)
+      setInputJob(e?.label)
     }
   }
-
-  console.log(ExpStatus, "jdfhjfdf")
-
+  const handleLocation = (e) => {
+    if (e != "location") {
+      setLocation(e.target.value)
+      setInputLoc(e.target.value)
+    }
+  }
   const handleExpYear = (e) => {
     console.log(e, "xvddfvfd")
-
-    setExpYear(e)
-
-    // setExpLevel(e?.label)
-    // console.log(ExpStatus?.filter((data)=>data?.experiance==experiance?.name),"dbsdbsds")
-    // handleFilter()
-
+    if (e !== "Experience")
+      setExpYear(e)
+    setInputExp(e?.label)
   }
   const handleMonth = (e) => {
     if (e != "datePosted") {
       setPostDate(e)
-
+      setInputDate(e?.label)
     }
-
   }
 
-
   const handleFilter = async () => {
-    let filterExp = ExpStatus?.filter((data) => data?.experiance == experiance?.key)
-    setInputData(location)
-    setInputJob(jobName?.label)
-    setInputExp(expYear?.label)
-    // setInputDate(postDate?.label)
     let variable_list = {
       entryFilter: {
         categorySlug: jobName?.label,
@@ -144,154 +117,89 @@ export default function FilterJob({ pathname, setList }) {
       setPostDate("");
     }
   }
+  // const categoryFun = async () => {
 
+  //   let variable_category = {
+  //     "categoryFilter": {
+  //       "categoryGroupSlug": "jobs",
+  //       "excludeGroup": true,
+  //       "hierarchyLevel": 2
 
-  // useEffect(() => {
-  //   if (location, jobName, expYear, postDate) {
-  //     handleFilter()
+  //     }
   //   }
-  // }, [location, jobName, expYear, postDate])
-  const categoryFun = async () => {
-
-    let variable_category = {
-      "categoryFilter": {
-        "categoryGroupSlug": "jobs",
-        "excludeGroup": true,
-        "hierarchyLevel": 2
-
-      }
-    }
-    const jobCategoryApi = await fetchGraphQl(GET_POST_CATEGORY_NAME, variable_category)
-    setCatList(jobCategoryApi?.CategoryList?.categorylist)
-    console.log(catList, "dhbcsjdfhjsd")
-  }
-  useEffect(() => {
-    categoryFun()
-  }, [])
-
-
+  //   const jobCategoryApi = await fetchGraphQl(GET_POST_CATEGORY_NAME, variable_category)
+  //   setCatList(jobCategoryApi?.CategoryList?.categorylist)
+  //   console.log(catList, "dhbcsjdfhjsd")
+  // }
+  // useEffect(() => {
+  //   categoryFun()
+  // }, [])
   // const handleClear = async () => {
-  //   setTrigger(false)
-  //   setJobName("")
-  //   setLocation("")
-  //   setExpYear("")
-  //   setPostDate("")
+  //   setInputDate("")
+  //   setInputExp("")
+  //   setInputJob("")
+  //   setInputLoc("")
 
   //   let variables = {
-  //     "limit": 10,
-  //     "offset": 0
+  //     entryFilter: {
+  //       categorySlug: "",
+  //     },
+  //     commonFilter: {
+  //       location: "",
+  //       Experience: "",
+  //       posteddate: ""
+  //     },
+  //     AdditionalData: {
+  //       additionalFields: true,
+  //       categories: true
+  //     },
   //   }
-  //   let ListData = await fetchGraphQl(GET_POST_LIST_QUERY, variables)
-  //   setList(ListData?.jobsList?.jobs)
+  //   let ListData = await fetchGraphQl(GET_JOB_LIST_QUERY, variables)
+  //   setList(transformData(ListData))
   // }
 
 
   // const handleClose = async (data) => {
-  //   if (data == "Job Category") {
+  //   if (data == inputJob?.label) {
   //     setJobName("")
   //     setInputJob("")
-  //     let filterExp = ExpStatus.filter((data) => data?.id == expYear.value)
-  //     let variable = {
-  //       "limit": 10,
-  //       "offset": 0,
-  //       "filter": {
-  //         "jobTitle": "",
-  //         "jobLocation": location,
-  //         // "categoryId": 2,
-  //         "categorySlug": "",
-  //         "keyWord": "",
-  //         "datePosted": postDate?.label,
-  //         "minimumYears": filterExp?.[0]?.minDate
-  //         // "maximumYears": filterExp?.[0]?.maxDate
-  //       }
-  //     }
-  //     let filterListData = await fetchGraphQl(GET_POST_LIST_QUERY, variable)
-  //     setList(filterListData?.jobsList?.jobs)
   //   }
-  //   else if (data == "") {
+  //   else if (data == inputLoc?.data?.target?.value) {
   //     setLocation("")
-  //     setInputData("")
-
-  //     let filterExp = ExpStatus.filter((data) => data?.id == expYear.value)
-  //     let variable = {
-  //       "limit": 10,
-  //       "offset": 0,
-  //       "filter": {
-  //         "jobTitle": "",
-  //         "jobLocation": "",
-  //         // "categoryId": 2,
-  //         "categorySlug": jobName?.label,
-  //         "keyWord": "",
-  //         "datePosted": postDate?.label,
-  //         "minimumYears": filterExp?.[0]?.minDate
-  //         // "maximumYears": filterExp?.[0]?.maxDate
-  //       }
-  //     }
-  //     let filterListData = await fetchGraphQl(GET_POST_LIST_QUERY, variable)
-  //     setList(filterListData?.jobsList?.jobs)
+  //     setInputLoc("")
   //   }
-  //   else if (data == "Experienced Level") {
+  //   else if (data == inputExp?.label) {
   //     setExpYear("")
   //     setInputExp("")
-  //     // let filterExp=ExpStatus.filter((data)=>data.name==expYear)
-  //     let variable = {
-  //       "limit": 10,
-  //       "offset": 0,
-  //       "filter": {
-  //         "jobTitle": "",
-  //         "jobLocation": location,
-  //         // "categoryId": 2,
-  //         "categorySlug": jobName?.label,
-  //         "keyWord": "",
-  //         "datePosted": postDate?.label
-  //       }
-  //     }
-  //     let filterListData = await fetchGraphQl(GET_POST_LIST_QUERY, variable)
-  //     setList(filterListData?.jobsList?.jobs)
   //   }
-  //   else if (data == "Date Posted") {
+
+  //   else if (data == inputDate?.label) {
   //     setPostDate("")
   //     setInputDate("")
-
-  //     let filterExp = ExpStatus.filter((data) => data?.id == expYear.value)
   //     let variable = {
-  //       "limit": 10,
-  //       "offset": 0,
-  //       "filter": {
-  //         "jobTitle": "",
-  //         "jobLocation": location,
-  //         // "categoryId": 2,
-  //         "categorySlug": jobName?.label,
-  //         "keyWord": "",
-  //         "datePosted": "",
-  //         "minimumYears": filterExp?.[0]?.minDate
-  //         // "maximumYears": filterExp?.[0]?.maxDate
-  //       }
+  //       entryFilter: {
+  //         categorySlug: jobName?.label,
+  //       },
+  //       commonFilter: {
+  //         location: location,
+  //         Experience: expYear?.value,
+  //         posteddate: ""
+  //       },
+  //       AdditionalData: {
+  //         additionalFields: true,
+  //         categories: true
+  //       },
   //     }
-
-  //     let filterListData = await fetchGraphQl(GET_POST_LIST_QUERY, variable)
-  //     setList(Category)
-
+  //     let filterListData = await fetchGraphQl(GET_JOB_LIST_QUERY, variable)
+  //     setList(transformData(filterListData))
   //   }
-
   // }
-
-  useEffect(() => {
-    if (jobName == "" && expYear == "" && postDate == "" && location == "") {
-      setTrigger(false)
-    }
-  }, [jobName, expYear, postDate, location])
   const jobFilterOption = catList?.map((data) => (
     {
       value: data.id,
       label: data.categorySlug
     }
   ))
-  console.log(expYear, "fdjdf")
-  const expFilterOption = expOption?.map((data) => ({
-    value: data?.id,
-    label: data?.experiance
-  }))
   console.log(expOption, "jvhfbdvhfbf")
   const expOptions = [
     { id: 1, name: "0-1 Years", key: "0-1" },
@@ -333,7 +241,7 @@ export default function FilterJob({ pathname, setList }) {
         </Select>
 
         <div className='w-full'>
-          <input className="h-[38px] rounded-[4px] border-gray-500 border w-full focus-visible:outline-none bg-transparent focus:border-[#2684FF] hover-blue p-3 text-sm font-normal placeholder:text-slate-300" placeholder="Location" value={location} onChange={(e) => setLocation(e.target.value)} />
+          <input className="h-[38px] rounded-[4px] border-gray-500 border w-full focus-visible:outline-none bg-transparent focus:border-[#2684FF] hover-blue p-3 text-sm font-normal placeholder:text-slate-300" placeholder="Location" value={location} onChange={(e) => handleLocation(e)} />
         </div>
         <Select className='text-sm' placeholder="Experienced Level"
           value={expYear} options={experiance} onChange={(e) => handleExpYear(e)}>
@@ -348,34 +256,6 @@ export default function FilterJob({ pathname, setList }) {
         <button className="min-w-[138px] h-[42px] bg-blue-600 text-white rounded text-sm font-medium md:col-auto col-span-2" onClick={handleFilter}>Filter Jobs</button>
       </div>
       <div className="flex justify-between sm:items-center items-end pb-6 border-gray border-b">
-        {trigger == true &&
-          <div className="flex flex-wrap gap-4">
-            {inputJob != undefined && inputJob != "" &&
-              <div className="flex gap-2 p-3 whitespace-nowrap bg-slate-50 border-gray-500 border rounded-md text-sm font-light text-black leading-4 ">
-                {inputJob}
-                <img src="/img/cancel.svg" className="cursor-pointer" onClick={() => handleClose("Job Category")} />
-              </div>}
-            {inputData != "" &&
-              <div className="flex gap-2 p-3 whitespace-nowrap bg-slate-50 border-gray-500 border rounded-md text-sm font-light text-black leading-4">
-                {inputData}
-                <img src="/img/cancel.svg" className="cursor-pointer" onClick={() => handleClose("")} />
-              </div>}
-
-            {inputExp != undefined && inputExp != "" &&
-              <div className="flex gap-2 p-3 whitespace-nowrap bg-slate-50 border-gray-500 border rounded-md text-sm font-light text-black leading-4">
-                {inputExp}
-                <img src="/img/cancel.svg" className="cursor-pointer" onClick={() => handleClose("Experienced Level")} />
-              </div>}
-
-            {inputDate != undefined && inputDate != "" &&
-              <div className="flex gap-2 p-3 whitespace-nowrap bg-slate-50 border-gray-500 border rounded-md text-sm font-light text-black leading-4">
-                {inputDate}
-                <img src="/img/cancel.svg" className="cursor-pointer" onClick={() => handleClose("Date Posted")} />
-              </div>}
-
-            <button className="text-sm whitespace-nowrap font-light text-black leading-4 p-3 border-gray-500 rounded-md border bg-white" onClick={() => handleClear()}>Clear All</button>
-          </div>}
-
         {pathname == "/" ? <Link href="/list-view" className="p-3 flex gap-2 justify-center items-center min-w-[110px] whitespace-nowrap h-[42px] text-blue-600 border-blue-600 border rounded-md ml-auto">
           <img src="/img/list.svg" />
           List View

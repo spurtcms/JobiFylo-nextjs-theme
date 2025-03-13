@@ -54,12 +54,12 @@ export default function HeaderServerActions({ tokenCheck }) {
           aria-label="Global"
         >
           <Link href="/"><img src="/img/job-theme-logo.svg" /></Link>
-          <Link href="/auth/signin"
-            className="p-[10px_32px] inline-block rounded-[50px] text-base font-semibold leading-[27px]   text-[#FFFFFF]  bg-blue-600 whitespace-nowrap max-md:p-[10px_14px] max-md:leading-none  max-md:text-sm hover:bg-blue-600 max-sm:!ml-0"
+          <Link href="/auth/signin">
+            {/* // className="p-[10px_32px] inline-block rounded-[50px] text-base font-semibold leading-[27px]   text-[#FFFFFF]  bg-blue-600 whitespace-nowrap max-md:p-[10px_14px] max-md:leading-none  max-md:text-sm hover:bg-blue-600 max-sm:!ml-0" */}
 
-          >Join Now</Link>
+            <img className="w-6 h-6 rounded-full" src={`/img/login-user.svg`} />
+          </Link>
           {/* <div className="flex gap-2 items-center text-gray-500 text-sm font-light">
-                        <img className="w-6 h-6 rounded-full" src={profileData?`${imageurl}${profileData}`:`/img/login-user.svg`} />
                         {tokenCheck?<span className="cursor-pointer" onClick={Logout}>Logout</span>:<span><Link href="/auth/login">Login\</Link><Link href="/auth/sign-up">Register</Link></span>}
                        
                     </div> */}
