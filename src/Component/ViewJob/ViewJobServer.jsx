@@ -93,7 +93,7 @@ export default function ViewJobServer({ ListData, token, params, RelatedPageApi,
 
 
                     <div className="flex gap-4 items-center pb-6 border-b border-gray mb-6">
-                        <Link href={`${form_Base_url}${DetailData?.ctaLink}`} target='_blank' className="w-auto p-4 h-11 bg-blue-600 text-white text-base font-normal rounded flex justify-center items-center">Apply Now</Link>
+                        <Link href={`${form_Base_url}${DetailData?.ctaLink}?id=${DetailData?.id}`} target='_blank' className="w-auto p-4 h-11 bg-blue-600 text-white text-base font-normal rounded flex justify-center items-center">Apply Now</Link>
                         {/* <Link href="shareJob" className="w-auto p-4 h-11 bg-slate-50 text-blue-600 border border-gray-500 text-base font-normal rounded flex justify-center items-center">Share Job</Link> */}
                     </div>
                     <div className="pb-6 border-b border-gray mb-6">
