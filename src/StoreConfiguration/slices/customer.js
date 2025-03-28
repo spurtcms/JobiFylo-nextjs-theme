@@ -7,11 +7,13 @@ const initialState = {
     header_slug: "blog",
     header_api_result_redux: [],
     header_keyword: "",
-    Header_logo_api_result_redux:"",
-    Entry_Detail_api_Data_redux:"",
-    search_Keyword_List:"",
-    Category_Slug_Data:"",
-    Entry_List_Api_Data:[],
+    Header_logo_api_result_redux: "",
+    Entry_Detail_api_Data_redux: "",
+    search_Keyword_List: "",
+    Category_Slug_Data: "",
+    Entry_List_Api_Data: [],
+    Related_Detail_api_Data_redux: "",
+    List_Detail_api_Data_redux:""
 };
 
 
@@ -39,23 +41,29 @@ export const customerSlice = createSlice({
             state.Header_logo_api_result_redux = action.payload;
         },
 
-        Entry_Detail_api_Data_redux:(state,action)=>{
-            state.Entry_Detail_api_Data_redux=action.payload;
+        Entry_Detail_api_Data_redux: (state, action) => {
+            state.Entry_Detail_api_Data_redux = action.payload;
         },
-        search_Keyword_List:(state,action)=>{
-            state.search_Keyword_List=action.payload;
+        search_Keyword_List: (state, action) => {
+            state.search_Keyword_List = action.payload;
+        },
+        Related_Detail_api_Data_redux: (state, action) => {
+            state.Entry_Detail_api_Data_redux = action.payload;
         },
 
-        Category_Slug_Data:(state,action)=>{
-            state.Category_Slug_Data=action.payload;
+        Category_Slug_Data: (state, action) => {
+            state.Category_Slug_Data = action.payload;
         },
-        Entry_List_Api_Data:(state,action)=>{
-            state.Entry_List_Api_Data=action.payload
+        Entry_List_Api_Data: (state, action) => {
+            state.Entry_List_Api_Data = action.payload
+        },
+        List_Detail_api_Data_redux:(state,action)=>{
+            state.List_Detail_api_Data_redux=action.payload
         }
     },
 });
 
 
-export const { addCount, EntryList_Redux_function, header_slug_Reduc_function ,Header_keyword_redux_function,Header_logo_api_result_redux_function , Header_api_result_redux_function,Entry_Detail_api_Data_redux,search_Keyword_List,Category_Slug_Data,Entry_List_Api_Data} = customerSlice.actions;
+export const { addCount, EntryList_Redux_function, header_slug_Reduc_function, Header_keyword_redux_function, Header_logo_api_result_redux_function, Header_api_result_redux_function, Entry_Detail_api_Data_redux, search_Keyword_List, Category_Slug_Data, Entry_List_Api_Data, Related_Detail_api_Data_redux, List_Detail_api_Data_redux } = customerSlice.actions;
 
 export default customerSlice.reducer;

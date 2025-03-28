@@ -29,6 +29,7 @@ export default function CardListViewPage({ params, List }) {
                 coverImage: entry.coverImage || "",
                 channelId: entry.channelId,
                 slug: entry.slug,
+                description: entry.description
             };
             entry.additionalFields.fields.forEach((field) => {
                 const key = field.fieldName
@@ -158,7 +159,7 @@ export default function CardListViewPage({ params, List }) {
                                                 <div className="border-gray-300 border rounded p-4 hover:shadow-lg flex flex-col" key={index}>
                                                     {/* {console.log( data?.additionalFields?.fields,"nckdsjfcnskjw")} */}
                                                     <span className="px-2.5 py-1 rounded-3xl bg-blue-100 text-black text-xs font-normal w-fit">{data?.keyresponsibilities}</span>
-                                                    <Link href="#" className="block text-black text-2xl leading-8 font-normal my-2">{data?.title}</Link>
+                                                    <Link href={`/view-job/${data?.slug}`} className="block text-black text-2xl leading-8 font-normal my-2" onClick={() => handleViewJobClick(data?.id, data?.slug, data?.channelId)}>{data?.title}</Link>
                                                     <p className="text-sm font-light leading-4 text-blue-600 mb-4">Job code: <span className="text-gray-500">{data?.jobcode}</span></p>
                                                     <div className="flex flex-col gap-4 mb-6">
                                                         <div className="flex items-center gap-2">
@@ -185,7 +186,7 @@ export default function CardListViewPage({ params, List }) {
 
                     </div>
                 </> : <>
-                    {console.log("djffhd")}
+
                     {
 
                         List?.length > 0 ? <>
@@ -197,7 +198,7 @@ export default function CardListViewPage({ params, List }) {
                                         <div className="border-gray-300 border rounded p-4 hover:shadow-lg flex flex-col" key={index}>
                                             {console.log(data, "nckdsjfcnskjw")}
                                             <span className="px-2.5 py-1 rounded-3xl bg-blue-100 text-black text-xs font-normal w-fit">{data?.keyresponsibilities}</span>
-                                            <Link href="#" className="block text-black text-2xl leading-8 font-normal my-2">{data?.title}</Link>
+                                            <Link href={`/view-job/${data?.slug}`} className="block text-black text-2xl leading-8 font-normal my-2 " onClick={() => handleViewJobClick(data?.id, data?.slug, data?.channelId)}>{data?.title}</Link>
                                             <p className="text-sm font-light leading-4 text-blue-600 mb-4">Job code: <span className="text-gray-500">{data?.jobcode}</span></p>
                                             <div className="flex flex-col gap-4 mb-6">
                                                 <div className="flex items-center gap-2">

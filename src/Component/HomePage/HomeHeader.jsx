@@ -8,7 +8,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Entry_List_Api_Data, search_Keyword_List } from '@/StoreConfiguration/slices/customer'
 import HomePageLoader from '../skeleton/homePageLoader'
 
-export default function HomeHeader({ setList, pathname }) {
+
+export default function HomeHeader({ setList }) {
   const [jobTitle, setJobTitle] = useState('')
   const [location, setLocation] = useState('')
   const [searchList, setSearchList] = useState("");
@@ -30,11 +31,12 @@ export default function HomeHeader({ setList, pathname }) {
     return apiResponse?.ChannelEntriesList?.channelEntriesList?.map((entry) => {
       console.log(entry, "vfdkvfd")
       let transformedEntry = {
-        id: entry.id,
-        title: entry.title,
-        coverImage: entry.coverImage || "",
+        id: entry?.id,
+        title: entry?.title,
+        coverImage: entry?.coverImage || "",
         channelId: entry.channelId,
-        slug: entry.slug,
+        slug: entry?.slug,
+        description: entry?.description
       };
       entry.additionalFields.fields.forEach((field) => {
         const key = field.fieldName
@@ -62,17 +64,14 @@ export default function HomeHeader({ setList, pathname }) {
 
       },
     };
-    if (jobTitle || location !== "") {
-
+    if (jobTitle !== "" || location !== "") {
       const res = await fetchGraphQl(GET_JOB_LIST_QUERY, variable_list);
-      setSearchKeyword(res?.ChannelEntriesList?.channelEntriesList); // Update state with fetched data
-      setList(transformData(res))
-      console.log(transformData(res), "ndbcsn")
-      dispatch(search_Keyword_List(res?.ChannelEntriesList?.channelEntriesList))
-      // setJobTitle(res?.ChannelEntriesList?.channelEntriesList?.keyword)
-      // setLocation(listAdditionalData?.location)
+      // setSearchKeyword(res?.ChannelEntriesList?.channelEntriesList); // Update state with fetched data
+      setList(transformData(res));
+      // setListData(transformData(res));
+      dispatch(search_Keyword_List(res?.ChannelEntriesList?.channelEntriesList));
       setJobTitle("");
-      setLocation("")
+      setLocation("");
     }
   }
 

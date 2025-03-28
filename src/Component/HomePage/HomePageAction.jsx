@@ -11,6 +11,7 @@ export default function HomePageAction({ ListData, cardListPage }) {
 
   const [List, setList] = useState([])
   const pathname = usePathname()
+ console.log(List,"nbdjkfvnkdf")
   return (
     <>
       <main className="min-h-screen">
@@ -19,10 +20,12 @@ export default function HomePageAction({ ListData, cardListPage }) {
         <div className="lg:px-[120px] max-w-screen-2xl m-auto md:px-10 px-6 mt-[11rem] sm:mt-20">
           <FilterJob pathname={pathname} setList={setList} />
 
-          {pathname == "/" ? <TilteView ListData={List} /> : <ListView ListData={List} />}
-          <Suspense fallback={<div>Loading...</div>}>
+          {/* {pathname == "/" ? <TilteView ListData={List} /> : <ListView ListData={List} setList={setList} />} */}
+        
+          {pathname == "/" ? <Suspense fallback={<div>Loading...</div>}>
             <CardListViewPage cardListPage={cardListPage} List={List} />
-          </Suspense>
+          </Suspense>  : <ListView  />
+          }
 
 
         </div>

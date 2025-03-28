@@ -145,9 +145,9 @@ const Signup = () => {
                     const response = await fetchGraphQl(GET_REGISTER_QUERY, register_list);
                     console.log(" response", response)
                     setLoginResponse(response)
-                    if (response !== null) {
+                    if (response?.memberRegister ) {
                         router.push("/")
-                    } else {
+                    } else if(response ==null) {
                         setEmailError("Email already exists")
                         setEmailStateError(true)
                     }

@@ -51,11 +51,12 @@ export default function FilterJob({ pathname, setList }) {
     return apiResponse?.ChannelEntriesList?.channelEntriesList?.map((entry) => {
       console.log(entry, "vfdkvfd")
       let transformedEntry = {
-        id: entry.id,
-        title: entry.title,
-        coverImage: entry.coverImage || "",
-        channelId: entry.channelId,
-        slug: entry.slug,
+        id: entry?.id,
+        title: entry?.title,
+        coverImage: entry?.coverImage || "",
+        channelId: entry?.channelId,
+        slug: entry?.slug,
+        description: entry?.description
       };
       entry.additionalFields.fields.forEach((field) => {
         const key = field.fieldName
@@ -111,6 +112,7 @@ export default function FilterJob({ pathname, setList }) {
     if (jobName !== "" || location !== "" || expYear !== "" || postDate !== "") {
       const res = await fetchGraphQl(GET_JOB_LIST_QUERY, variable_list);
       setList(transformData(res))
+
       setJobName("");
       setLocation("");
       setExpYear("");

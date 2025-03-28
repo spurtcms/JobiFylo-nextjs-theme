@@ -1,16 +1,18 @@
-import React from 'react'
+"use client"
+import React, { useState } from 'react'
 import Home from '@/Component/HomePage'
 import ListView from '@/Component/HomePage/ListView'
 import HomeHeader from '@/Component/HomePage/HomeHeader'
 import FilterJob from '@/Component/HomePage/FilterJob'
 
-export default function page() {
-    
+export default function Page() {
+    const [listData,setListData]=useState([]);
+
     return (
         <>
         {/* <HomeHeader/> */}
         {/* <FilterJob/> */}
-       <ListView/>
+       <ListView  listData={listData} setListData={setListData}/>
         </>
     )
 }

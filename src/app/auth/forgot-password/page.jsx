@@ -1,7 +1,7 @@
 "use client"
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { GET_HEADER_FORGOT_PASSWORD_QUERY, GET_JOB_LIST_QUERY } from '@/api/query';
 import { fetchGraphQl } from '@/api/graphicql';
 import { local_Url } from '@/api/url';
@@ -26,7 +26,12 @@ const Forgot_Password = () => {
     };
     const [signupTenantId, setSignupTenantId] = useState("");
     const [signupUserId, setSignupUserId] = useState("");
+   const [url, setUrl] = useState(null)
 
+
+// const url=usePathname()
+// const baseUrl=url.get("url")
+console.log(url,"baseUrl")
     useEffect(() => {
         const fetchData = async () => {
             const variable_list = {
@@ -56,6 +61,7 @@ const Forgot_Password = () => {
         };
 
         fetchData();
+        setUrl(window.location)
     }, []);
     console.log(signupTenantId, "khfkejfekrjfkj")
     const handleVerifyMailId = () => {
@@ -67,7 +73,7 @@ const Forgot_Password = () => {
                     "input": {
                         "email": emailId,
                         "tenantId": signupTenantId,
-                        "url": local_Url
+                        "url": url?.origin
                     }
                 }
 
