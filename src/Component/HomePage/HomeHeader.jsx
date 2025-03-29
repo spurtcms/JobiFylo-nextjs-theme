@@ -5,7 +5,7 @@ import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import CardListViewPage from './CardListPage'
 import { useDispatch, useSelector } from 'react-redux'
-import { Entry_List_Api_Data, search_Keyword_List } from '@/StoreConfiguration/slices/customer'
+import { Entry_List_Api_Data, search_Keyword_List, searchApi_List } from '@/StoreConfiguration/slices/customer'
 import HomePageLoader from '../skeleton/homePageLoader'
 
 
@@ -16,8 +16,8 @@ export default function HomeHeader({ setList }) {
   const [searchKeyword, setSearchKeyword] = useState("");
   const [searchLocation, setSearchLocation] = useState("");
   const dispatch = useDispatch();
-  const listAdditionalData = useSelector((s) => s?.customerRedux?.Entry_List_Api_Data)
-  console.log(location, "cbfhbefjehnrfn")
+  const SearchApiList = useSelector((s) => s?.customerRedux?.searchApi_List)
+  console.log(SearchApiList, "cbfhbefjehnrfn")
   const handleJobTitle = (e, value) => {
     if (value == "jobTitle") {
       setJobTitle(e)
@@ -36,7 +36,8 @@ export default function HomeHeader({ setList }) {
         coverImage: entry?.coverImage || "",
         channelId: entry.channelId,
         slug: entry?.slug,
-        description: entry?.description
+        description: entry?.description,
+        categories: entry?.categories?.[0]?.[0]
       };
       entry.additionalFields.fields.forEach((field) => {
         const key = field.fieldName
@@ -60,18 +61,19 @@ export default function HomeHeader({ setList }) {
 
       },
       AdditionalData: {
-        additionalFields: true
-
+        additionalFields: true,
+        categories: true
       },
     };
     if (jobTitle !== "" || location !== "") {
       const res = await fetchGraphQl(GET_JOB_LIST_QUERY, variable_list);
       // setSearchKeyword(res?.ChannelEntriesList?.channelEntriesList); // Update state with fetched data
       setList(transformData(res));
+      dispatch(searchApi_List(transformData(res)))
       // setListData(transformData(res));
       dispatch(search_Keyword_List(res?.ChannelEntriesList?.channelEntriesList));
-      setJobTitle("");
-      setLocation("");
+      // setJobTitle("");
+      // setLocation("");
     }
   }
 
@@ -99,7 +101,21 @@ export default function HomeHeader({ setList }) {
   //     handleSearchList()
   //   }
   // }, [jobTitle, location])
-  console.log(searchKeyword, "searchkeyword")
+
+  const enterKeyEvent = (e) => {
+    console.log(e, "eventeee")
+    if (e.key == "Enter") {
+      if (e.target.value == location) {
+        handleSearchList();
+      }
+    }
+    if (e.key == "Enter") {
+      if (e.target.value == jobTitle) {
+        handleSearchList();
+      }
+    }
+  }
+
   return (
     <>
 
@@ -120,6 +136,7 @@ export default function HomeHeader({ setList }) {
                   placeholder="Search by Job Title/Role"
                   value={jobTitle}
                   onChange={(e) => setJobTitle(e.target.value)}
+                  onKeyDown={(e) => enterKeyEvent(e)}
                 />
                 <img src="/img/search.svg" className="absolute top-3 sm:top-[27px] left-6" />
               </div>
@@ -130,6 +147,7 @@ export default function HomeHeader({ setList }) {
                   placeholder="Location"
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
+                  onKeyDown={(e) => enterKeyEvent(e)}
                 />
                 <img src="/img/location.svg" className="absolute top-3 sm:top-[27px] left-6" />
               </div>

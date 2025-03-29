@@ -56,7 +56,8 @@ export default function FilterJob({ pathname, setList }) {
         coverImage: entry?.coverImage || "",
         channelId: entry?.channelId,
         slug: entry?.slug,
-        description: entry?.description
+        description: entry?.description,
+        categories: entry?.categories?.[0]?.[0]
       };
       entry.additionalFields.fields.forEach((field) => {
         const key = field.fieldName
@@ -113,29 +114,29 @@ export default function FilterJob({ pathname, setList }) {
       const res = await fetchGraphQl(GET_JOB_LIST_QUERY, variable_list);
       setList(transformData(res))
 
-      setJobName("");
-      setLocation("");
-      setExpYear("");
-      setPostDate("");
+      // setJobName("");
+      // setLocation("");
+      // setExpYear("");
+      // setPostDate("");
     }
   }
-  // const categoryFun = async () => {
+  const categoryFun = async () => {
 
-  //   let variable_category = {
-  //     "categoryFilter": {
-  //       "categoryGroupSlug": "jobs",
-  //       "excludeGroup": true,
-  //       "hierarchyLevel": 2
+    let variable_category = {
+      "categoryFilter": {
+        "categoryGroupSlug": "jobs",
+        "excludeGroup": true,
+        "hierarchyLevel": 2
 
-  //     }
-  //   }
-  //   const jobCategoryApi = await fetchGraphQl(GET_POST_CATEGORY_NAME, variable_category)
-  //   setCatList(jobCategoryApi?.CategoryList?.categorylist)
-  //   console.log(catList, "dhbcsjdfhjsd")
-  // }
-  // useEffect(() => {
-  //   categoryFun()
-  // }, [])
+      }
+    }
+    const jobCategoryApi = await fetchGraphQl(GET_POST_CATEGORY_NAME, variable_category)
+    setCatList(jobCategoryApi?.CategoryList?.categorylist)
+    console.log(catList, "dhbcsjdfhjsd")
+  }
+  useEffect(() => {
+    categoryFun()
+  }, [])
   // const handleClear = async () => {
   //   setInputDate("")
   //   setInputExp("")
@@ -234,6 +235,14 @@ export default function FilterJob({ pathname, setList }) {
       label: data?.name
     }
   ))
+  const enterKeyEvent = (e) => {
+    console.log(e, "eventeee")
+    if (e.key == "Enter") {
+      if (e.target.value == location) {
+        handleFilter()
+      }
+    }
+  }
   return (
     <>
       <div className="grid md:grid-cols-5fr grid-cols-2  gap-4 mb-4">
@@ -243,7 +252,7 @@ export default function FilterJob({ pathname, setList }) {
         </Select>
 
         <div className='w-full'>
-          <input className="h-[38px] rounded-[4px] border-gray-500 border w-full focus-visible:outline-none bg-transparent focus:border-[#2684FF] hover-blue p-3 text-sm font-normal placeholder:text-slate-300" placeholder="Location" value={location} onChange={(e) => handleLocation(e)} />
+          <input className="h-[38px] rounded-[4px] border-gray-500 border w-full focus-visible:outline-none bg-transparent focus:border-[#2684FF] hover-blue p-3 text-sm font-normal placeholder:text-slate-300" placeholder="Location" value={location} onChange={(e) => handleLocation(e)} onKeyDown={(e) => enterKeyEvent(e)} />
         </div>
         <Select className='text-sm' placeholder="Experienced Level"
           value={expYear} options={experiance} onChange={(e) => handleExpYear(e)}>

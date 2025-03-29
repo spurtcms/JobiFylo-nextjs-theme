@@ -67,7 +67,8 @@ export default function ListView({ listData, setListData }) {
             channelId: detail?.channelId,
             slug: detail?.slug,
             description: detail?.description,
-            ctaLink: detail?.ctaLink
+            ctaLink: detail?.ctaLink,
+            categories: detail?.categories?.[0]?.[0]
         };
 
         detail?.additionalFields?.fields.forEach((field) => {
@@ -133,7 +134,7 @@ export default function ListView({ listData, setListData }) {
                                             listViewData?.map((data, index) => (
                                                 <div className="flex flex-col gap-6 mt-6" key={index}>
                                                     <div className="border-gray-300 border rounded p-4 hover:shadow-lg">
-                                                        <span className="px-2.5 py-1 rounded-3xl bg-blue-100 text-black text-xs font-normal">{data?.keyresponsibilities}</span>
+                                                        <span className="px-2.5 py-1 rounded-3xl bg-blue-100 text-black text-xs font-normal">{data?.categories?.categoryName}</span>
                                                         <div className="mb-4 mt-2 flex justify-between items-start sm:items-center flex-col sm:flex-row gap-2">
                                                             <Link href={`/view-job/${data?.slug}`} className="block text-black text-2xl leading-8 font-normal my-2" onClick={() => handleViewJobClick(data?.id, data?.slug, data?.channelId)}>{data?.title}</Link>
                                                             <p className="text-sm font-normal leading-4 text-blue-600 ">Job code: <span className="text-gray-500 font-light">{data?.jobcode}</span></p>
@@ -188,7 +189,7 @@ export default function ListView({ listData, setListData }) {
 
                                                 <div className="flex flex-col gap-6 mt-6" key={index}>
                                                     <div className="border-gray-300 border rounded p-4 hover:shadow-lg">
-                                                        <span className="px-2.5 py-1 rounded-3xl bg-blue-100 text-black text-xs font-normal">{data?.keyresponsibilities}</span>
+                                                        <span className="px-2.5 py-1 rounded-3xl bg-blue-100 text-black text-xs font-normal">{data?.categories?.categoryName}</span>
                                                         <div className="mb-4 mt-2 flex justify-between items-start sm:items-center flex-col sm:flex-row gap-2">
                                                             <Link href={`/view-job/${data?.slug}`} className="block text-black text-2xl leading-8 font-normal my-2" onClick={() => handleViewJobClick(data?.id, data?.slug, data?.channelId)}>{data?.title}</Link>
                                                             <p className="text-sm font-normal leading-4 text-blue-600 ">Job code: <span className="text-gray-500 font-light">{data?.jobcode}</span></p>

@@ -27,11 +27,12 @@ export default function ViewJobServer({ ListData, token, params, RelatedPageApi,
         return apiResponse?.ChannelEntriesList?.channelEntriesList?.map((entry) => {
             console.log(entry, "vfdkvfd")
             let transformedEntry = {
-                id: entry.id,
-                title: entry.title,
-                coverImage: entry.coverImage || "",
-                channelId: entry.channelId,
-                slug: entry.slug,
+                id: entry?.id,
+                title: entry?.title,
+                coverImage: entry?.coverImage || "",
+                channelId: entry?.channelId,
+                slug: entry?.slug,
+                categories: entry?.categories?.[0]?.[0]
             };
             entry.additionalFields.fields.forEach((field) => {
                 const key = field.fieldName
@@ -76,7 +77,8 @@ export default function ViewJobServer({ ListData, token, params, RelatedPageApi,
             channelId: detail?.channelId,
             slug: detail?.slug,
             description: detail?.description,
-            ctaLink: detail?.ctaLink
+            ctaLink: detail?.ctaLink,
+            categories: detail?.categories?.[0]?.[0]
         };
 
         detail?.additionalFields?.fields.forEach((field) => {
@@ -130,7 +132,7 @@ export default function ViewJobServer({ ListData, token, params, RelatedPageApi,
                 {
                     DetailData ? <>
                         <div className="mt-8">
-                            <span className="px-2.5 py-1 rounded-3xl bg-blue-100 text-black text-xs font-normal">{DetailData?.keyresponsibilities}{console.log(DetailData, "cbdjjsfnsf")}</span>
+                            <span className="px-2.5 py-1 rounded-3xl bg-blue-100 text-black text-xs font-normal">{DetailData?.categories?.categoryName}{console.log(DetailData, "cbdjjsfnsf")}</span>
                             <h2 className="mt-2 mb-4 sm:text-4xl sm:leading-[45px] font-normal text-blue-600 text-3xl">{DetailData?.title}</h2>
                             <div className="flex gap-6 mb-6 flex-wrap">
                                 <div className="flex items-center gap-2">
@@ -179,7 +181,7 @@ export default function ViewJobServer({ ListData, token, params, RelatedPageApi,
                                 {
                                     relatedList?.map((data, index) => (
                                         <div className="border-gray-300 border rounded p-4 hover:shadow-lg flex flex-col" key={index}>
-                                            <span className="px-2.5 py-1 rounded-3xl bg-blue-100 text-black text-xs font-normal w-fit">{data?.keyresponsibilities}</span>
+                                            <span className="px-2.5 py-1 rounded-3xl bg-blue-100 text-black text-xs font-normal w-fit">{data?.categories?.categoryName}</span>
                                             <Link href={`/view-job/${data?.slug}`} className="block text-black text-2xl leading-8 font-normal my-2" onClick={() => handleViewJobClick(data?.id, data?.slug, data?.channelId)}>{data?.title}</Link>
                                             <p className="text-sm font-light leading-4 text-blue-600 mb-4">Job code: <span className="text-gray-500">{data?.jobcode}</span></p>
                                             <div className="flex flex-col gap-4 mb-6">
