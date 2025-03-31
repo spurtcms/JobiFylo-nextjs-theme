@@ -1,6 +1,7 @@
 "use client"
 import { fetchGraphQl } from '@/api/graphicql'
 import { GET_JOB_LIST_QUERY, GET_POST_CATEGORIES_LIST, GET_POST_CATEGORY_NAME } from '@/api/query'
+import { channelName } from '@/api/url'
 import { Entry_List_Api_Data } from '@/StoreConfiguration/slices/customer'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
@@ -32,7 +33,8 @@ export default function FilterJob({ pathname, setList }) {
     let cardParams = {
       "entryFilter": {
         "Status": "published",
-        "categorySlug": "jobs"
+        "categorySlug": "jobs",
+        "ChannelName": channelName
       },
       "AdditionalData": {
         "categories": true,
@@ -97,17 +99,18 @@ export default function FilterJob({ pathname, setList }) {
 
   const handleFilter = async () => {
     let variable_list = {
-      entryFilter: {
-        categorySlug: jobName?.label,
+      "entryFilter": {
+        "categorySlug": jobName?.label,
+        "ChannelName": channelName
       },
-      commonFilter: {
-        location: location,
-        Experience: expYear?.value,
-        posteddate: postDate?.label
+      "commonFilter": {
+        "location": location,
+        "Experience": expYear?.value,
+        "posteddate": postDate?.label
       },
-      AdditionalData: {
-        additionalFields: true,
-        categories: true
+      "AdditionalData": {
+        "additionalFields": true,
+        "categories": true
       },
     };
     if (jobName !== "" || location !== "" || expYear !== "" || postDate !== "") {

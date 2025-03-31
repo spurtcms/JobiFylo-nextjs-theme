@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { GET_HEADER_FORGOT_PASSWORD_QUERY, GET_JOB_LIST_QUERY } from '@/api/query';
 import { fetchGraphQl } from '@/api/graphicql';
-import { local_Url } from '@/api/url';
+import { channelName, local_Url } from '@/api/url';
 import Head from 'next/head';
 
 const Forgot_Password = () => {
@@ -26,17 +26,18 @@ const Forgot_Password = () => {
     };
     const [signupTenantId, setSignupTenantId] = useState("");
     const [signupUserId, setSignupUserId] = useState("");
-   const [url, setUrl] = useState(null)
+    const [url, setUrl] = useState(null)
 
 
-// const url=usePathname()
-// const baseUrl=url.get("url")
-console.log(url,"baseUrl")
+    // const url=usePathname()
+    // const baseUrl=url.get("url")
+    console.log(url, "baseUrl")
     useEffect(() => {
         const fetchData = async () => {
             const variable_list = {
                 "entryFilter": {
-                    "categorySlug": "best-stories"
+                    "categorySlug": "best-stories",
+                    "ChannelName": channelName
                 },
                 "commonFilter": {
                     // "limit": 10,

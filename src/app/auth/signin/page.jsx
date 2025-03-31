@@ -2,6 +2,7 @@
 
 import { fetchGraphQl } from '@/api/graphicql'
 import { GET_JOB_LIST_QUERY, GET_SIGNIN_QUERY } from '@/api/query'
+import { channelName } from '@/api/url'
 import Head from 'next/head'
 
 // import Cookies from 'js-cookie'
@@ -38,7 +39,8 @@ const Signin = () => {
         const fetchData = async () => {
             const variable_list = {
                 "entryFilter": {
-                    "categorySlug": "best-stories"
+                    "categorySlug": "best-stories",
+                    "ChannelName": channelName
                 },
                 "commonFilter": {
                     // "limit": 10,

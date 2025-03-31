@@ -1,6 +1,7 @@
 "use client"
 import { fetchGraphQl } from "@/api/graphicql";
 import { GET_JOB_LIST_QUERY, GET_RESET_NEW_PASSWORD } from "@/api/query";
+import { channelName } from "@/api/url";
 import Head from "next/head";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -36,7 +37,8 @@ const ChangePassword = () => {
         const fetchData = async () => {
             const variable_list = {
                 "entryFilter": {
-                    "categorySlug": "jobs"
+                    "categorySlug": "jobs",
+                    "ChannelName": channelName
                 },
                 "commonFilter": {
                     // "limit": 10,

@@ -1,6 +1,7 @@
 "use client"
 import { fetchGraphQl } from '@/api/graphicql';
 import { GET_JOB_LIST_QUERY, GET_REGISTER_QUERY } from '@/api/query';
+import { channelName } from '@/api/url';
 import Head from 'next/head';
 
 import Link from 'next/link';
@@ -40,7 +41,8 @@ const Signup = () => {
         const fetchData = async () => {
             const variable_list = {
                 "entryFilter": {
-                    "categorySlug": "best-stories"
+                    "categorySlug": "best-stories",
+                    "ChannelName": channelName
                 },
                 "commonFilter": {
                     // "limit": 10,
@@ -145,9 +147,9 @@ const Signup = () => {
                     const response = await fetchGraphQl(GET_REGISTER_QUERY, register_list);
                     console.log(" response", response)
                     setLoginResponse(response)
-                    if (response?.memberRegister ) {
+                    if (response?.memberRegister) {
                         router.push("/")
-                    } else if(response ==null) {
+                    } else if (response == null) {
                         setEmailError("Email already exists")
                         setEmailStateError(true)
                     }

@@ -1,6 +1,7 @@
 import ViewJobServer from './ViewJobServer'
 import { Token, fetchGraphQLDa } from '@/api/clientGraphicql';
 import { GET_JOB_LIST_QUERY, GET_VIEW_DETAIL_QUERY } from '@/api/query';
+import { channelName } from '@/api/url';
 
 
 export default async function ViewJobPage({ params }) {
@@ -11,7 +12,8 @@ export default async function ViewJobPage({ params }) {
     let cardParams = {
         "entryFilter": {
             "Status": "published",
-            "categorySlug": "jobs"
+            "categorySlug": "jobs",
+            "ChannelName": channelName
         },
         "AdditionalData": {
             "categories": true,
@@ -33,7 +35,8 @@ export default async function ViewJobPage({ params }) {
     let relatedValues = {
         "entryFilter": {
             "Status": "published",
-            "categorySlug": viewJobApi?.ChannelEntryDetail?.categories?.[0]?.[0]?.categorySlug
+            "categorySlug": viewJobApi?.ChannelEntryDetail?.categories?.[0]?.[0]?.categorySlug,
+            "ChannelName": channelName
         },
         "AdditionalData": {
             "categories": true,

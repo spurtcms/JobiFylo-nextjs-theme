@@ -7,6 +7,7 @@ import CardListViewPage from './CardListPage'
 import { useDispatch, useSelector } from 'react-redux'
 import { Entry_List_Api_Data, search_Keyword_List, searchApi_List } from '@/StoreConfiguration/slices/customer'
 import HomePageLoader from '../skeleton/homePageLoader'
+import { channelName } from '@/api/url'
 
 
 export default function HomeHeader({ setList }) {
@@ -52,17 +53,18 @@ export default function HomeHeader({ setList }) {
   const handleSearchList = async () => {
 
     let variable_list = {
-      entryFilter: {
-        categorySlug: "jobs",
+      "entryFilter": {
+        "categorySlug": "jobs",
+        "ChannelName": channelName
       },
-      commonFilter: {
-        keyword: jobTitle,
-        location: location,
+      "commonFilter": {
+        "keyword": jobTitle,
+        "location": location,
 
       },
-      AdditionalData: {
-        additionalFields: true,
-        categories: true
+      "AdditionalData": {
+        "additionalFields": true,
+        "categories": true
       },
     };
     if (jobTitle !== "" || location !== "") {

@@ -7,6 +7,7 @@ import React, { useEffect, useState } from "react";
 import ViewJobPage from "../ViewJob";
 import { Category_Slug_Data, Entry_Detail_api_Data_redux, Entry_List_Api_Data } from "@/StoreConfiguration/slices/customer";
 import HomePageLoader from "../skeleton/homePageLoader";
+import { channelName } from "@/api/url";
 // import { fetchGraphQLDa } from "@/api/clientGraphicql";
 
 export default function CardListViewPage({ params, List }) {
@@ -49,7 +50,8 @@ export default function CardListViewPage({ params, List }) {
     let cardParams = {
       "entryFilter": {
         "Status": "published",
-        "categorySlug": "jobs"
+        "categorySlug": "jobs",
+        "ChannelName": channelName
       },
       "AdditionalData": {
         "categories": true,
