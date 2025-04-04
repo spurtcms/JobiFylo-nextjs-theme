@@ -405,6 +405,7 @@ $AdditionalData: EntriesAdditionalData
         }
         
       }
+       count
     }
   }`
 

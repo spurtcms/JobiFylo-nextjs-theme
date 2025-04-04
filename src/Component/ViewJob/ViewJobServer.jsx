@@ -7,22 +7,20 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import DOMPurify from 'dompurify';
 import { fetchGraphQLDa } from '@/api/clientGraphicql';
-import { GET_VIEW_DETAIL_QUERY } from '@/api/query';
+import { GET_JOB_LIST_QUERY, GET_VIEW_DETAIL_QUERY } from '@/api/query';
 import { fetchGraphQl } from '@/api/graphicql';
-import { form_Base_url } from '@/api/url';
+import { channelName, form_Base_url } from '@/api/url';
 import { Entry_Detail_api_Data_redux, Related_Detail_api_Data_redux } from '@/StoreConfiguration/slices/customer';
-export default function ViewJobServer({ ListData, token, params, RelatedPageApi, viewJobApi }) {
+export default function ViewJobServer({ ListData, token, params, viewJobApi }) {
     const [relatedList, setRelatedList] = useState([])
-    const [categorySlug, setCategorySlug] = useState("");
     const Category = useSelector((s) => s?.customerRedux?.Category_Slug_Data)
     const [viewJob, setViewJob] = useState({})
     const DetailData = useSelector((s) => s?.customerRedux?.Entry_Detail_api_Data_redux);
+    const RelatedDataSlug = useSelector((s) => s?.customerRedux?.Related_Jobs_redux);
+    console.log(relatedList, "slugSlugSlug")
     const ListDetailData = useSelector((s) => s?.customerRedux?.List_Detail_api_Data_redux);
-
-    console.log(DetailData, "ListDetailDataJobs")
     const dispatch = useDispatch()
 
-    console.log(viewJobApi?.ChannelEntryDetail?.categories?.[0]?.[0]?.categorySlug, "viewJobApi")
     const transformData = (apiResponse) => {
         return apiResponse?.ChannelEntriesList?.channelEntriesList?.map((entry) => {
             console.log(entry, "vfdkvfd")
@@ -45,14 +43,27 @@ export default function ViewJobServer({ ListData, token, params, RelatedPageApi,
             return transformedEntry;
         });
     };
-    console.log(RelatedPageApi, "cnsjdcfbdhf")
-    console.log(viewJobApi, "vdbvbsdfs")
 
     useEffect(() => {
-        setRelatedList(transformData(RelatedPageApi))
-    }, [])
-    console.log(relatedList, "jbdfvbhj")
+        const relatedJobs = async () => {
 
+            let relatedValues = {
+                "entryFilter": {
+                    "Status": "published",
+                    "categorySlug": RelatedDataSlug,
+                    "ChannelName": channelName
+                },
+                "AdditionalData": {
+                    "categories": true,
+                    "additionalFields": true
+                },
+
+            }
+            const RelatedPageApi = await fetchGraphQLDa(GET_JOB_LIST_QUERY, relatedValues)
+            setRelatedList(transformData(RelatedPageApi))
+        }
+        relatedJobs()
+    }, [])
 
     const sanitizeHTML = (html) => {
         const sanitized = DOMPurify.sanitize(html, {
@@ -116,8 +127,6 @@ export default function ViewJobServer({ ListData, token, params, RelatedPageApi,
 
         setViewJob(transformDetailData(postes));
         dispatch(Entry_Detail_api_Data_redux(transformDetailData(postes)));
-
-        // dispatch(Related_Detail_api_Data_redux(transformDetailData(postes)));
         console.log(transformDetailData(postes), "cskjdksjdns")
         if (!postes) {
             return notFound();
@@ -173,7 +182,7 @@ export default function ViewJobServer({ ListData, token, params, RelatedPageApi,
                         <div>
                             <div className="flex justify-between items-center mb-6">
                                 <h2 className="text-2xl font-medium leading-[30px]  text-black">Related Jobs</h2>
-                                <Link href="#" className="flex items-center gap-2 text-xs font-light text-blue-600"> View All <img src="/img/right-arrow.svg" /> </Link>
+                                <Link href="/" className="flex items-center gap-2 text-xs font-light text-blue-600"> View All <img src="/img/right-arrow.svg" /> </Link>
                             </div>
 
 

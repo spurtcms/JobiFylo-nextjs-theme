@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import Select from 'react-select';
 
-export default function FilterJob({ pathname, setList }) {
+export default function FilterJob({ pathname, setList, setSearchStatus }) {
 
   const [catList, setCatList] = useState([])
   const [jobName, setJobName] = useState("")
@@ -24,6 +24,7 @@ export default function FilterJob({ pathname, setList }) {
   const [categoryName, setCategoryName] = useState();
   const [trigger, setTrigger] = useState(false)
   const [ExpStatus, setExpStatus] = useState([])
+  const [inputData, setInputData] = useState()
   const Category = useSelector((s) => s?.customerRedux?.Category_Slug_Data)
   const listAdditionalData = useSelector((s) => s?.customerRedux?.Entry_List_Api_Data)
   console.log(inputJob, "jnbvbfbgffj")
@@ -98,6 +99,13 @@ export default function FilterJob({ pathname, setList }) {
   }
 
   const handleFilter = async () => {
+
+    setTrigger(true)
+    setSearchStatus(true)
+    setInputData(location)
+    setInputJob(jobName?.label)
+    setInputExp(expYear?.label)
+    setInputDate(postDate?.label)
     let variable_list = {
       "entryFilter": {
         "categorySlug": jobName?.label,
@@ -121,6 +129,7 @@ export default function FilterJob({ pathname, setList }) {
       // setLocation("");
       // setExpYear("");
       // setPostDate("");
+
     }
   }
   const categoryFun = async () => {
@@ -140,66 +149,68 @@ export default function FilterJob({ pathname, setList }) {
   useEffect(() => {
     categoryFun()
   }, [])
-  // const handleClear = async () => {
-  //   setInputDate("")
-  //   setInputExp("")
-  //   setInputJob("")
-  //   setInputLoc("")
+  const handleClear = async () => {
+    setTrigger(false)
+    setInputDate("")
+    setInputExp("")
+    setInputJob("")
+    setInputLoc("")
+    setJobName("")
+    setLocation("")
+    setExpYear("")
+    setPostDate("")
 
-  //   let variables = {
-  //     entryFilter: {
-  //       categorySlug: "",
-  //     },
-  //     commonFilter: {
-  //       location: "",
-  //       Experience: "",
-  //       posteddate: ""
-  //     },
-  //     AdditionalData: {
-  //       additionalFields: true,
-  //       categories: true
-  //     },
-  //   }
-  //   let ListData = await fetchGraphQl(GET_JOB_LIST_QUERY, variables)
-  //   setList(transformData(ListData))
-  // }
+    let variables = {
+      entryFilter: {
+        categorySlug: "",
+        ChannelName: channelName
+      },
+      commonFilter: {
+        location: "",
+        Experience: "",
+        posteddate: ""
+      },
+      AdditionalData: {
+        additionalFields: true,
+        categories: true
+      },
+    }
+    let ListData = await fetchGraphQl(GET_JOB_LIST_QUERY, variables)
+    setList(transformData(ListData))
+  }
 
+  const handleClose = async (e) => {
+    console.log(e, "xmsbhb")
+    if (inputJob !== "") {
+      setJobName("")
+      setInputJob("")
+    }
+    else if (inputLoc !== "") {
+      setLocation("")
+      setInputLoc("")
+    }
+    else if (inputExp !== "") {
+      setExpYear("")
+      setInputExp("")
+    }
 
-  // const handleClose = async (data) => {
-  //   if (data == inputJob?.label) {
-  //     setJobName("")
-  //     setInputJob("")
-  //   }
-  //   else if (data == inputLoc?.data?.target?.value) {
-  //     setLocation("")
-  //     setInputLoc("")
-  //   }
-  //   else if (data == inputExp?.label) {
-  //     setExpYear("")
-  //     setInputExp("")
-  //   }
-
-  //   else if (data == inputDate?.label) {
-  //     setPostDate("")
-  //     setInputDate("")
-  //     let variable = {
-  //       entryFilter: {
-  //         categorySlug: jobName?.label,
-  //       },
-  //       commonFilter: {
-  //         location: location,
-  //         Experience: expYear?.value,
-  //         posteddate: ""
-  //       },
-  //       AdditionalData: {
-  //         additionalFields: true,
-  //         categories: true
-  //       },
-  //     }
-  //     let filterListData = await fetchGraphQl(GET_JOB_LIST_QUERY, variable)
-  //     setList(transformData(filterListData))
-  //   }
-  // }
+    else if (inputDate !== "") {
+      console.log("ggggggg")
+      setPostDate("")
+      setInputDate("")
+      // let variable = {
+      //   commonFilter: {
+      //     posteddate: ""
+      //   },
+      //   AdditionalData: {
+      //     additionalFields: true,
+      //     categories: true
+      //   },
+      // }
+      // let filterListData = await fetchGraphQl(GET_JOB_LIST_QUERY, variable)
+      // setList(transformData(filterListData))
+    }
+  }
   const jobFilterOption = catList?.map((data) => (
     {
       value: data.id,
@@ -232,7 +243,7 @@ export default function FilterJob({ pathname, setList }) {
     { id: 3, name: "This Year", apiName: "" },
     { id: 4, name: "Today", apiName: "" },
   ]
-  let dateFilterOption = postedD?.map((data) => (
+  const dateFilterOption = postedD?.map((data) => (
     {
       value: data?.id,
       label: data?.name
@@ -259,16 +270,68 @@ export default function FilterJob({ pathname, setList }) {
         </div>
         <Select className='text-sm' placeholder="Experienced Level"
           value={expYear} options={experiance} onChange={(e) => handleExpYear(e)}>
-
         </Select>
-
         <Select placeholder="Date Posted" className='text-sm'
           value={postDate} options={dateFilterOption} onChange={(e) => handleMonth(e)}>
-
         </Select>
-
-        <button className="min-w-[138px] h-[42px] bg-blue-600 text-white rounded text-sm font-medium md:col-auto col-span-2" onClick={handleFilter}>Filter Jobs</button>
+        {
+          jobName !== "" || expYear !== "" || location !== "" || postDate !== "" ?
+            <>
+              <button
+                className="min-w-[138px] h-[42px] bg-blue-600 text-white rounded text-sm font-medium md:col-auto col-span-2"
+                onClick={handleFilter}>
+                Filter Jobs
+              </button>
+            </> :
+            <>
+              <button
+                className="min-w-[138px] h-[42px] bg-blue-400 text-white rounded text-sm font-medium md:col-auto col-span-2"
+                disabled
+                style={{ pointerEvents: "none" }}>
+                Filter Jobs
+              </button>
+            </>
+        }
       </div>
+      <div className="flex justify-between sm:items-center items-end pb-6 border-gray border-b">
+        <div className="flex flex-wrap gap-4">
+          {
+            trigger ?
+              <>
+                {inputJob != undefined && inputJob != "" &&
+                  <div className="flex gap-2 p-3 whitespace-nowrap bg-slate-50 border-gray-500 border rounded-md text-sm font-light text-black leading-4 ">
+                    {inputJob}
+                    <img src="/img/cancel.svg" className="cursor-pointer" onClick={() => handleClose()} />
+                  </div>}
+                {inputLoc != "" &&
+                  <div className="flex gap-2 p-3 whitespace-nowrap bg-slate-50 border-gray-500 border rounded-md text-sm font-light text-black leading-4">
+                    {inputLoc}
+                    <img src="/img/cancel.svg" className="cursor-pointer" onClick={() => handleClose()} />
+                  </div>}
+
+                {inputExp != undefined && inputExp != "" &&
+                  <div className="flex gap-2 p-3 whitespace-nowrap bg-slate-50 border-gray-500 border rounded-md text-sm font-light text-black leading-4">
+                    {inputExp}
+                    <img src="/img/cancel.svg" className="cursor-pointer" onClick={() => handleClose()} />
+                  </div>}
+
+                {inputDate != undefined && inputDate != "" &&
+                  <div className="flex gap-2 p-3 whitespace-nowrap bg-slate-50 border-gray-500 border rounded-md text-sm font-light text-black leading-4">
+                    {inputDate}
+                    <img src="/img/cancel.svg" className="cursor-pointer" onClick={() => handleClose()} />
+                  </div>}
+
+                <button className="text-sm whitespace-nowrap font-light text-black leading-4 p-3 border-gray-500 rounded-md border bg-white" onClick={() => handleClear()}>Clear All</button>
+
+              </> : <>
+
+              </>
+
+          }
+
+        </div>
+      </div>
+
       <div className="flex justify-between sm:items-center items-end pb-6 border-gray border-b">
         {pathname == "/" ? <Link href="/list-view" className="p-3 flex gap-2 justify-center items-center min-w-[110px] whitespace-nowrap h-[42px] text-blue-600 border-blue-600 border rounded-md ml-auto">
           <img src="/img/list.svg" />

@@ -32,24 +32,24 @@ export default async function ViewJobPage({ params }) {
 
     const viewJobApi = await fetchGraphQLDa(GET_VIEW_DETAIL_QUERY, variable_slug)
 
-    let relatedValues = {
-        "entryFilter": {
-            "Status": "published",
-            "categorySlug": viewJobApi?.ChannelEntryDetail?.categories?.[0]?.[0]?.categorySlug,
-            "ChannelName": channelName
-        },
-        "AdditionalData": {
-            "categories": true,
-            "additionalFields": true
-        },
+    // let relatedValues = {
+    //     "entryFilter": {
+    //         "Status": "published",
+    //         "categorySlug": viewJobApi?.ChannelEntryDetail?.categories?.[0]?.[0]?.categorySlug,
+    //         "ChannelName": channelName
+    //     },
+    //     "AdditionalData": {
+    //         "categories": true,
+    //         "additionalFields": true
+    //     },
 
-    }
-    const RelatedPageApi = await fetchGraphQLDa(GET_JOB_LIST_QUERY, relatedValues)
-    console.log(RelatedPageApi, "jhbdfshbfhsj")
+    // }
+    // const RelatedPageApi = await fetchGraphQLDa(GET_JOB_LIST_QUERY, relatedValues)
+    // console.log(viewJobApi?.ChannelEntryDetail?.categories?.categorySlug, "jhbdfshbfhsj")
 
     return (
         <>
-            <ViewJobServer token={token} params={params} cardListPage={cardListPage} RelatedPageApi={RelatedPageApi} viewJobApi={viewJobApi} />
+            <ViewJobServer token={token} params={params} cardListPage={cardListPage} viewJobApi={viewJobApi} />
         </>
     )
 }

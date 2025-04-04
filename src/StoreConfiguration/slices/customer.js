@@ -14,7 +14,8 @@ const initialState = {
     Entry_List_Api_Data: [],
     Related_Detail_api_Data_redux: "",
     List_Detail_api_Data_redux: "",
-    searchApi_List: []
+    searchApi_List: [],
+    Related_Jobs_redux: ""
 };
 
 
@@ -63,11 +64,14 @@ export const customerSlice = createSlice({
         },
         searchApi_List: (state, action) => {
             state.searchApi_List = action.payload
+        },
+        Related_Jobs_redux: (state, action) => {
+            state.Related_Jobs_redux = action.payload
         }
     },
 });
 
 
-export const { addCount, EntryList_Redux_function, header_slug_Reduc_function, Header_keyword_redux_function, Header_logo_api_result_redux_function, Header_api_result_redux_function, Entry_Detail_api_Data_redux, search_Keyword_List, Category_Slug_Data, Entry_List_Api_Data, Related_Detail_api_Data_redux, List_Detail_api_Data_redux, searchApi_List } = customerSlice.actions;
+export const { addCount, EntryList_Redux_function, header_slug_Reduc_function, Header_keyword_redux_function, Header_logo_api_result_redux_function, Header_api_result_redux_function, Entry_Detail_api_Data_redux, search_Keyword_List, Category_Slug_Data, Entry_List_Api_Data, Related_Detail_api_Data_redux, List_Detail_api_Data_redux, searchApi_List, Related_Jobs_redux } = customerSlice.actions;
 
 export default customerSlice.reducer;

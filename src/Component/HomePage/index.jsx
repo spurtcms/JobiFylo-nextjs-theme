@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react'
 import HomePageAction from './HomePageAction'
-import { fetchGraphQl } from '@/api/graphicql'
+
 
 
 export default async function Home() {

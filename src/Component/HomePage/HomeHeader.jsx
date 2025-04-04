@@ -9,8 +9,7 @@ import { Entry_List_Api_Data, search_Keyword_List, searchApi_List } from '@/Stor
 import HomePageLoader from '../skeleton/homePageLoader'
 import { channelName } from '@/api/url'
 
-
-export default function HomeHeader({ setList }) {
+export default function HomeHeader({ setList, setSearchStatus }) {
   const [jobTitle, setJobTitle] = useState('')
   const [location, setLocation] = useState('')
   const [searchList, setSearchList] = useState("");
@@ -19,12 +18,53 @@ export default function HomeHeader({ setList }) {
   const dispatch = useDispatch();
   const SearchApiList = useSelector((s) => s?.customerRedux?.searchApi_List)
   console.log(SearchApiList, "cbfhbefjehnrfn")
-  const handleJobTitle = (e, value) => {
-    if (value == "jobTitle") {
-      setJobTitle(e)
+
+  const handleJobTitle = async (e) => {
+    setJobTitle(e.target.value)
+    if (e.target.value == "") {
+      let variable_list = {
+        "entryFilter": {
+          "categorySlug": "jobs",
+          "ChannelName": channelName
+        },
+        "commonFilter": {
+          "keyword": "",
+          "location": "",
+        },
+        "AdditionalData": {
+          "additionalFields": true,
+          "categories": true
+        },
+      };
+      if (jobTitle !== "" || location !== "") {
+        const res = await fetchGraphQl(GET_JOB_LIST_QUERY, variable_list);
+        setList(transformData(res));
+      }
+
     }
-    else if (value == "jobLocation") {
-      setLocation(e)
+  }
+
+  const handleLocation = async (e) => {
+    setLocation(e.target.value)
+    if (e.target.value == "") {
+      let variable_list = {
+        "entryFilter": {
+          "categorySlug": "jobs",
+          "ChannelName": channelName
+        },
+        "commonFilter": {
+          "keyword": "",
+          "location": "",
+        },
+        "AdditionalData": {
+          "additionalFields": true,
+          "categories": true
+        },
+      };
+      if (jobTitle !== "" || location !== "") {
+        const res = await fetchGraphQl(GET_JOB_LIST_QUERY, variable_list);
+        setList(transformData(res));
+      }
     }
   }
 
@@ -51,7 +91,7 @@ export default function HomeHeader({ setList }) {
     });
   };
   const handleSearchList = async () => {
-
+    setSearchStatus(true)
     let variable_list = {
       "entryFilter": {
         "categorySlug": "jobs",
@@ -60,7 +100,6 @@ export default function HomeHeader({ setList }) {
       "commonFilter": {
         "keyword": jobTitle,
         "location": location,
-
       },
       "AdditionalData": {
         "additionalFields": true,
@@ -76,8 +115,11 @@ export default function HomeHeader({ setList }) {
       dispatch(search_Keyword_List(res?.ChannelEntriesList?.channelEntriesList));
       // setJobTitle("");
       // setLocation("");
+
     }
   }
+
+
 
   // const handleSearch=async()=>{
   //   // setJobTitle("")
@@ -137,7 +179,7 @@ export default function HomeHeader({ setList }) {
                   className="sm:h-full sm:border-0 border-b border-gray  h-10 py-0 sm:py-7 w-full focus-visible:outline-none ps-14 text-sm leading-4 font-light placeholder:text-slate-300"
                   placeholder="Search by Job Title/Role"
                   value={jobTitle}
-                  onChange={(e) => setJobTitle(e.target.value)}
+                  onChange={(e) => handleJobTitle(e)}
                   onKeyDown={(e) => enterKeyEvent(e)}
                 />
                 <img src="/img/search.svg" className="absolute top-3 sm:top-[27px] left-6" />
@@ -148,12 +190,29 @@ export default function HomeHeader({ setList }) {
                   className="sm:h-full h-10 py-0 sm:py-7 w-full sm:border-0 border-b border-gray focus-visible:outline-none ps-14 text-sm leading-4 font-light placeholder:text-slate-300"
                   placeholder="Location"
                   value={location}
-                  onChange={(e) => setLocation(e.target.value)}
+                  onChange={(e) => handleLocation(e)}
                   onKeyDown={(e) => enterKeyEvent(e)}
                 />
                 <img src="/img/location.svg" className="absolute top-3 sm:top-[27px] left-6" />
               </div>
-              <button className="sm:h-full h-10 min-w-[177px] sm:mt-0 mt-3 rounded bg-blue-600 text-white text-base leading-5 font-medium" onClick={handleSearchList}>Search Jobs</button>
+              {
+                jobTitle !== "" || location !== "" ?
+                  <>
+                    <button
+                      className="sm:h-full h-10 min-w-[177px] sm:mt-0 mt-3 rounded bg-blue-600 text-white text-base leading-5 font-medium"
+                      onClick={handleSearchList}>
+                      Search Jobs
+                    </button>
+                  </> :
+                  <>
+                    <button
+                      className="sm:h-full h-10 min-w-[177px] sm:mt-0 mt-3 rounded bg-blue-400 text-white text-base leading-5 font-medium"
+                      disabled style={{ pointerEvents: "none" }}     >
+                      Search Jobs
+                    </button>
+                  </>
+              }
+
             </div>
             <div className="w-full h-px bg-gray-200"></div>
           </div>
