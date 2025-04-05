@@ -11,7 +11,7 @@ import { channelName } from "@/api/url";
 import ReactPaginate from "react-paginate";
 // import { fetchGraphQLDa } from "@/api/clientGraphicql";
 
-export default function CardListViewPage({ params, List, searchStatus }) {
+export default function CardListViewPage({ params, List, searchStatus, loaderSearch }) {
   const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   const [cardData, setCardData] = useState([]);
   const [viewJob, setViewJob] = useState("");
@@ -117,8 +117,6 @@ export default function CardListViewPage({ params, List, searchStatus }) {
           dispatch(Category_Slug_Data(values?.categorySlug))
         })
       }
-
-
     })
     return transformedEntry;
 
@@ -144,7 +142,6 @@ export default function CardListViewPage({ params, List, searchStatus }) {
   }
   return (
     <div>
-
       {
         searchStatus == true ?
           <>
@@ -166,30 +163,39 @@ export default function CardListViewPage({ params, List, searchStatus }) {
               </> : <>
                 <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 grid-cols-1 mt-6 mb-10">
                   {
-                    List?.map((data, index) => (
-                      <div className="border-gray-300 border rounded p-4 hover:shadow-lg flex flex-col" key={index}>
-                        {console.log(data, "nckdsjfcnskjw")}
-                        <span className="px-2.5 py-1 rounded-3xl bg-blue-100 text-black text-xs font-normal w-fit">{data?.categories?.categoryName}</span>
-                        <Link href={`/view-job/${data?.slug}`} className="block text-black text-2xl leading-8 font-normal my-2 " onClick={() => handleViewJobClick(data?.id, data?.slug, data?.channelId)}>{data?.title}</Link>
-                        <p className="text-sm font-light leading-4 text-blue-600 mb-4">Job code: <span className="text-gray-500">{data?.jobcode}</span></p>
-                        <div className="flex flex-col gap-4 mb-6">
-                          <div className="flex items-center gap-2">
-                            <img src="/img/exp.svg" />
-                            <p className="text-sm font-normal leading-4 text-blue-600 ">Experience: <span className="text-gray-500 font-light">{data?.experiance}</span></p>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <img src="/img/Time.svg" />
-                            <p className="text-sm font-normal leading-4 text-blue-600 ">Job Type:  <span className="text-gray-500 font-light">{data?.jobtype}</span></p>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <img src="/img/job-type.svg" />
-                            <p className="text-sm font-normal leading-4 text-blue-600 ">Location:  <span className="text-gray-500 font-light">{data?.location}</span></p>
-                          </div>
-                        </div>
-                        <h5 className="text-gray-500 text-xs font-light mb-4">Posted Date: {data?.posteddate}</h5>
-                        <Link href={`/view-job/${data?.slug}`} className="w-full h-11 bg-blue-600 text-white text-base font-normal rounded flex justify-center items-center mt-auto" onClick={() => handleViewJobClick(data?.id, data?.slug, data?.channelId)}>View Job</Link>
-                      </div>
-                    ))
+                    loaderSearch ?
+                      (
+                        arr?.map((index, id) => (
+                          <HomePageLoader key={id} />
+                        ))
+                      ) : <>
+                        {
+                          List?.map((data, index) => (
+                            <div className="border-gray-300 border rounded p-4 hover:shadow-lg flex flex-col" key={index}>
+                              {console.log(data, "nckdsjfcnskjw")}
+                              <span className="px-2.5 py-1 rounded-3xl bg-blue-100 text-black text-xs font-normal w-fit">{data?.categories?.categoryName}</span>
+                              <Link href={`/view-job/${data?.slug}`} className="block text-black text-2xl leading-8 font-normal my-2 " onClick={() => handleViewJobClick(data?.id, data?.slug, data?.channelId)}>{data?.title}</Link>
+                              <p className="text-sm font-light leading-4 text-blue-600 mb-4">Job code: <span className="text-gray-500">{data?.jobcode}</span></p>
+                              <div className="flex flex-col gap-4 mb-6">
+                                <div className="flex items-center gap-2">
+                                  <img src="/img/exp.svg" />
+                                  <p className="text-sm font-normal leading-4 text-blue-600 ">Experience: <span className="text-gray-500 font-light">{data?.experiance}</span></p>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  <img src="/img/Time.svg" />
+                                  <p className="text-sm font-normal leading-4 text-blue-600 ">Job Type:  <span className="text-gray-500 font-light">{data?.jobtype}</span></p>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  <img src="/img/job-type.svg" />
+                                  <p className="text-sm font-normal leading-4 text-blue-600 ">Location:  <span className="text-gray-500 font-light">{data?.location}</span></p>
+                                </div>
+                              </div>
+                              <h5 className="text-gray-500 text-xs font-light mb-4">Posted Date: {data?.posteddate}</h5>
+                              <Link href={`/view-job/${data?.slug}`} className="w-full h-11 bg-blue-600 text-white text-base font-normal rounded flex justify-center items-center mt-auto" onClick={() => handleViewJobClick(data?.id, data?.slug, data?.channelId)}>View Job</Link>
+                            </div>
+                          ))
+                        }
+                      </>
                   }
                 </div>
 

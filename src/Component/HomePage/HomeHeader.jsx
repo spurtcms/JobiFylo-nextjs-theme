@@ -9,7 +9,7 @@ import { Entry_List_Api_Data, search_Keyword_List, searchApi_List } from '@/Stor
 import HomePageLoader from '../skeleton/homePageLoader'
 import { channelName } from '@/api/url'
 
-export default function HomeHeader({ setList, setSearchStatus }) {
+export default function HomeHeader({ setList, setSearchStatus, setLoaderSearch }) {
   const [jobTitle, setJobTitle] = useState('')
   const [location, setLocation] = useState('')
   const [searchList, setSearchList] = useState("");
@@ -91,6 +91,7 @@ export default function HomeHeader({ setList, setSearchStatus }) {
     });
   };
   const handleSearchList = async () => {
+    setLoaderSearch(true)
     setSearchStatus(true)
     let variable_list = {
       "entryFilter": {
@@ -115,11 +116,14 @@ export default function HomeHeader({ setList, setSearchStatus }) {
       dispatch(search_Keyword_List(res?.ChannelEntriesList?.channelEntriesList));
       // setJobTitle("");
       // setLocation("");
-
+      setLoaderSearch(false)
     }
   }
 
+  const handleClose = () => {
 
+
+  }
 
   // const handleSearch=async()=>{
   //   // setJobTitle("")
@@ -183,6 +187,7 @@ export default function HomeHeader({ setList, setSearchStatus }) {
                   onKeyDown={(e) => enterKeyEvent(e)}
                 />
                 <img src="/img/search.svg" className="absolute top-3 sm:top-[27px] left-6" />
+                {/* <img src="/img/cancel.svg" className="cursor-pointer" onClick={() => handleClose()} /> */}
               </div>
               <div className="h-[50px] w-0.5 bg-gray-200 hidden sm:flex"></div>
               <div className="w-full relative">
@@ -194,6 +199,7 @@ export default function HomeHeader({ setList, setSearchStatus }) {
                   onKeyDown={(e) => enterKeyEvent(e)}
                 />
                 <img src="/img/location.svg" className="absolute top-3 sm:top-[27px] left-6" />
+                {/* <img src="/img/cancel.svg" className="cursor-pointer" onClick={() => handleClose()} /> */}
               </div>
               {
                 jobTitle !== "" || location !== "" ?
@@ -201,14 +207,16 @@ export default function HomeHeader({ setList, setSearchStatus }) {
                     <button
                       className="sm:h-full h-10 min-w-[177px] sm:mt-0 mt-3 rounded bg-blue-600 text-white text-base leading-5 font-medium"
                       onClick={handleSearchList}>
-                      Search Jobs
+                      Search Job
                     </button>
+
                   </> :
                   <>
                     <button
                       className="sm:h-full h-10 min-w-[177px] sm:mt-0 mt-3 rounded bg-blue-400 text-white text-base leading-5 font-medium"
                       disabled style={{ pointerEvents: "none" }}     >
                       Search Jobs
+
                     </button>
                   </>
               }

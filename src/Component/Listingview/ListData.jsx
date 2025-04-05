@@ -11,11 +11,12 @@ import React, { useState } from "react"
 export default function ListedData() {
     const [listData, setListData] = useState([]);
     const [ListSearch, setListSearch] = useState(false);
+    const [loaderList, setLoaderList] = useState(false)
     return (
         <>
             {/* <HomeHeader/> */}
             {/* <FilterJob/> */}
-            <ListView listData={listData} setListData={setListData} ListSearch={ListSearch} setListSearch={setListSearch} />
+            <ListView listData={listData} setListData={setListData} ListSearch={ListSearch} setListSearch={setListSearch} loaderList={loaderList} setLoaderList={setLoaderList} />
         </>
     )
 }

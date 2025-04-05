@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import Select from 'react-select';
 
-export default function FilterJob({ pathname, setList, setSearchStatus }) {
+export default function FilterJob({ pathname, setList, setSearchStatus, setLoaderSearch }) {
 
   const [catList, setCatList] = useState([])
   const [jobName, setJobName] = useState("")
@@ -99,7 +99,7 @@ export default function FilterJob({ pathname, setList, setSearchStatus }) {
   }
 
   const handleFilter = async () => {
-
+    setLoaderSearch(true)
     setTrigger(true)
     setSearchStatus(true)
     setInputData(location)
@@ -124,7 +124,7 @@ export default function FilterJob({ pathname, setList, setSearchStatus }) {
     if (jobName !== "" || location !== "" || expYear !== "" || postDate !== "") {
       const res = await fetchGraphQl(GET_JOB_LIST_QUERY, variable_list);
       setList(transformData(res))
-
+      setLoaderSearch(false)
       // setJobName("");
       // setLocation("");
       // setExpYear("");

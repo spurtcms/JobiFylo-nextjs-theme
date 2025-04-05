@@ -17,7 +17,7 @@ export default function ViewJobServer({ ListData, token, params, viewJobApi }) {
     const [viewJob, setViewJob] = useState({})
     const DetailData = useSelector((s) => s?.customerRedux?.Entry_Detail_api_Data_redux);
     const RelatedDataSlug = useSelector((s) => s?.customerRedux?.Related_Jobs_redux);
-    console.log(relatedList, "slugSlugSlug")
+    console.log(RelatedDataSlug, "slugSlugSlug")
     const ListDetailData = useSelector((s) => s?.customerRedux?.List_Detail_api_Data_redux);
     const dispatch = useDispatch()
 
