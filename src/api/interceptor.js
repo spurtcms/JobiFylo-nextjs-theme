@@ -1,119 +1,110 @@
-
 import { Token } from "./clientGraphicql";
 import { RemoveToken } from "./serverActions";
 import { handleCartStore } from "./clientActions";
 import ToastMessage from "@/Component/ToastMessage/ToastMessage";
 
+export const apiinstance = async (url, options) => {
+  const headers = {
+    "Content-Type": "application/json",
+    ApiKey: process.env.NEXT_PUBLIC_SPURTCMS_NEXTJS_STARTER_DEFAULT_APIKEY,
+  };
+  const token = await Token();
 
+  if (token == "" || token == undefined) {
+    headers["Authorization"] =
+      process.env.NEXT_PUBLIC_SPURTCMS_NEXTJS_STARTER_THEME_TOKEN;
+  } else {
+    headers["Authorization"] = token;
+  }
 
-export const apiinstance=async(url,options)=>{
-    const headers = {
-        'Content-Type': 'application/json',
-        "ApiKey":process.env.NEXT_PUBLIC_SPURTCMS_NEXTJS_STARTER_DEFAULT_APIKEY
-      }
-      const token = await Token();
-    
-      if (token==""||token==undefined) {
-        headers['Authorization']=process.env.NEXT_PUBLIC_SPURTCMS_NEXTJS_STARTER_THEME_TOKEN
-        
-      }
-      else{
-        headers['Authorization'] = token
-      }
-    
-      const config = {
-        method: options.method || 'GET',
-        headers,
-        ...options,
-      }
-    
-      if (config.method == 'GET') {
-        delete config.body
-      } else {
-        config.body = config.body
-      }
+  const config = {
+    method: options.method || "GET",
+    headers,
+    ...options,
+  };
 
-        // const res = await fetch(`${process.env.NEXT_PUBLIC_SPURTCMS_NEXTJS_STARTER_THEME_BASEURL}${url}`,config);
-        try {
-          const res = await fetch(`${process.env.NEXT_PUBLIC_SPURTCMS_NEXTJS_STARTER_THEME_BASEURL}${url}`, config);
-          const data = await res.json()
-          return data
-        } catch (error) {
-          console.log(error)
-       
-       
-//         if(res.ok){
-//             return await res.json();
-//         }else{
-         
-//           switch(res.status){
-           
-//         case 400:
-//           handleBadRequest(res);
-//         break;
+  if (config.method == "GET") {
+    delete config.body;
+  } else {
+    config.body = config.body;
+  }
 
-//         case 401:
-//           handleUnauthorized(res)
-//           break;
+  // const res = await fetch(`${process.env.NEXT_PUBLIC_SPURTCMS_NEXTJS_STARTER_THEME_BASEURL}${url}`,config);
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SPURTCMS_NEXTJS_STARTER_THEME_BASEURL}${url}`,
+      config
+    );
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.log(error);
 
-//         case 403:
-//           handleForbidden(res);
-//           break;
+    // if (res.ok) {
+    //   return await res.json();
+    // } else {
+    //   switch (res.status) {
+    //     case 400:
+    //       handleBadRequest(res);
+    //       break;
 
-//         case 404:
-//           handleNotFound(res);
-//           break;
+    //     case 401:
+    //       handleUnauthorized(res);
+    //       break;
 
-//         case 422:
-//           handleUnProcessableEntry(res);
-//           break;
+    //     case 403:
+    //       handleForbidden(res);
+    //       break;
 
-//         case 500:
-//           handleServerError(res);
-//           break;
-//         case 409:
-//           handleErrorMessages(res);
-//           break;
-//         case 0:
-//           handleServerError502(res);
-//           break;
-//         default:
-//           break;
-//           }
+    //     case 404:
+    //       handleNotFound(res);
+    //       break;
 
-//           return res
-//         }
-     
-}
-}
-const handleBadRequest=async(res)=>{
+    //     case 422:
+    //       handleUnProcessableEntry(res);
+    //       break;
 
-  ToastMessage({type:'error',message:res?.statusText})
-}
+    //     case 500:
+    //       handleServerError(res);
+    //       break;
+    //     case 409:
+    //       handleErrorMessages(res);
+    //       break;
+    //     case 0:
+    //       handleServerError502(res);
+    //       break;
+    //     default:
+    //       break;
+    //   }
 
-const handleUnauthorized= async(res)=>{
+    //   return res;
+    // }
+  }
+};
+const handleBadRequest = async (res) => {
+  ToastMessage({ type: "error", message: res?.statusText });
+};
+
+const handleUnauthorized = async (res) => {
   // handleCartStore()
-  RemoveToken()
-  ToastMessage({type:'error',message:"Unauthorized"})
-   }
- 
- const handleForbidden=async()=>{
-  ToastMessage({type:'error',message:"Forbidden"})
- }  
+  RemoveToken();
+  ToastMessage({ type: "error", message: "Unauthorized" });
+};
 
- const handleNotFound=async()=>{
-  ToastMessage({type:'error',message:"Api not found"})
- } 
+const handleForbidden = async () => {
+  ToastMessage({ type: "error", message: "Forbidden" });
+};
 
- const handleUnProcessableEntry=async(res)=>{
-  
-  ToastMessage({type:'error',message:res?.statusText})
- }  
+const handleNotFound = async () => {
+  ToastMessage({ type: "error", message: "Api not found" });
+};
 
- const handleServerError=async(res)=>{
-  ToastMessage({type:'error',message:res?.statusText})
- }
+const handleUnProcessableEntry = async (res) => {
+  ToastMessage({ type: "error", message: res?.statusText });
+};
 
- const handleServerError502=async()=>{
+const handleServerError = async (res) => {
+  ToastMessage({ type: "error", message: res?.statusText });
+};
 
- }
+const handleServerError502 = async () => {};

@@ -1,18 +1,16 @@
 "use client"
 import { fetchGraphQl } from "@/api/graphicql";
 import { GET_JOB_LIST_QUERY, GET_RESET_NEW_PASSWORD } from "@/api/query";
-import { channelName } from "@/api/url";
 import Head from "next/head";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useState, useEffect } from "react";
 
-
 const ChangePassword = () => {
 
     const [newSetPassword, setNewSetPaasword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [hidePassword, setHidePassword] = useState(false);
+    const [hidePassword, setHidePassword] = useState(true);
     const [signupTenantId, setSignupTenantId] = useState("");
     const [signupUserId, setSignupUserId] = useState("");
     const [memberId, setMemberId] = useState("");
@@ -21,7 +19,7 @@ const ChangePassword = () => {
     const [errorPasswordShow, setErrorPasswordShow] = useState(false);
     const [confirmPasswordError, setConfirmPasswordError] = useState("");
     const [confirmPassErrorShow, setConfirmPassErrShow] = useState(false);
-    const [hideConfirmPassword, setHideConfirmPassword] = useState(false);
+    const [hideConfirmPassword, setHideConfirmPassword] = useState(true);
     const PasswordRegex = {
         password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
     }
@@ -38,7 +36,7 @@ const ChangePassword = () => {
             const variable_list = {
                 "entryFilter": {
                     "categorySlug": "jobs",
-                    "ChannelName": channelName
+                  
                 },
                 "commonFilter": {
                     // "limit": 10,
@@ -231,7 +229,12 @@ const ChangePassword = () => {
 
                                 <input placeholder="Enter your Password" type={`${hidePassword ? "password" : "text"}`} className={`border rounded-[4px] h-[42px] p-[6px_10px] text-black outline-none block w-full text-[14px] font-normal leading-[16px] placeholder:text-[#1516188F] ${errorPasswordShow ? "border-[#EC1919]" : "border-[#00000029]"} `} id="newPassword" value={newSetPassword} onChange={handlePasswordChange} />
                                 <button className='absolute right-[10px] p-0' onClick={(e) => setHidePassword(!hidePassword)}>
-                                    <img src="/img/hide-password.svg" alt="password" />
+                                    <img src=
+                                    {
+                                        hidePassword?
+                                        "/img/hide-password.svg" :"/img/show-password.svg"
+                                    }
+                                    alt="password" />
                                 </button>
 
                             </div>
@@ -249,7 +252,12 @@ const ChangePassword = () => {
 
                                 <input placeholder="Enter your Password" type={`${hideConfirmPassword ? "password" : "text"}`} className={`border rounded-[4px] h-[42px] p-[6px_10px] text-black outline-none block w-full text-[14px] font-normal leading-[16px] placeholder:text-[#1516188F] ${confirmPassErrorShow ? "border-[#EC1919]" : "border-[#00000029]"} `} id="confrimPassword" value={confirmPassword} onChange={handlePasswordChange} />
                                 <button className='absolute right-[10px] p-0' onClick={(e) => setHideConfirmPassword(!hideConfirmPassword)}>
-                                    <img src="/img/hide-password.svg" alt="password" />
+                                    <img src=
+                                    {
+                                        hideConfirmPassword?
+                                        "/img/hide-password.svg" : "/img/show-password.svg"
+                                    }
+                                    alt="password" />
                                 </button>
 
 

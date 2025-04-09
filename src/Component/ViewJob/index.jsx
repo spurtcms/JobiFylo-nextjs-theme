@@ -24,12 +24,7 @@ export default async function ViewJobPage({ params }) {
     }
 
     const cardListPage = await fetchGraphQLDa(GET_JOB_LIST_QUERY, cardParams)
-
-
-
-    console.log(cardListPage?.ChannelEntriesList?.channelEntriesList?.id, "setCardData")
     let variable_slug = { "id": cardListPage?.ChannelEntriesList?.channelEntriesList[0]?.id, "channelId": cardListPage?.ChannelEntriesList?.channelEntriesList[0]?.channelId, "slug": cardListPage?.ChannelEntriesList?.channelEntriesList[0]?.slug, "AdditionalData": { "categories": true, "additionalFields": true } };
-
     const viewJobApi = await fetchGraphQLDa(GET_VIEW_DETAIL_QUERY, variable_slug)
 
     // let relatedValues = {

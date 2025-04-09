@@ -30,7 +30,8 @@ export default function ViewJobServer({ ListData, token, params, viewJobApi }) {
                 coverImage: entry?.coverImage || "",
                 channelId: entry?.channelId,
                 slug: entry?.slug,
-                categories: entry?.categories?.[0]?.[0]
+                categories: entry?.categories?.[0]?.[0],
+                count:apiResponse?.ChannelEntriesList?.count
             };
             entry.additionalFields.fields.forEach((field) => {
                 const key = field.fieldName
@@ -124,7 +125,6 @@ export default function ViewJobServer({ ListData, token, params, viewJobApi }) {
         let variable_slug = { "id": id, "slug": slug, "AdditionalData": { additionalFields: true, categories: true }, "channelId": channelId, };
         const postes = await fetchGraphQl(GET_VIEW_DETAIL_QUERY, variable_slug)
         console.log(postes, "chennelEntryDetail")
-
         setViewJob(transformDetailData(postes));
         dispatch(Entry_Detail_api_Data_redux(transformDetailData(postes)));
         console.log(transformDetailData(postes), "cskjdksjdns")
@@ -132,16 +132,14 @@ export default function ViewJobServer({ ListData, token, params, viewJobApi }) {
             return notFound();
         }
     }
-
     return (
         <>
-
             <main className="min-h-screen max-w-screen-2xl m-auto md:py-8 lg:px-[120px] md:px-10 p-6">
                 <Link href='/' className="flex gap-1 items-center text-gray-500 text-xs font-light leading-4"> <img src="/img/left-arrow.svg" /> Back </Link>
                 {
                     DetailData ? <>
                         <div className="mt-8">
-                            <span className="px-2.5 py-1 rounded-3xl bg-blue-100 text-black text-xs font-normal">{DetailData?.categories?.categoryName}{console.log(DetailData, "cbdjjsfnsf")}</span>
+                            <span className="px-2.5 py-1 rounded-3xl bg-blue-100 text-black text-xs font-normal">{DetailData?.categories?.categoryName}</span>
                             <h2 className="mt-2 mb-4 sm:text-4xl sm:leading-[45px] font-normal text-blue-600 text-3xl">{DetailData?.title}</h2>
                             <div className="flex gap-6 mb-6 flex-wrap">
                                 <div className="flex items-center gap-2">
@@ -159,8 +157,6 @@ export default function ViewJobServer({ ListData, token, params, viewJobApi }) {
                                     <p className="text-sm  leading-4 text-gray-500 font-light">{DetailData?.location}</p>
                                 </div>
                             </div>
-
-
                             <div className="flex gap-4 items-center pb-6 border-b border-gray mb-6">
                                 <Link href={`${form_Base_url}${DetailData?.ctaLink}?id=${DetailData?.id}`} target='_blank' className="w-auto p-4 h-11 bg-blue-600 text-white text-base font-normal rounded flex justify-center items-center">Apply Now</Link>
                                 {/* <Link href="shareJob" className="w-auto p-4 h-11 bg-slate-50 text-blue-600 border border-gray-500 text-base font-normal rounded flex justify-center items-center">Share Job</Link> */}

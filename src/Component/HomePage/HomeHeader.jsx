@@ -9,7 +9,7 @@ import { Entry_List_Api_Data, search_Keyword_List, searchApi_List } from '@/Stor
 import HomePageLoader from '../skeleton/homePageLoader'
 import { channelName } from '@/api/url'
 
-export default function HomeHeader({ setList, setSearchStatus, setLoaderSearch }) {
+export default function HomeHeader({ setCardData, limit, offset }) {
   const [jobTitle, setJobTitle] = useState('')
   const [location, setLocation] = useState('')
   const [searchList, setSearchList] = useState("");
@@ -17,7 +17,6 @@ export default function HomeHeader({ setList, setSearchStatus, setLoaderSearch }
   const [searchLocation, setSearchLocation] = useState("");
   const dispatch = useDispatch();
   const SearchApiList = useSelector((s) => s?.customerRedux?.searchApi_List)
-  console.log(SearchApiList, "cbfhbefjehnrfn")
 
   const handleJobTitle = async (e) => {
     setJobTitle(e.target.value)
@@ -30,6 +29,8 @@ export default function HomeHeader({ setList, setSearchStatus, setLoaderSearch }
         "commonFilter": {
           "keyword": "",
           "location": "",
+          "limit": limit,
+          "offset": offset
         },
         "AdditionalData": {
           "additionalFields": true,
@@ -38,7 +39,7 @@ export default function HomeHeader({ setList, setSearchStatus, setLoaderSearch }
       };
       if (jobTitle !== "" || location !== "") {
         const res = await fetchGraphQl(GET_JOB_LIST_QUERY, variable_list);
-        setList(transformData(res));
+        setCardData(transformData(res));
       }
 
     }
@@ -55,6 +56,8 @@ export default function HomeHeader({ setList, setSearchStatus, setLoaderSearch }
         "commonFilter": {
           "keyword": "",
           "location": "",
+          "limit": limit,
+          "offset": offset
         },
         "AdditionalData": {
           "additionalFields": true,
@@ -63,7 +66,7 @@ export default function HomeHeader({ setList, setSearchStatus, setLoaderSearch }
       };
       if (jobTitle !== "" || location !== "") {
         const res = await fetchGraphQl(GET_JOB_LIST_QUERY, variable_list);
-        setList(transformData(res));
+        setCardData(transformData(res));
       }
     }
   }
@@ -78,7 +81,8 @@ export default function HomeHeader({ setList, setSearchStatus, setLoaderSearch }
         channelId: entry.channelId,
         slug: entry?.slug,
         description: entry?.description,
-        categories: entry?.categories?.[0]?.[0]
+        categories: entry?.categories?.[0]?.[0],
+        count: apiResponse?.ChannelEntriesList?.count
       };
       entry.additionalFields.fields.forEach((field) => {
         const key = field.fieldName
@@ -91,8 +95,8 @@ export default function HomeHeader({ setList, setSearchStatus, setLoaderSearch }
     });
   };
   const handleSearchList = async () => {
-    setLoaderSearch(true)
-    setSearchStatus(true)
+    // setLoaderSearch(true)
+    // setSearchStatus(true)
     let variable_list = {
       "entryFilter": {
         "categorySlug": "jobs",
@@ -101,6 +105,8 @@ export default function HomeHeader({ setList, setSearchStatus, setLoaderSearch }
       "commonFilter": {
         "keyword": jobTitle,
         "location": location,
+        "limit": limit,
+        "offset": offset
       },
       "AdditionalData": {
         "additionalFields": true,
@@ -110,45 +116,75 @@ export default function HomeHeader({ setList, setSearchStatus, setLoaderSearch }
     if (jobTitle !== "" || location !== "") {
       const res = await fetchGraphQl(GET_JOB_LIST_QUERY, variable_list);
       // setSearchKeyword(res?.ChannelEntriesList?.channelEntriesList); // Update state with fetched data
-      setList(transformData(res));
+      setCardData(transformData(res));
       dispatch(searchApi_List(transformData(res)))
-      // setListData(transformData(res));
+
       dispatch(search_Keyword_List(res?.ChannelEntriesList?.channelEntriesList));
       // setJobTitle("");
       // setLocation("");
-      setLoaderSearch(false)
+      // setLoaderSearch(false)
     }
   }
+  const handleClose = async () => {
+    if (jobTitle !== "") {
+      // setLoaderSearch(true)
+      // setSearchStatus(true)
+      setJobTitle("")
+      let variable_list = {
+        "entryFilter": {
+          "categorySlug": "jobs",
+          "ChannelName": channelName
+        },
+        "commonFilter": {
+          "keyword": "",
+          "location": location,
+          "limit": limit,
+          "offset": offset
+        },
+        "AdditionalData": {
+          "additionalFields": true,
+          "categories": true
+        },
+      };
 
-  const handleClose = () => {
+      if (jobTitle !== "" || location !== "") {
+        const res = await fetchGraphQl(GET_JOB_LIST_QUERY, variable_list);
+        // setSearchKeyword(res?.ChannelEntriesList?.channelEntriesList); // Update state with fetched data
+        setCardData(transformData(res));
+        // setLoaderSearch(false)
+      }
 
+    } else if (location !== "") {
+      // setLoaderSearch(true)
+      // setSearchStatus(true)
+      setLocation("")
+      let variable_list = {
+        "entryFilter": {
+          "categorySlug": "jobs",
+          "ChannelName": channelName
+        },
+        "commonFilter": {
+          "keyword": jobTitle,
+          "location": "",
+          "limit": limit,
+          "offset": offset
+
+        },
+        "AdditionalData": {
+          "additionalFields": true,
+          "categories": true
+        },
+      };
+
+      if (jobTitle !== "" || location !== "") {
+        const res = await fetchGraphQl(GET_JOB_LIST_QUERY, variable_list);
+        // setSearchKeyword(res?.ChannelEntriesList?.channelEntriesList); // Update state with fetched data
+        setCardData(transformData(res));
+        // setLoaderSearch(false)
+      }
+    }
 
   }
-
-  // const handleSearch=async()=>{
-  //   // setJobTitle("")
-  //   // setLocation("")
-  //   let variable={
-  //     "limit":10,
-  //     "offset":0,
-  //     "filter": {
-  //       "jobTitle":jobTitle,
-  //       "jobLocation":location
-
-  //     }
-  //   }
-  //       if(jobTitle&&location){
-
-  //   let filterListData=await fetchGraphQl (GET_POST_LIST_QUERY,variable)
-  //   setList(filterListData?.jobsList?.jobs)
-  //       }
-  // }
-
-  // useEffect(() => {
-  //   if (jobTitle && location) {
-  //     handleSearchList()
-  //   }
-  // }, [jobTitle, location])
 
   const enterKeyEvent = (e) => {
     console.log(e, "eventeee")
@@ -178,7 +214,7 @@ export default function HomeHeader({ setList, setSearchStatus, setLoaderSearch }
           <div className="lg:px-[120px] max-w-screen-2xl m-auto sm:h-[76px] h-auto absolute  w-full left-0 -bottom-[11rem]  sm:-bottom-16  md:px-10 px-6 mb-6">
             <div className="w-full bg-white h-full flex gap-px items-center p-2 rounded-md shadow-500 border border-gray mb-6 flex-col sm:flex-row">
 
-              <div className="w-full relative">
+              <div className="w-full relative flex">
                 <input type="text"
                   className="sm:h-full sm:border-0 border-b border-gray  h-10 py-0 sm:py-7 w-full focus-visible:outline-none ps-14 text-sm leading-4 font-light placeholder:text-slate-300"
                   placeholder="Search by Job Title/Role"
@@ -186,8 +222,14 @@ export default function HomeHeader({ setList, setSearchStatus, setLoaderSearch }
                   onChange={(e) => handleJobTitle(e)}
                   onKeyDown={(e) => enterKeyEvent(e)}
                 />
-                <img src="/img/search.svg" className="absolute top-3 sm:top-[27px] left-6" />
-                {/* <img src="/img/cancel.svg" className="cursor-pointer" onClick={() => handleClose()} /> */}
+                <div >
+                  <img src="/img/search.svg" className="absolute top-3 sm:top-[27px] left-6" />
+                  {
+                    jobTitle!=="" ?
+                    <img src="/img/cancel.svg" className=" absolute top-3 sm:top-[27px] right-6 " onClick={() => handleClose()} />:
+                    <></>
+                  }
+                </div>
               </div>
               <div className="h-[50px] w-0.5 bg-gray-200 hidden sm:flex"></div>
               <div className="w-full relative">
@@ -198,8 +240,15 @@ export default function HomeHeader({ setList, setSearchStatus, setLoaderSearch }
                   onChange={(e) => handleLocation(e)}
                   onKeyDown={(e) => enterKeyEvent(e)}
                 />
-                <img src="/img/location.svg" className="absolute top-3 sm:top-[27px] left-6" />
-                {/* <img src="/img/cancel.svg" className="cursor-pointer" onClick={() => handleClose()} /> */}
+                <div >
+
+                  <img src="/img/location.svg" className="absolute top-3 sm:top-[27px] left-6" />
+                  {
+                    location!==""?
+                    <img src="/img/cancel.svg" className="absolute top-3 sm:top-[27px] right-6" onClick={() => handleClose()} />
+                 :<></>
+                  }
+                </div>
               </div>
               {
                 jobTitle !== "" || location !== "" ?

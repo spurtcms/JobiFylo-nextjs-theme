@@ -2,13 +2,13 @@
 import { fetchGraphQl } from '@/api/graphicql'
 import { GET_JOB_LIST_QUERY, GET_POST_CATEGORIES_LIST, GET_POST_CATEGORY_NAME } from '@/api/query'
 import { channelName } from '@/api/url'
-import { Entry_List_Api_Data } from '@/StoreConfiguration/slices/customer'
+import { Entry_List_Api_Data, Homepage_View_Change_redux } from '@/StoreConfiguration/slices/customer'
 import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import React, { useEffect, useReducer, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import Select from 'react-select';
 
-export default function FilterJob({ pathname, setList, setSearchStatus, setLoaderSearch }) {
+export default function FilterJob({ pathname, setCardData, limit, offset, setLoader }) {
 
   const [catList, setCatList] = useState([])
   const [jobName, setJobName] = useState("")
@@ -17,39 +17,19 @@ export default function FilterJob({ pathname, setList, setSearchStatus, setLoade
   const [expYear, setExpYear] = useState("")
   const [expOption, setExpOption] = useState([])
   const [postDate, setPostDate] = useState("")
-  const [inputJob, setInputJob] = useState()
-  const [inputLoc, setInputLoc] = useState()
-  const [inputExp, setInputExp] = useState()
-  const [inputDate, setInputDate] = useState()
+  const [inputJob, setInputJob] = useState("")
+  const [inputLoc, setInputLoc] = useState("")
+  const [inputExp, setInputExp] = useState("")
+  const [inputDate, setInputDate] = useState("")
   const [categoryName, setCategoryName] = useState();
   const [trigger, setTrigger] = useState(false)
   const [ExpStatus, setExpStatus] = useState([])
   const [inputData, setInputData] = useState()
   const Category = useSelector((s) => s?.customerRedux?.Category_Slug_Data)
   const listAdditionalData = useSelector((s) => s?.customerRedux?.Entry_List_Api_Data)
-  console.log(inputJob, "jnbvbfbgffj")
-  console.log(ExpStatus, "ndjkfjkd")
-
-  const handleCategory = async () => {
-    let cardParams = {
-      "entryFilter": {
-        "Status": "published",
-        "categorySlug": "jobs",
-        "ChannelName": channelName
-      },
-      "AdditionalData": {
-        "categories": true,
-        "additionalFields": true
-      },
-    }
-    const cardListPage = await fetchGraphQl(GET_JOB_LIST_QUERY, cardParams)
-    console.log(cardListPage, "cardListPage")
-    console.log(GET_JOB_LIST_QUERY, "cbsjsd")
-    setExpStatus(transformData(cardListPage))
-  }
-  useEffect(() => {
-    handleCategory()
-  }, [])
+  const viewPage = useSelector((s) => s?.customerRedux?.Homepage_View_redux)
+  const dispatch = useDispatch()
+ 
   const transformData = (apiResponse) => {
     return apiResponse?.ChannelEntriesList?.channelEntriesList?.map((entry) => {
       console.log(entry, "vfdkvfd")
@@ -60,7 +40,8 @@ export default function FilterJob({ pathname, setList, setSearchStatus, setLoade
         channelId: entry?.channelId,
         slug: entry?.slug,
         description: entry?.description,
-        categories: entry?.categories?.[0]?.[0]
+        categories: entry?.categories?.[0]?.[0],
+        count:apiResponse?.ChannelEntriesList?.count
       };
       entry.additionalFields.fields.forEach((field) => {
         const key = field.fieldName
@@ -99,9 +80,9 @@ export default function FilterJob({ pathname, setList, setSearchStatus, setLoade
   }
 
   const handleFilter = async () => {
-    setLoaderSearch(true)
+    setLoader(true)
     setTrigger(true)
-    setSearchStatus(true)
+    // setSearchStatus(true)
     setInputData(location)
     setInputJob(jobName?.label)
     setInputExp(expYear?.label)
@@ -114,7 +95,9 @@ export default function FilterJob({ pathname, setList, setSearchStatus, setLoade
       "commonFilter": {
         "location": location,
         "Experience": expYear?.value,
-        "posteddate": postDate?.label
+        "posteddate": postDate?.label,
+        "limit": limit,
+        "offset": offset
       },
       "AdditionalData": {
         "additionalFields": true,
@@ -123,8 +106,8 @@ export default function FilterJob({ pathname, setList, setSearchStatus, setLoade
     };
     if (jobName !== "" || location !== "" || expYear !== "" || postDate !== "") {
       const res = await fetchGraphQl(GET_JOB_LIST_QUERY, variable_list);
-      setList(transformData(res))
-      setLoaderSearch(false)
+      setCardData(transformData(res))
+      setLoader(false)
       // setJobName("");
       // setLocation("");
       // setExpYear("");
@@ -144,12 +127,13 @@ export default function FilterJob({ pathname, setList, setSearchStatus, setLoade
     }
     const jobCategoryApi = await fetchGraphQl(GET_POST_CATEGORY_NAME, variable_category)
     setCatList(jobCategoryApi?.CategoryList?.categorylist)
-    console.log(catList, "dhbcsjdfhjsd")
+
   }
   useEffect(() => {
     categoryFun()
   }, [])
   const handleClear = async () => {
+    setLoader(true)
     setTrigger(false)
     setInputDate("")
     setInputExp("")
@@ -161,54 +145,112 @@ export default function FilterJob({ pathname, setList, setSearchStatus, setLoade
     setPostDate("")
 
     let variables = {
-      entryFilter: {
-        categorySlug: "",
-        ChannelName: channelName
+      "entryFilter": {
+        "categorySlug": "",
+        "ChannelName": channelName
       },
-      commonFilter: {
-        location: "",
-        Experience: "",
-        posteddate: ""
+      "commonFilter": {
+        "location": "",
+        "Experience": "",
+        "posteddate": "",
+        "limit": limit,
+        "offset": offset
       },
-      AdditionalData: {
-        additionalFields: true,
-        categories: true
+      "AdditionalData": {
+        "additionalFields": true,
+        "categories": true
       },
     }
     let ListData = await fetchGraphQl(GET_JOB_LIST_QUERY, variables)
-    setList(transformData(ListData))
+    setCardData(transformData(ListData))
+    setLoader(false)
   }
+  
 
   const handleClose = async (e) => {
-    console.log(e, "xmsbhb")
+
     if (inputJob !== "") {
       setJobName("")
       setInputJob("")
+       let variable = {
+         "entryFilter": {
+        "categorySlug": "",
+        "ChannelName": channelName
+      },
+        "commonFilter": {
+     "limit":limit,
+     "offset":offset
+        },
+        "AdditionalData": {
+          "additionalFields": true,
+          "categories": true
+        },
+      }
+      let filterListData = await fetchGraphQl(GET_JOB_LIST_QUERY, variable)
+      setCardData(transformData(filterListData))
     }
     else if (inputLoc !== "") {
       setLocation("")
       setInputLoc("")
+       let variable = {
+         "entryFilter": {
+        "ChannelName": channelName
+      },
+        commonFilter: {
+          "location":"",
+     "limit":limit,
+     "offset":offset
+        },
+        AdditionalData: {
+          additionalFields: true,
+          categories: true
+        },
+      }
+      let filterListData = await fetchGraphQl(GET_JOB_LIST_QUERY, variable)
+      setCardData(transformData(filterListData))
     }
     else if (inputExp !== "") {
       setExpYear("")
       setInputExp("")
+
+       let variable = {
+         "entryFilter": {
+        "ChannelName": channelName
+      },
+        "commonFilter": {
+          "Experience": "",
+          "limit":limit,
+          "offset":offset
+        },
+        AdditionalData: {
+          additionalFields: true,
+          categories: true
+        },
+      }
+      let filterListData = await fetchGraphQl(GET_JOB_LIST_QUERY, variable)
+      setCardData(transformData(filterListData))
     }
 
     else if (inputDate !== "") {
-      console.log("ggggggg")
       setPostDate("")
       setInputDate("")
-      // let variable = {
-      //   commonFilter: {
-      //     posteddate: ""
-      //   },
-      //   AdditionalData: {
-      //     additionalFields: true,
-      //     categories: true
-      //   },
-      // }
-      // let filterListData = await fetchGraphQl(GET_JOB_LIST_QUERY, variable)
-      // setList(transformData(filterListData))
+      let variable = {
+         "entryFilter": {
+        "ChannelName": channelName
+      },
+        "commonFilter": {
+          "posteddate": "",
+          "limit":limit,
+          "offset":offset
+
+        },
+        "AdditionalData": {
+          "additionalFields": true,
+          "categories": true
+        },
+      }
+      let filterListData = await fetchGraphQl(GET_JOB_LIST_QUERY, variable)
+      setCardData(transformData(filterListData))
     }
   }
   const jobFilterOption = catList?.map((data) => (
@@ -217,7 +259,7 @@ export default function FilterJob({ pathname, setList, setSearchStatus, setLoade
       label: data.categorySlug
     }
   ))
-  console.log(expOption, "jvhfbdvhfbf")
+
   const expOptions = [
     { id: 1, name: "0-1 Years", key: "0-1" },
     { id: 2, name: "1-2 Years", key: "1-2" },
@@ -250,13 +292,13 @@ export default function FilterJob({ pathname, setList, setSearchStatus, setLoade
     }
   ))
   const enterKeyEvent = (e) => {
-    console.log(e, "eventeee")
     if (e.key == "Enter") {
       if (e.target.value == location) {
         handleFilter()
       }
     }
   }
+
   return (
     <>
       <div className="grid md:grid-cols-5fr grid-cols-2  gap-4 mb-4">
@@ -265,8 +307,9 @@ export default function FilterJob({ pathname, setList, setSearchStatus, setLoade
 
         </Select>
 
-        <div className='w-full'>
+        <div className='w-full relative'>
           <input className="h-[38px] rounded-[4px] border-gray-500 border w-full focus-visible:outline-none bg-transparent focus:border-[#2684FF] hover-blue p-3 text-sm font-normal placeholder:text-slate-300" placeholder="Location" value={location} onChange={(e) => handleLocation(e)} onKeyDown={(e) => enterKeyEvent(e)} />
+          {/* <img src="/img/location.svg" className="absolute top-3 sm:top-[27px] left-6" /> */}
         </div>
         <Select className='text-sm' placeholder="Experienced Level"
           value={expYear} options={experiance} onChange={(e) => handleExpYear(e)}>
@@ -320,8 +363,13 @@ export default function FilterJob({ pathname, setList, setSearchStatus, setLoade
                     {inputDate}
                     <img src="/img/cancel.svg" className="cursor-pointer" onClick={() => handleClose()} />
                   </div>}
+{
+  inputData !=="" || inputDate!=="" || inputExp!=="" || inputJob!==""?<>
+    <button className="text-sm whitespace-nowrap font-light text-black leading-4 p-3 border-gray-500 rounded-md border bg-white" onClick={() => handleClear()}>Clear All</button>
+  </>:<></>
 
-                <button className="text-sm whitespace-nowrap font-light text-black leading-4 p-3 border-gray-500 rounded-md border bg-white" onClick={() => handleClear()}>Clear All</button>
+  
+}
 
               </> : <>
 
@@ -333,13 +381,17 @@ export default function FilterJob({ pathname, setList, setSearchStatus, setLoade
       </div>
 
       <div className="flex justify-between sm:items-center items-end pb-6 border-gray border-b">
-        {pathname == "/" ? <Link href="/list-view" className="p-3 flex gap-2 justify-center items-center min-w-[110px] whitespace-nowrap h-[42px] text-blue-600 border-blue-600 border rounded-md ml-auto">
-          <img src="/img/list.svg" />
-          List View
-        </Link> : <Link href="/" className="p-3 flex gap-2 justify-center items-center min-w-[110px] whitespace-nowrap h-[42px] text-blue-600 border-blue-600 border rounded-md ml-auto">
-          <img src="/img/title.svg" />
-          Tile View
-        </Link>}
+        {viewPage == "tile-view"
+          ?
+          <button onClick={() => dispatch(Homepage_View_Change_redux("list-view"))} className="p-3 flex gap-2 justify-center items-center min-w-[110px] whitespace-nowrap h-[42px] text-blue-600 border-blue-600 border rounded-md ml-auto">
+            <img src="/img/list.svg" />
+            List View
+          </button>
+          :
+          <button onClick={() => dispatch(Homepage_View_Change_redux("tile-view"))} className="p-3 flex gap-2 justify-center items-center min-w-[110px] whitespace-nowrap h-[42px] text-blue-600 border-blue-600 border rounded-md ml-auto">
+            <img src="/img/title.svg" />
+            Tile View
+          </button>}
 
       </div>
     </>
