@@ -32,9 +32,6 @@ const Forgot_Password = () => {
   const [signupUserId, setSignupUserId] = useState("");
   const [url, setUrl] = useState(null);
 
-  // const url=usePathname()
-  // const baseUrl=url.get("url")
-  console.log(url, "baseUrl");
   useEffect(() => {
     const fetchData = async () => {
       const variable_list = {
@@ -56,7 +53,7 @@ const Forgot_Password = () => {
           GET_JOB_LIST_QUERY,
           variable_list
         );
-        console.log(FetchValue, "cjhdjshfsf");
+
         setSignupTenantId(
           FetchValue?.ChannelEntriesList?.channelEntriesList[0]?.tenantId
         );
@@ -71,7 +68,7 @@ const Forgot_Password = () => {
     fetchData();
     setUrl(window.location);
   }, []);
-  console.log(signupTenantId, "khfkejfekrjfkj");
+
   const handleVerifyMailId = () => {
     setEmailSubmit(1);
     if (validateMailId()) {
@@ -89,15 +86,13 @@ const Forgot_Password = () => {
             GET_HEADER_FORGOT_PASSWORD_QUERY,
             password_params
           );
-          console.log(forgotPass_Call, "whatDAtata");
+
           if (forgotPass_Call !== null && forgotPass_Call !== undefined) {
             setSucesMsg(forgotPass_Call?.forgotPassword?.message);
             setSuccessMsgShow(true);
-            console.log("successsss");
           } else {
             setGetErrorMsg("you are not registered with us");
             setErrorMsgShow(true);
-            console.log("not regitered");
           }
         } catch (error) {
           if (error == null) {
@@ -107,7 +102,6 @@ const Forgot_Password = () => {
       };
       ForgotPasswordData();
     } else {
-      console.log("Email is Invalid");
       setEmailError(" Please enter your mail");
     }
   };

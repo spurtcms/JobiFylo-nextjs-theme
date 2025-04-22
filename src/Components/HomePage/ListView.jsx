@@ -18,33 +18,9 @@ import ReactPaginate from "react-paginate";
 
 export default function ListView({ cardData, loader }) {
   const dispatch = useDispatch();
-  console.log(cardData, "cjndshjshdj");
-  //   const pagination_Num = 1;
-  // const pageCount = Math.ceil(cardData?.[0]?.count / limit);
   const arr = [1, 2, 3, 4, 5, 6];
-  // useEffect(() => {
-  //     setLoader(true)
-  //     setCardData(reduxData)
-
-  //     if (cardData) {
-  //         setLoader(false);
-  //     }
-  // }, [])
-  // const sanitizeHTML = (html) => {
-  //     const sanitized = DOMPurify.sanitize(html, {
-  //         FORBID_TAGS: ['img'], // Remove <h1> and <img> tags
-  //         FORBID_ATTR: ['style'], // Remove inline styles for consistency
-  //     });
-  //     // Remove first <img> tag found in the sanitized HTML
-  //     return sanitized
-  //         .replace(/<br>/g, ' ') // Replace <br> with spaces
-  //         .replace(/<div class="card[^"]*"(.*?)<\/div>/g, '') // Remove specific <div> tags
-  //         .replace(/<h1[^>]*>.*?<\/h1>/, "") // Remove the first <h1> tag and its content
-  //         .replace(/<img[^>]*>/, ""); // Remove the first <img> tag, regardless of where it is
-  // };
   const sanitizeHTML = (html) => {
     const sanitized = DOMPurify.sanitize(html, {
-      // FORBID_TAGS: ['h1', 'img'], // Remove <h1> and <img> tags
       FORBID_ATTR: ["style"], // Remove inline styles for consistency
     });
     // Remove first <img> tag found in the sanitized HTML
@@ -77,23 +53,16 @@ export default function ListView({ cardData, loader }) {
       const key = field.fieldName.toLowerCase().replace(/\s+/g, "");
       transformedEntry[key] = field.fieldValue?.fieldValue || "";
     });
-    console.log(detail, "cjhvndjsfn");
 
     detail?.categories?.forEach((value) => {
-      console.log(value, "jncsbdj");
-
       {
-        value?.map((values) => {
-          // dispatch(Category_Slug_Data(values?.categorySlug))
-          console.log(values?.categorySlug, "djfncnsjnhfb");
-        });
+        value?.map((values) => {});
       }
     });
     return transformedEntry;
   };
 
   const handleViewJobClick = async (id, slug, channelId) => {
-    console.log(id, "ncsdjfhsudfjn");
     let variable_slug = {
       id: id,
       slug: slug,
@@ -107,17 +76,12 @@ export default function ListView({ cardData, loader }) {
         postes?.ChannelEntryDetail?.categories?.[0]?.[0]?.categorySlug
       )
     );
-    console.log(transformDetailData(postes), "cskjdksjdns");
+
     if (!postes) {
       return notFound();
     }
   };
-  const handlePageClick = (event) => {
-    console.log(event, "selectedPage");
-    let off = (event.selected * limit) % cardData?.[0]?.count;
-    setOffset(off);
-  };
-  console.log(cardData, "cbsdjfhj");
+
   return (
     <>
       {cardData?.length > 0 ? (

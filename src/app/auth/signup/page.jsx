@@ -145,13 +145,12 @@ const Signup = () => {
           },
         };
 
-        console.log("register_list", register_list);
         try {
           const response = await fetchGraphQl(
             GET_REGISTER_QUERY,
             register_list
           );
-          console.log(" response", response);
+
           setLoginResponse(response);
           if (response?.memberRegister) {
             router.push("/auth/signin");

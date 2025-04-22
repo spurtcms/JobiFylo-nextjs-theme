@@ -7,19 +7,21 @@ import { fetchGraphQl } from "@/api/graphicql";
 import { Login_token, UniqueId } from "@/api/clientActions";
 import { image_url } from "@/api/url";
 import { useRouter } from "nextjs-toploader/app";
+import { Popover } from "@headlessui/react";
 
 export default function HeaderServerActions() {
   const [registered, setRegistered] = useState("");
-  console.log(registered, "regitered");
+
   const [nameString, setNameString] = useState("");
   const [userDetails, setUserDetails] = useState({});
   const [isPopoverVisible, setPopoverVisible] = useState(false);
   const router = useRouter();
   const Id = UniqueId();
   const getAccesstoken = Login_token();
+
   useEffect(() => {
     setRegistered(getAccesstoken);
-  }, []);
+  }, [getAccesstoken]);
   useEffect(() => {
     const fetchData = async () => {
       let variable = {
@@ -77,69 +79,57 @@ export default function HeaderServerActions() {
               </button>
             ) : (
               <>
-                <div>
+                {" "}
+                <Popover className="group relative">
                   {userDetails ? (
-                    <button
+                    <Popover.Button
                       type="button"
-                      className="inline-flex w-12 h-12 justify-center  rounded-md    shadow-xs   hover:bg-gray-50"
-                      id="menu-button"
-                      aria-expanded={isPopoverVisible}
-                      aria-haspopup="true"
-                      onClick={() => setPopoverVisible((prev) => !prev)}
+                      className="inline-flex w-12 h-12 space-x-1 bg-transparent focus-visible:outline-0 font-semibold text-black-300 text-sm leading-6 style-2"
                     >
-                      {console.log(image_url + userDetails, "imgUrl134")}
                       <img
                         src={image_url + userDetails}
                         alt="profile"
                         className="w-12 h-12 rounded-full"
                       />
-                    </button>
+                    </Popover.Button>
                   ) : (
-                    <button
+                    <Popover.Button
                       type="button"
-                      className="w-12 h-12 bg-[#DD5B15] hover:bg-[#823e19] rounded-full text-2xl font-semibold text-white flex items-center justify-center "
-                      onClick={() => setPopoverVisible((prev) => !prev)}
+                      className="w-12 h-12 bg-[#DD5B15] hover:bg-[#823e19] rounded-full text-[25px] font-semibold leading-[25px] text-white grid place-items-center"
                     >
                       {nameString?.NameString}
-                    </button>
+                    </Popover.Button>
                   )}
-                </div>
+                  <Popover.Panel className="hidden group-hover:block top-full left-0 z-30 absolute bg-white shadow-lg rounded-md ring-1 ring-gray-900/5 w-32 overflow-hidden">
+                    <div>
+                      <div className="px-3 py-2 bg-gray-50 border-gray-700 rounded-lg">
+                        <button
+                          type="button"
+                          className="flex items-center space-x-2 mb-4 w-full h-full text-left text-[14px] font-normal leading-[17px] text-[#120B14] hover:bg-[#F1F1F1] rounded-lg"
+                          role="menuitem"
+                          tabIndex="-1"
+                          id="menu-item-profile"
+                          onClick={handleProfile}
+                        >
+                          <img src="/img/profile1.svg" alt="Profile" />
+                          My Profile
+                        </button>
 
-                {isPopoverVisible && (
-                  <div
-                    className="absolute left-2 z-10 mt-1 w-32 bg-blue-50 origin-top-right rounded-md shadow-lg ring-1 ring-black/5 focus:outline-hidden"
-                    role="menu"
-                    aria-orientation="vertical"
-                    aria-labelledby="menu-button"
-                    tabIndex="-1"
-                  >
-                    <div className="px-3 py-2 bg-gray-50 border-gray-700 rounded-lg">
-                      <button
-                        type="button" // Changed to button
-                        className="flex items-center space-x-2 mb-4 w-full h-full text-left text-[14px] font-normal leading-[17px] text-[#120B14] hover:bg-[#F1F1F1] rounded-lg"
-                        role="menuitem"
-                        tabIndex="-1"
-                        id="menu-item-profile" // Unique ID
-                        onClick={handleProfile}
-                      >
-                        <img src="/img/profile1.svg" alt="profile" />
-                        My Profile
-                      </button>
-
-                      <button
-                        type="button" // Changed to button
-                        className="flex items-center ml-1 space-x-2 w-full h-full text-left text-[14px] font-normal leading-[17px] text-[#120B14] hover:bg-[#F1F1F1] rounded-lg cursor-pointer"
-                        role="menuitem"
-                        tabIndex="-1"
-                        id="menu-item-logout" // Unique ID
-                        onClick={handleLogout}
-                      >
-                        <img src="/img/logout.svg" alt="logout" />
-                        Logout
-                      </button>
+                        <button
+                          type="button"
+                          className="flex items-center ml-1 space-x-2 w-full h-full text-left text-[14px] font-normal leading-[17px] text-[#120B14] hover:bg-[#F1F1F1] rounded-lg cursor-pointer"
+                          role="menuitem"
+                          tabIndex="-1"
+                          id="menu-item-logout"
+                          onClick={handleLogout}
+                        >
+                          <img src="/img/logout.svg" alt="Logout" />
+                          Logout
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                )}
+                  </Popover.Panel>
+                </Popover>
               </>
             )}
           </div>

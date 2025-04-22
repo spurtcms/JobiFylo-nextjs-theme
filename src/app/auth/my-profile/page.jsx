@@ -33,7 +33,7 @@ const Page = () => {
 
   const [selectedCode, setSelectedCode] = useState(codeOptions[0]);
   const [userDetails, setUserDetails] = useState({});
-  console.log(userDetails, "uuuuuuuuuuuu");
+
   const [firstName, setFirstName] = useState("");
   const [nameError, setNameError] = useState("");
   const [nameErrorState, setNameErrorState] = useState(false);
@@ -95,7 +95,6 @@ const Page = () => {
     placeholder: () => "text-[#201035]",
   });
   const id = UniqueId();
-  console.log(id, "jdsdjsjdjshdjsh");
   useEffect(() => {
     const fetchData = async () => {
       let variable = {
@@ -104,7 +103,6 @@ const Page = () => {
       try {
         const data = await fetchGraphQl(GET_USER_DETAILS, variable);
         setUserDetails(data?.MemberProfileDetails);
-        console.log("data", data);
       } catch (err) {
         console.error("Error fetching data:", err);
         setErrorMessage(err);
@@ -145,7 +143,6 @@ const Page = () => {
       setErrorMessage("No file selected.");
     }
   };
-  console.log(base64String, "base64String");
 
   useEffect(() => {
     if (
@@ -186,8 +183,6 @@ const Page = () => {
       setImage(image_url + userDetails?.profileImagePath);
     }
   }, [userDetails]);
-
-  console.log(userDetails, "bjbjbj");
 
   const InputFeildRegax = {
     emailId: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/,
@@ -303,8 +298,6 @@ const Page = () => {
     }
   };
 
-  console.log(updateProfile, "cbjsbjshbjhbdfg");
-
   useEffect(() => {
     dispatch(get_user_profile(updateProfile));
   }, [updateProfile]);
@@ -319,8 +312,6 @@ const Page = () => {
   const handleDiscard = () => {
     router.push("/");
   };
-
-  console.log(image, "bhubuhbub");
 
   return (
     <>

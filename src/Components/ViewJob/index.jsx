@@ -26,21 +26,6 @@ export default async function ViewJobPage({ params }) {
   };
   const viewJobApi = await fetchGraphQl(GET_VIEW_DETAIL_QUERY, variable_slug);
 
-  // let relatedValues = {
-  //     "entryFilter": {
-  //         "Status": "published",
-  //         "categorySlug": viewJobApi?.ChannelEntryDetail?.categories?.[0]?.[0]?.categorySlug,
-  //         "ChannelName": channelName
-  //     },
-  //     "AdditionalData": {
-  //         "categories": true,
-  //         "additionalFields": true
-  //     },
-
-  // }
-  // const RelatedPageApi = await fetchGraphQLDa(GET_JOB_LIST_QUERY, relatedValues)
-  // console.log(viewJobApi?.ChannelEntryDetail?.categories?.categorySlug, "jhbdfshbfhsj")
-
   return (
     <>
       <ViewJobServer

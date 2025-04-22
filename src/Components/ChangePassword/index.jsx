@@ -135,14 +135,11 @@ const ChangePassword = () => {
             GET_RESET_NEW_PASSWORD,
             setNewPassword_Params
           );
-          console.log(res, "whatDAtata");
+
           const statusCode = res.status || 200;
           if (statusCode === 200) {
-            console.log("MailRecived:", res);
-
             router.push("/auth/reset-password");
           } else {
-            // console.log({type:error , message:forgotPass_Call?.data?.message},"kjaweiusncskdf")
             console.error(`Error: Received status code ${statusCode}`);
           }
         } catch (err) {

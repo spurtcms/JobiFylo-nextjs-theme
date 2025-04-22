@@ -18,7 +18,7 @@ export default function ViewJobServer({ ListData, params, viewJobApi }) {
   const RelatedDataSlug = useSelector(
     (s) => s?.customerRedux?.Related_Jobs_redux
   );
-  console.log(RelatedDataSlug, "slugSlugSlug");
+
   const ListDetailData = useSelector(
     (s) => s?.customerRedux?.List_Detail_api_Data_redux
   );
@@ -26,7 +26,6 @@ export default function ViewJobServer({ ListData, params, viewJobApi }) {
 
   const transformData = (apiResponse) => {
     return apiResponse?.ChannelEntriesList?.channelEntriesList?.map((entry) => {
-      console.log(entry, "vfdkvfd");
       let transformedEntry = {
         id: entry?.id,
         title: entry?.title,
@@ -41,7 +40,6 @@ export default function ViewJobServer({ ListData, params, viewJobApi }) {
         transformedEntry[key] = field.fieldValue?.fieldValue || "";
       });
 
-      console.log(transformedEntry, "dfbdf");
       return transformedEntry;
     });
   };
@@ -97,23 +95,16 @@ export default function ViewJobServer({ ListData, params, viewJobApi }) {
       const key = field.fieldName.toLowerCase().replace(/\s+/g, "");
       transformedEntry[key] = field.fieldValue?.fieldValue || "";
     });
-    console.log(detail, "cjhvndjsfn");
 
     detail?.categories?.forEach((value) => {
-      console.log(value, "jncsbdj");
-
       {
-        value?.map((values) => {
-          // dispatch(Category_Slug_Data(values?.categorySlug))
-          console.log(values?.categorySlug, "djfncnsjnhfb");
-        });
+        value?.map((values) => {});
       }
     });
     return transformedEntry;
   };
 
   const handleViewJobClick = async (id, slug, channelId) => {
-    console.log(id, "ncsdjfhsudfjn");
     let variable_slug = {
       id: id,
       slug: slug,
@@ -121,10 +112,10 @@ export default function ViewJobServer({ ListData, params, viewJobApi }) {
       channelId: channelId,
     };
     const postes = await fetchGraphQl(GET_VIEW_DETAIL_QUERY, variable_slug);
-    console.log(postes, "chennelEntryDetail");
+
     setViewJob(transformDetailData(postes));
     dispatch(Entry_Detail_api_Data_redux(transformDetailData(postes)));
-    console.log(transformDetailData(postes), "cskjdksjdns");
+
     if (!postes) {
       return notFound();
     }

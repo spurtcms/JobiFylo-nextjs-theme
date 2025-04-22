@@ -129,7 +129,6 @@ const Signin = () => {
           },
         };
 
-        console.log("register_list", register_list);
         try {
           const response = await fetchGraphQl(GET_SIGNIN_QUERY, register_list);
           localStorage.setItem("token", response?.memberCheckLogin?.token);
