@@ -1,11 +1,10 @@
-import ViewJob from '@/Component/ViewJob'
-import React from 'react'
+import ViewJob from "@/Components/ViewJob";
+import React from "react";
 
-
-export default function page({params}) {
-    return (
-        <>
-         <ViewJob params={params?.slug}/>
-        </>
-    )
+export default function page({ params }) {
+  return (
+    <>
+      <ViewJob params={params?.slug} />
+    </>
+  );
 }

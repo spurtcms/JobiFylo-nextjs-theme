@@ -16,6 +16,9 @@ const initialState = {
   searchApi_List: [],
   Related_Jobs_redux: "",
   Homepage_View_redux: "tile-view",
+  get_name_first_latter:"",
+  get_user_id_Redux_func:0,
+  get_user_profile:"",
 };
 
 export const customerSlice = createSlice({
@@ -70,6 +73,15 @@ export const customerSlice = createSlice({
     Homepage_View_Change_redux: (state, action) => {
       state.Homepage_View_redux = action.payload;
     },
+    get_name_first_latter: (state, action) => {
+      state.get_name_first_latter = action.payload;
+    },
+    get_user_id_Redux_func: (state, action) => {
+      state.get_user_id_Redux_func = action.payload;
+    },
+    get_user_profile: (state, action) => {
+      state.get_user_profile = action.payload;
+    },
   },
 });
 
@@ -89,6 +101,9 @@ export const {
   searchApi_List,
   Related_Jobs_redux,
   Homepage_View_Change_redux,
+  get_name_first_latter,
+  get_user_id_Redux_func,
+  get_user_profile,
 } = customerSlice.actions;
 
 export default customerSlice.reducer;

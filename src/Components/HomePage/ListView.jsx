@@ -16,10 +16,7 @@ import {
 import ListPageLoader from "../skeleton/listPageLoader";
 import ReactPaginate from "react-paginate";
 
-export default function ListView({
-  cardData,
-  loader,
-}) {
+export default function ListView({ cardData, loader }) {
   const dispatch = useDispatch();
   console.log(cardData, "cjndshjshdj");
   //   const pagination_Num = 1;
@@ -123,94 +120,91 @@ export default function ListView({
   console.log(cardData, "cbsdjfhj");
   return (
     <>
-      {cardData?.length >0? (
+      {cardData?.length > 0 ? (
         <>
           {loader ? (
             arr?.map(() => <ListPageLoader />)
           ) : (
             <>
               {cardData?.map((data, index) => (
-
-             
-                  <div className="flex flex-col gap-6 mt-6" key={index} >
-                    <div className="border-gray-300 border rounded p-4 hover:shadow-lg">
-                      <span className="px-2.5 py-1 rounded-3xl bg-blue-100 text-black text-xs font-normal">
-                        {data?.categories?.categoryName}
-                      </span>
-                      <div className="mb-4 mt-2 flex justify-between items-start sm:items-center flex-col sm:flex-row gap-2">
-                        <Link
-                          href={`/view-job/${data?.slug}`}
-                          className="block text-black text-2xl leading-8 font-normal my-2"
-                          onClick={() =>
-                            handleViewJobClick(
-                              data?.id,
-                              data?.slug,
-                              data?.channelId
-                            )
-                          }
-                        >
-                          {data?.title}
-                        </Link>
-                        <p className="text-sm font-normal leading-4 text-blue-600 ">
-                          Job code:{" "}
-                          <span className="text-gray-500 font-light">
-                            {data?.jobcode}
-                          </span>
+                <div className="flex flex-col gap-6 mt-6" key={index}>
+                  <div className="border-gray-300 border rounded p-4 hover:shadow-lg">
+                    <span className="px-2.5 py-1 rounded-3xl bg-blue-100 text-black text-xs font-normal">
+                      {data?.categories?.categoryName}
+                    </span>
+                    <div className="mb-4 mt-2 flex justify-between items-start sm:items-center flex-col sm:flex-row gap-2">
+                      <Link
+                        href={`/view-job/${data?.slug}`}
+                        className="block text-black text-2xl leading-8 font-normal my-2"
+                        onClick={() =>
+                          handleViewJobClick(
+                            data?.id,
+                            data?.slug,
+                            data?.channelId
+                          )
+                        }
+                      >
+                        {data?.title}
+                      </Link>
+                      <p className="text-sm font-normal leading-4 text-blue-600 ">
+                        Job code:{" "}
+                        <span className="text-gray-500 font-light">
+                          {data?.jobcode}
+                        </span>
+                      </p>
+                    </div>
+                    <div className="flex gap-4 mb-6 flex-wrap">
+                      <div className="flex items-center gap-2">
+                        <img src="/img/exp.svg" />
+                        <p className="text-sm  leading-4  text-gray-500 font-light">
+                          {data?.experiance}
                         </p>
                       </div>
-                      <div className="flex gap-4 mb-6 flex-wrap">
-                        <div className="flex items-center gap-2">
-                          <img src="/img/exp.svg" />
-                          <p className="text-sm  leading-4  text-gray-500 font-light">
-                            {data?.experiance}
-                          </p>
-                        </div>
-                        <div className="w-0.5 h-4 bg-gray-200"></div>
-                        <div className="flex items-center gap-2">
-                          <img src="/img/Time.svg" />
-                          <p className="text-sm  leading-4 text-gray-500 font-light">
-                            {data?.jobtype}
-                          </p>
-                        </div>
-                        <div className="w-0.5 h-4 bg-gray-200"></div>
-                        <div className="flex items-center gap-2">
-                          <img src="/img/job-type.svg" />
-                          <p className="text-sm  leading-4 text-gray-500 font-light">
-                            {data?.location}
-                          </p>
-                        </div>
+                      <div className="w-0.5 h-4 bg-gray-200"></div>
+                      <div className="flex items-center gap-2">
+                        <img src="/img/Time.svg" />
+                        <p className="text-sm  leading-4 text-gray-500 font-light">
+                          {data?.jobtype}
+                        </p>
                       </div>
-                      <div className="flex flex-col gap-3 mb-4 ">
-                        <div
-                          className="pr-[12px] max-[700px]:pr-0 line-clamp-2 text-gray-500"
-                          // style={{ color: 'black' }}
-                          dangerouslySetInnerHTML={{
-                            __html: sanitizeHTML(data?.description),
-                          }}
-                        ></div>
-                      </div>
-                      {/* <p className="text-sm font-normal leading-4 text-blue-600 mb-6">Skill Required: <span className="text-gray-500">Solution Architect Project Role Description: Own the overall solution blueprint and roadmap, work closely with clients to articulate business problems and into translate them into an appropriate solution design. Must have skills: Solution Architecture work closely with clients to articulate business problems and translate them wasn't  into Must have skills: Solution Architecture work closely with clients to articulate business problems and translate them into...</span> </p> */}
-                      <div className="flex justify-between sm:items-center items-start gap-4 flex-col sm:flex-row">
-                        <h5 className="text-gray-500 text-xs font-light">
-                          Posted Date: {data?.posteddate}
-                        </h5>
-                        <Link
-                          href={`/view-job/${data?.slug}`}
-                          className="min-w-full sm:min-w-[352px] h-11 bg-blue-600 text-white text-base font-normal rounded flex justify-center items-center"
-                          onClick={() =>
-                            handleViewJobClick(
-                              data?.id,
-                              data?.slug,
-                              data?.channelId
-                            )
-                          }
-                        >
-                          View Job
-                        </Link>
+                      <div className="w-0.5 h-4 bg-gray-200"></div>
+                      <div className="flex items-center gap-2">
+                        <img src="/img/job-type.svg" />
+                        <p className="text-sm  leading-4 text-gray-500 font-light">
+                          {data?.location}
+                        </p>
                       </div>
                     </div>
+                    <div className="flex flex-col gap-3 mb-4 ">
+                      <div
+                        className="pr-[12px] max-[700px]:pr-0 line-clamp-2 text-gray-500"
+                        // style={{ color: 'black' }}
+                        dangerouslySetInnerHTML={{
+                          __html: sanitizeHTML(data?.description),
+                        }}
+                      ></div>
+                    </div>
+                    {/* <p className="text-sm font-normal leading-4 text-blue-600 mb-6">Skill Required: <span className="text-gray-500">Solution Architect Project Role Description: Own the overall solution blueprint and roadmap, work closely with clients to articulate business problems and into translate them into an appropriate solution design. Must have skills: Solution Architecture work closely with clients to articulate business problems and translate them wasn't  into Must have skills: Solution Architecture work closely with clients to articulate business problems and translate them into...</span> </p> */}
+                    <div className="flex justify-between sm:items-center items-start gap-4 flex-col sm:flex-row">
+                      <h5 className="text-gray-500 text-xs font-light">
+                        Posted Date: {data?.posteddate}
+                      </h5>
+                      <Link
+                        href={`/view-job/${data?.slug}`}
+                        className="min-w-full sm:min-w-[352px] h-11 bg-blue-600 text-white text-base font-normal rounded flex justify-center items-center"
+                        onClick={() =>
+                          handleViewJobClick(
+                            data?.id,
+                            data?.slug,
+                            data?.channelId
+                          )
+                        }
+                      >
+                        View Job
+                      </Link>
+                    </div>
                   </div>
-      
+                </div>
               ))}
             </>
           )}
@@ -235,8 +229,6 @@ export default function ListView({
           </div>
         </>
       )}
-
-
     </>
   );
 }

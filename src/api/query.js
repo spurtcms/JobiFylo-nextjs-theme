@@ -1,4 +1,3 @@
-
 export const GET_POSTS_SIGN_QUERY = `mutation 
 memberRegister($input: MemberDetails!
   $ecomModule: Int){
@@ -13,8 +12,6 @@ export const GET_REGISTER_QUERY = `mutation
       memberRegister(input:$input,
       arguments:$arguments)
     }`;
-
-
 
 export const GET_POSTS_LOGIN_QUERY = `mutation 
   templateMemberlogin($username: String, $email: String, 
@@ -57,7 +54,7 @@ export const GET_POSTS_LOGIN_QUERY = `mutation
     }
       count
     }
-    }`
+    }`;
 
 export const GET_VIEW_DETAIL_QUERY = `query ChannelEntryDetail(
 $id: Int
@@ -209,7 +206,7 @@ $AdditionalData: EntriesAdditionalData
       length
     }
   }
-} `
+} `;
 
 export const GET_POST_DETAIL_QUERY = `query($jobSlug: String){
       jobDetail(jobSlug:$jobSlug){
@@ -245,7 +242,7 @@ export const GET_POST_DETAIL_QUERY = `query($jobSlug: String){
         
       }
     }
-    `
+    `;
 export const GET_POST_CATEGORIES_LIST = `query($hierarchylevel: Int!,$categoryGroupId: Int){
       categoriesList(hierarchyLevel: $hierarchylevel,categoryGroupId:$categoryGroupId){
         categories{
@@ -256,7 +253,7 @@ export const GET_POST_CATEGORIES_LIST = `query($hierarchylevel: Int!,$categoryGr
         }
       }
     }
-    `
+    `;
 export const GET_POST_CATEGORY_NAME = `query
   CategoryList(
 $categoryFilter: CategoryFilter
@@ -272,7 +269,7 @@ $commonFilter: Filter
           tenantId
         }
       }
-    }`
+    }`;
 
 export const GET_POST_JOB_APPLY_LIST_QUERY = `
     query applicantDetails ($jobId: Int!
@@ -307,7 +304,7 @@ export const GET_POST_JOB_APPLY_LIST_QUERY = `
           storageType
         }
       }
-    `
+    `;
 
 export const GET_JOB_LIST_QUERY = `query
   ChannelEntriesList(
@@ -407,7 +404,7 @@ $AdditionalData: EntriesAdditionalData
       }
        count
     }
-  }`
+  }`;
 
 export const GET_SIGNIN_QUERY = `mutation
   memberCheckLogin($input: MemberSignin!){
@@ -417,6 +414,17 @@ export const GET_SIGNIN_QUERY = `mutation
       message
       token
       success
+      memberDetails{
+        Id
+        firstName
+        lastName
+        NameString
+        email
+        password
+        mobile
+        profileImage
+        profileImagePath
+      }
     }
   }
 `;
@@ -428,9 +436,38 @@ forgotPassword($input: MemberInfo!){
   }
 }`;
 
-
 export const GET_RESET_NEW_PASSWORD = `mutation 
 resetPassword($input: MemberResetpassInfo!){
   resetPassword(input:$input)
-}
-`
+}`;
+
+export const GET_USER_DETAILS = `query MemberProfileDetails($id: Int!){
+  MemberProfileDetails(id:$id){
+    Id
+    firstName
+    lastName
+    email
+    profileImage
+    profileImagePath
+    password
+    username
+    mobile  
+    NameString
+  }
+}`;
+
+export const UPDATE_USER_DETAILS = `mutation updateMemberProfile($input: UpdateMember!){
+  updateMemberProfile(input:$input){
+    message
+    memberDetails{
+      Id
+      firstName
+      lastName
+      mobile
+      username
+      profileImage
+      profileImagePath
+      password
+    }
+  }
+}`;

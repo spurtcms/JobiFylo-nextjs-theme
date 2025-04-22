@@ -1,20 +1,18 @@
-import { Token } from "./clientGraphicql";
-import { RemoveToken } from "./serverActions";
-import { handleCartStore } from "./clientActions";
-import ToastMessage from "@/Component/ToastMessage/ToastMessage";
+import { Login_token } from "./clientActions";
 
 export const apiinstance = async (url, options) => {
+  const Token_user = Login_token();
+
   const headers = {
     "Content-Type": "application/json",
     ApiKey: process.env.NEXT_PUBLIC_SPURTCMS_NEXTJS_STARTER_DEFAULT_APIKEY,
   };
-  const token = await Token();
 
-  if (token == "" || token == undefined) {
-    headers["Authorization"] =
-      process.env.NEXT_PUBLIC_SPURTCMS_NEXTJS_STARTER_THEME_TOKEN;
-  } else {
-    headers["Authorization"] = token;
+  headers["Authorization"] =
+    process.env.NEXT_PUBLIC_SPURTCMS_NEXTJS_STARTER_THEME_TOKEN;
+  const accessToken = await Login_token();
+  if (accessToken) {
+    headers["Userkey"] = accessToken;
   }
 
   const config = {
@@ -29,7 +27,6 @@ export const apiinstance = async (url, options) => {
     config.body = config.body;
   }
 
-  // const res = await fetch(`${process.env.NEXT_PUBLIC_SPURTCMS_NEXTJS_STARTER_THEME_BASEURL}${url}`,config);
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_SPURTCMS_NEXTJS_STARTER_THEME_BASEURL}${url}`,
@@ -39,72 +36,5 @@ export const apiinstance = async (url, options) => {
     return data;
   } catch (error) {
     console.log(error);
-
-    // if (res.ok) {
-    //   return await res.json();
-    // } else {
-    //   switch (res.status) {
-    //     case 400:
-    //       handleBadRequest(res);
-    //       break;
-
-    //     case 401:
-    //       handleUnauthorized(res);
-    //       break;
-
-    //     case 403:
-    //       handleForbidden(res);
-    //       break;
-
-    //     case 404:
-    //       handleNotFound(res);
-    //       break;
-
-    //     case 422:
-    //       handleUnProcessableEntry(res);
-    //       break;
-
-    //     case 500:
-    //       handleServerError(res);
-    //       break;
-    //     case 409:
-    //       handleErrorMessages(res);
-    //       break;
-    //     case 0:
-    //       handleServerError502(res);
-    //       break;
-    //     default:
-    //       break;
-    //   }
-
-    //   return res;
-    // }
   }
 };
-const handleBadRequest = async (res) => {
-  ToastMessage({ type: "error", message: res?.statusText });
-};
-
-const handleUnauthorized = async (res) => {
-  // handleCartStore()
-  RemoveToken();
-  ToastMessage({ type: "error", message: "Unauthorized" });
-};
-
-const handleForbidden = async () => {
-  ToastMessage({ type: "error", message: "Forbidden" });
-};
-
-const handleNotFound = async () => {
-  ToastMessage({ type: "error", message: "Api not found" });
-};
-
-const handleUnProcessableEntry = async (res) => {
-  ToastMessage({ type: "error", message: res?.statusText });
-};
-
-const handleServerError = async (res) => {
-  ToastMessage({ type: "error", message: res?.statusText });
-};
-
-const handleServerError502 = async () => {};
