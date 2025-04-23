@@ -2,6 +2,7 @@ import ViewJobServer from "./ViewJobServer";
 import { fetchGraphQl } from "@/api/graphicql";
 import { GET_JOB_LIST_QUERY, GET_VIEW_DETAIL_QUERY } from "@/api/query";
 import { channelName } from "@/api/url";
+import Header from "../Header";
 
 export default async function ViewJobPage({ params }) {
   let cardParams = {
@@ -28,6 +29,7 @@ export default async function ViewJobPage({ params }) {
 
   return (
     <>
+      <Header />
       <ViewJobServer
         params={params}
         cardListPage={cardListPage}
